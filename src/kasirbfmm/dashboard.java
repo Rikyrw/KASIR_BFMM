@@ -53,10 +53,12 @@ public class dashboard extends javax.swing.JFrame {
     private void jlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlogoutActionPerformed
         login dashboard = new login();
         dashboard.setVisible(true);
+        System.out.println("hai");
         
         this.dispose();
     }//GEN-LAST:event_jlogoutActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
