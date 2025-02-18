@@ -26,10 +26,64 @@ public class jual extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        logout = new javax.swing.JButton();
+        dasbor1 = new javax.swing.JButton();
+        barang1 = new javax.swing.JButton();
+        restok1 = new javax.swing.JButton();
+        jual1 = new javax.swing.JButton();
+        user1 = new javax.swing.JButton();
+        pembelian1 = new javax.swing.JButton();
+        penjualan1 = new javax.swing.JButton();
+        laba1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        logout.setBorderPainted(false);
+        logout.setContentAreaFilled(false);
+        logout.setFocusPainted(false);
+        getContentPane().add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 720, 130, 30));
+
+        dasbor1.setBorderPainted(false);
+        dasbor1.setContentAreaFilled(false);
+        dasbor1.setFocusPainted(false);
+        getContentPane().add(dasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 110, 20));
+
+        barang1.setBorderPainted(false);
+        barang1.setContentAreaFilled(false);
+        barang1.setFocusPainted(false);
+        getContentPane().add(barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 110, 20));
+
+        restok1.setBorderPainted(false);
+        restok1.setContentAreaFilled(false);
+        restok1.setFocusPainted(false);
+        getContentPane().add(restok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
+
+        jual1.setBorderPainted(false);
+        jual1.setContentAreaFilled(false);
+        jual1.setFocusPainted(false);
+        getContentPane().add(jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
+
+        user1.setBorderPainted(false);
+        user1.setContentAreaFilled(false);
+        user1.setFocusPainted(false);
+        getContentPane().add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 110, 20));
+
+        pembelian1.setBorderPainted(false);
+        pembelian1.setContentAreaFilled(false);
+        pembelian1.setFocusPainted(false);
+        getContentPane().add(pembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 130, 20));
+
+        penjualan1.setBorderPainted(false);
+        penjualan1.setContentAreaFilled(false);
+        penjualan1.setFocusPainted(false);
+        getContentPane().add(penjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 130, 30));
+
+        laba1.setBorderPainted(false);
+        laba1.setContentAreaFilled(false);
+        laba1.setFocusPainted(false);
+        getContentPane().add(laba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 130, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/jual.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -74,6 +128,15 @@ public class jual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton barang1;
+    private javax.swing.JButton dasbor1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jual1;
+    private javax.swing.JButton laba1;
+    private javax.swing.JButton logout;
+    private javax.swing.JButton pembelian1;
+    private javax.swing.JButton penjualan1;
+    private javax.swing.JButton restok1;
+    private javax.swing.JButton user1;
     // End of variables declaration//GEN-END:variables
 }

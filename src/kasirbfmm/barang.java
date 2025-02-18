@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package kasirbfmm;
-
-/**
+/*
  *
  * @author Dhimas Ananta
  */
@@ -15,6 +14,7 @@ public class barang extends javax.swing.JFrame {
      */
     public barang() {
         initComponents();
+        
     }
 
     /**
@@ -26,10 +26,146 @@ public class barang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tombolHapus = new javax.swing.JButton();
+        tombolDasbor1 = new javax.swing.JButton();
+        tombolBarang1 = new javax.swing.JButton();
+        tombolrestok1 = new javax.swing.JButton();
+        tombolJual1 = new javax.swing.JButton();
+        tombolUser1 = new javax.swing.JButton();
+        tombolPembelian1 = new javax.swing.JButton();
+        tombolPenjualan1 = new javax.swing.JButton();
+        tombolLaba1 = new javax.swing.JButton();
+        tombolLogout1 = new javax.swing.JButton();
+        tombolCari1 = new javax.swing.JButton();
+        tombolTambah1 = new javax.swing.JButton();
+        tombolEdit1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tombolHapus.setBorderPainted(false);
+        tombolHapus.setContentAreaFilled(false);
+        tombolHapus.setFocusPainted(false);
+        getContentPane().add(tombolHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
+
+        tombolDasbor1.setBorderPainted(false);
+        tombolDasbor1.setContentAreaFilled(false);
+        tombolDasbor1.setFocusPainted(false);
+        getContentPane().add(tombolDasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 150, 120, 20));
+
+        tombolBarang1.setBorderPainted(false);
+        tombolBarang1.setContentAreaFilled(false);
+        tombolBarang1.setFocusPainted(false);
+        getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 20));
+
+        tombolrestok1.setBorderPainted(false);
+        tombolrestok1.setContentAreaFilled(false);
+        tombolrestok1.setFocusPainted(false);
+        getContentPane().add(tombolrestok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 120, 20));
+
+        tombolJual1.setBorderPainted(false);
+        tombolJual1.setContentAreaFilled(false);
+        tombolJual1.setFocusPainted(false);
+        getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 20));
+
+        tombolUser1.setBorderPainted(false);
+        tombolUser1.setContentAreaFilled(false);
+        tombolUser1.setFocusPainted(false);
+        getContentPane().add(tombolUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 120, 20));
+
+        tombolPembelian1.setBorderPainted(false);
+        tombolPembelian1.setContentAreaFilled(false);
+        tombolPembelian1.setFocusPainted(false);
+        getContentPane().add(tombolPembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 130, 20));
+
+        tombolPenjualan1.setBorderPainted(false);
+        tombolPenjualan1.setContentAreaFilled(false);
+        tombolPenjualan1.setFocusPainted(false);
+        getContentPane().add(tombolPenjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 130, 30));
+
+        tombolLaba1.setBorderPainted(false);
+        tombolLaba1.setContentAreaFilled(false);
+        tombolLaba1.setFocusPainted(false);
+        getContentPane().add(tombolLaba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 130, 30));
+
+        tombolLogout1.setBorderPainted(false);
+        tombolLogout1.setContentAreaFilled(false);
+        tombolLogout1.setFocusPainted(false);
+        getContentPane().add(tombolLogout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 720, 130, 30));
+
+        tombolCari1.setBorderPainted(false);
+        tombolCari1.setContentAreaFilled(false);
+        tombolCari1.setFocusPainted(false);
+        getContentPane().add(tombolCari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 40, 40));
+
+        tombolTambah1.setBorderPainted(false);
+        tombolTambah1.setContentAreaFilled(false);
+        tombolTambah1.setFocusPainted(false);
+        getContentPane().add(tombolTambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
+
+        tombolEdit1.setBorderPainted(false);
+        tombolEdit1.setContentAreaFilled(false);
+        tombolEdit1.setFocusPainted(false);
+        getContentPane().add(tombolEdit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jTextField1.setCaretColor(new java.awt.Color(255, 255, 255));
+        jTextField1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jTextField1.setSelectionColor(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 410, 30));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 110, 40));
+
+        jTable1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Kode", "Nama", "Harga", "Stok", "Kategori"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setFocusable(false);
+        jTable1.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        jTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        jTable1.setSelectionForeground(new java.awt.Color(76, 52, 98));
+        jTable1.setShowGrid(true);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 1020, 540));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/barangg.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -37,6 +173,10 @@ public class barang extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -74,6 +214,23 @@ public class barang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton tombolBarang1;
+    private javax.swing.JButton tombolCari1;
+    private javax.swing.JButton tombolDasbor1;
+    private javax.swing.JButton tombolEdit1;
+    private javax.swing.JButton tombolHapus;
+    private javax.swing.JButton tombolJual1;
+    private javax.swing.JButton tombolLaba1;
+    private javax.swing.JButton tombolLogout1;
+    private javax.swing.JButton tombolPembelian1;
+    private javax.swing.JButton tombolPenjualan1;
+    private javax.swing.JButton tombolTambah1;
+    private javax.swing.JButton tombolUser1;
+    private javax.swing.JButton tombolrestok1;
     // End of variables declaration//GEN-END:variables
 }

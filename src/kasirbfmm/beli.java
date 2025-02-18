@@ -26,10 +26,134 @@ public class beli extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tombolHapus = new javax.swing.JButton();
+        tombolDasbor1 = new javax.swing.JButton();
+        tombolBarang1 = new javax.swing.JButton();
+        tombolRestok1 = new javax.swing.JButton();
+        tombolJual1 = new javax.swing.JButton();
+        tombolUser1 = new javax.swing.JButton();
+        tombolPembelian1 = new javax.swing.JButton();
+        tombolPenjualan1 = new javax.swing.JButton();
+        tombolLaba1 = new javax.swing.JButton();
+        tombolLogout = new javax.swing.JButton();
+        tombolTambah1 = new javax.swing.JButton();
+        tombolSimpan1 = new javax.swing.JButton();
+        kodeBarang = new javax.swing.JTextField();
+        namaBarang1 = new javax.swing.JTextField();
+        namaPemasok = new javax.swing.JTextField();
+        hargaJual2 = new javax.swing.JTextField();
+        hargaaBeli1 = new javax.swing.JTextField();
+        totalHarga1 = new javax.swing.JTextField();
+        stok1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tombolHapus.setBorderPainted(false);
+        tombolHapus.setContentAreaFilled(false);
+        tombolHapus.setFocusPainted(false);
+        getContentPane().add(tombolHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 450, 110, 30));
+
+        tombolDasbor1.setBorderPainted(false);
+        tombolDasbor1.setContentAreaFilled(false);
+        tombolDasbor1.setFocusPainted(false);
+        getContentPane().add(tombolDasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 110, 20));
+
+        tombolBarang1.setBorderPainted(false);
+        tombolBarang1.setContentAreaFilled(false);
+        tombolBarang1.setFocusPainted(false);
+        getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 110, 20));
+
+        tombolRestok1.setBorderPainted(false);
+        tombolRestok1.setContentAreaFilled(false);
+        tombolRestok1.setFocusPainted(false);
+        getContentPane().add(tombolRestok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
+
+        tombolJual1.setBorderPainted(false);
+        tombolJual1.setContentAreaFilled(false);
+        tombolJual1.setFocusPainted(false);
+        getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
+
+        tombolUser1.setBorderPainted(false);
+        tombolUser1.setContentAreaFilled(false);
+        tombolUser1.setFocusPainted(false);
+        getContentPane().add(tombolUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 110, 20));
+
+        tombolPembelian1.setBorderPainted(false);
+        tombolPembelian1.setContentAreaFilled(false);
+        tombolPembelian1.setFocusPainted(false);
+        getContentPane().add(tombolPembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 130, 30));
+
+        tombolPenjualan1.setBorderPainted(false);
+        tombolPenjualan1.setContentAreaFilled(false);
+        tombolPenjualan1.setFocusPainted(false);
+        getContentPane().add(tombolPenjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 130, 30));
+
+        tombolLaba1.setBorderPainted(false);
+        tombolLaba1.setContentAreaFilled(false);
+        tombolLaba1.setFocusPainted(false);
+        getContentPane().add(tombolLaba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 90, 30));
+
+        tombolLogout.setBorderPainted(false);
+        tombolLogout.setContentAreaFilled(false);
+        tombolLogout.setFocusPainted(false);
+        getContentPane().add(tombolLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 720, 110, 30));
+
+        tombolTambah1.setBorderPainted(false);
+        tombolTambah1.setContentAreaFilled(false);
+        tombolTambah1.setFocusPainted(false);
+        getContentPane().add(tombolTambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 110, 30));
+
+        tombolSimpan1.setBorderPainted(false);
+        tombolSimpan1.setContentAreaFilled(false);
+        tombolSimpan1.setFocusPainted(false);
+        getContentPane().add(tombolSimpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 450, 110, 30));
+
+        kodeBarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        kodeBarang.setOpaque(false);
+        getContentPane().add(kodeBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 450, 30));
+
+        namaBarang1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        namaBarang1.setOpaque(false);
+        getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 200, 450, 30));
+
+        namaPemasok.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        namaPemasok.setOpaque(false);
+        getContentPane().add(namaPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, 470, 20));
+
+        hargaJual2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        hargaJual2.setOpaque(false);
+        getContentPane().add(hargaJual2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 180, 30));
+
+        hargaaBeli1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        hargaaBeli1.setOpaque(false);
+        getContentPane().add(hargaaBeli1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 290, 180, 30));
+
+        totalHarga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        totalHarga1.setOpaque(false);
+        getContentPane().add(totalHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 290, 180, 30));
+
+        stok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        stok1.setOpaque(false);
+        getContentPane().add(stok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 380, 180, 30));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 552, 1020, 170));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/beli.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -74,6 +198,27 @@ public class beli extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField hargaJual2;
+    private javax.swing.JTextField hargaaBeli1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField kodeBarang;
+    private javax.swing.JTextField namaBarang1;
+    private javax.swing.JTextField namaPemasok;
+    private javax.swing.JTextField stok1;
+    private javax.swing.JButton tombolBarang1;
+    private javax.swing.JButton tombolDasbor1;
+    private javax.swing.JButton tombolHapus;
+    private javax.swing.JButton tombolJual1;
+    private javax.swing.JButton tombolLaba1;
+    private javax.swing.JButton tombolLogout;
+    private javax.swing.JButton tombolPembelian1;
+    private javax.swing.JButton tombolPenjualan1;
+    private javax.swing.JButton tombolRestok1;
+    private javax.swing.JButton tombolSimpan1;
+    private javax.swing.JButton tombolTambah1;
+    private javax.swing.JButton tombolUser1;
+    private javax.swing.JTextField totalHarga1;
     // End of variables declaration//GEN-END:variables
 }
