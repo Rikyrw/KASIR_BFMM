@@ -90,7 +90,6 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
 
         RFIDInput.setBackground(new java.awt.Color(255, 255, 255));
         RFIDInput.setUI(null);
-        RFIDInput.setBorder(null);
         RFIDInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RFIDInputActionPerformed(evt);
