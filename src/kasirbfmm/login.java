@@ -110,7 +110,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
         return; // Hentikan eksekusi jika ada yang kosong
     }
          if (jpassword.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Password harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Passwor harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
         return; // Hentikan eksekusi jika ada yang kosong
     }
         Connection conn = null;
