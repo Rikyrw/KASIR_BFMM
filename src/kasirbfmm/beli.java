@@ -47,6 +47,8 @@ public class beli extends javax.swing.JFrame {
         stok1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        tanggal = new javax.swing.JTextField();
+        noTransaksi1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -142,18 +144,43 @@ public class beli extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Kode", "Nama", "Stok", "Harga satuan", "Total harga", "Nama pemasok"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 552, 1020, 170));
+
+        tanggal.setBackground(new java.awt.Color(153, 153, 153));
+        tanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 100, -1));
+
+        noTransaksi1.setBackground(new java.awt.Color(153, 153, 153));
+        noTransaksi1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(noTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 100, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/beli.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -206,7 +233,9 @@ public class beli extends javax.swing.JFrame {
     private javax.swing.JTextField kodeBarang;
     private javax.swing.JTextField namaBarang1;
     private javax.swing.JTextField namaPemasok;
+    private javax.swing.JTextField noTransaksi1;
     private javax.swing.JTextField stok1;
+    private javax.swing.JTextField tanggal;
     private javax.swing.JButton tombolBarang1;
     private javax.swing.JButton tombolDasbor1;
     private javax.swing.JButton tombolHapus;

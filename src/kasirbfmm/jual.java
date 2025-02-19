@@ -26,7 +26,7 @@ public class jual extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        logout = new javax.swing.JButton();
+        barang = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
         restok1 = new javax.swing.JButton();
@@ -35,15 +35,34 @@ public class jual extends javax.swing.JFrame {
         pembelian1 = new javax.swing.JButton();
         penjualan1 = new javax.swing.JButton();
         laba1 = new javax.swing.JButton();
+        logout1 = new javax.swing.JButton();
+        simpan = new javax.swing.JButton();
+        hapus1 = new javax.swing.JButton();
+        tambah2 = new javax.swing.JButton();
+        cetak1 = new javax.swing.JButton();
+        ekspor1 = new javax.swing.JButton();
+        tanggal = new javax.swing.JTextField();
+        noTransaksi1 = new javax.swing.JTextField();
+        namaBarang = new javax.swing.JTextField();
+        kembalian = new javax.swing.JTextField();
+        kodeBarang2 = new javax.swing.JTextField();
+        harga1 = new javax.swing.JTextField();
+        stok1 = new javax.swing.JTextField();
+        qty1 = new javax.swing.JTextField();
+        jumlahHarga1 = new javax.swing.JTextField();
+        total1 = new javax.swing.JTextField();
+        bayar1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        logout.setBorderPainted(false);
-        logout.setContentAreaFilled(false);
-        logout.setFocusPainted(false);
-        getContentPane().add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 720, 130, 30));
+        barang.setBorderPainted(false);
+        barang.setContentAreaFilled(false);
+        barang.setFocusPainted(false);
+        getContentPane().add(barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 360, 120, 40));
 
         dasbor1.setBorderPainted(false);
         dasbor1.setContentAreaFilled(false);
@@ -73,7 +92,7 @@ public class jual extends javax.swing.JFrame {
         pembelian1.setBorderPainted(false);
         pembelian1.setContentAreaFilled(false);
         pembelian1.setFocusPainted(false);
-        getContentPane().add(pembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 130, 20));
+        getContentPane().add(pembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 130, 30));
 
         penjualan1.setBorderPainted(false);
         penjualan1.setContentAreaFilled(false);
@@ -85,8 +104,114 @@ public class jual extends javax.swing.JFrame {
         laba1.setFocusPainted(false);
         getContentPane().add(laba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 130, 30));
 
+        logout1.setBorderPainted(false);
+        logout1.setContentAreaFilled(false);
+        logout1.setFocusPainted(false);
+        getContentPane().add(logout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 720, 130, 30));
+
+        simpan.setBorderPainted(false);
+        simpan.setContentAreaFilled(false);
+        simpan.setFocusPainted(false);
+        getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 680, 130, 40));
+
+        hapus1.setBorderPainted(false);
+        hapus1.setContentAreaFilled(false);
+        hapus1.setFocusPainted(false);
+        getContentPane().add(hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, 130, 40));
+
+        tambah2.setBorderPainted(false);
+        tambah2.setContentAreaFilled(false);
+        tambah2.setFocusPainted(false);
+        getContentPane().add(tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 130, 40));
+
+        cetak1.setBorderPainted(false);
+        cetak1.setContentAreaFilled(false);
+        cetak1.setFocusPainted(false);
+        getContentPane().add(cetak1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 680, 130, 40));
+
+        ekspor1.setBorderPainted(false);
+        ekspor1.setContentAreaFilled(false);
+        ekspor1.setFocusPainted(false);
+        getContentPane().add(ekspor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 680, 130, 40));
+
+        tanggal.setBackground(new java.awt.Color(153, 153, 153));
+        tanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 110, 20));
+
+        noTransaksi1.setBackground(new java.awt.Color(153, 153, 153));
+        noTransaksi1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(noTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 110, 20));
+
+        namaBarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        namaBarang.setOpaque(false);
+        getContentPane().add(namaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 210, 450, 30));
+
+        kembalian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        kembalian.setOpaque(false);
+        getContentPane().add(kembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 690, 100, 30));
+
+        kodeBarang2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        kodeBarang2.setOpaque(false);
+        getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 209, 450, 30));
+
+        harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        harga1.setOpaque(false);
+        getContentPane().add(harga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 190, 30));
+
+        stok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        stok1.setOpaque(false);
+        getContentPane().add(stok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 190, 30));
+
+        qty1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        qty1.setOpaque(false);
+        getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 300, 190, 30));
+
+        jumlahHarga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jumlahHarga1.setOpaque(false);
+        getContentPane().add(jumlahHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 300, 190, 30));
+
+        total1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        total1.setOpaque(false);
+        getContentPane().add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 690, 100, 30));
+
+        bayar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bayar1.setOpaque(false);
+        getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 690, 100, 30));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Kode", "Nama", "Qty", "Harga satuan"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 422, 1020, 230));
+
+        jLabel1.setBackground(new java.awt.Color(153, 153, 153));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/jual.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setText(" ");
+        jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -128,15 +253,34 @@ public class jual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton barang;
     private javax.swing.JButton barang1;
+    private javax.swing.JTextField bayar1;
+    private javax.swing.JButton cetak1;
     private javax.swing.JButton dasbor1;
+    private javax.swing.JButton ekspor1;
+    private javax.swing.JButton hapus1;
+    private javax.swing.JTextField harga1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton jual1;
+    private javax.swing.JTextField jumlahHarga1;
+    private javax.swing.JTextField kembalian;
+    private javax.swing.JTextField kodeBarang2;
     private javax.swing.JButton laba1;
-    private javax.swing.JButton logout;
+    private javax.swing.JButton logout1;
+    private javax.swing.JTextField namaBarang;
+    private javax.swing.JTextField noTransaksi1;
     private javax.swing.JButton pembelian1;
     private javax.swing.JButton penjualan1;
+    private javax.swing.JTextField qty1;
     private javax.swing.JButton restok1;
+    private javax.swing.JButton simpan;
+    private javax.swing.JTextField stok1;
+    private javax.swing.JButton tambah2;
+    private javax.swing.JTextField tanggal;
+    private javax.swing.JTextField total1;
     private javax.swing.JButton user1;
     // End of variables declaration//GEN-END:variables
 }
