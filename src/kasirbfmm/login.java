@@ -180,7 +180,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
     private final int RFID_THRESHOLD = 30;
     
     private void jusernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jusernameKeyTyped
-    long currentTime = System.currentTimeMillis();
+        long currentTime = System.currentTimeMillis();
         char c = evt.getKeyChar();
 
         // Cek apakah inputnya terlalu cepat (mungkin RFID)
