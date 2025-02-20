@@ -120,7 +120,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
         try {
     conn = db.koneksiDB();
     if (conn == null) {
-        JOptionPane.showMessageDialog(null, "Database tidak dapat dihubungkan!");
+        JOptionPane.showMessageDialog(null, "Database tidak dapat dihubungka!");
         return;
     } else {
         System.out.println("Database terhubung!");
