@@ -6,7 +6,6 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import kasirbfmm.RFIDInput;
 
 public class login extends javax.swing.JFrame {     databasee db = new databasee();
        Connection connection = null;
@@ -14,6 +13,18 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
      
     public login() {
         initComponents();
+        // Tambahkan koneksi ke database di constructor
+    try {
+        connection = db.koneksiDB();
+        if (connection == null) {
+            System.out.println("Koneksi database gagal!");
+        } else {
+            System.out.println("Koneksi database berhasil!");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    
         jlogin.setOpaque(false); 
         jlogin.setContentAreaFilled(false); 
         jlogin.setBorderPainted(false);
@@ -213,23 +224,25 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
    
 
     private void ambilData(String rfid) {
-        String query = "SELECT * FROM user WHERE rfid = ? LIMIT 1";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, rfid);
-            ResultSet hasil = ps.executeQuery();
-            if (hasil.next()) {
-                do {
-                    jusername.setText(hasil.getString("username"));
-                    jpassword.setText(hasil.getString("password"));
-//                        System.out.println(Session.getRole());
-//                    mainf.init();
-                } while (hasil.next());
-            } else {
-                JOptionPane.showMessageDialog(this,"eror tidak terdaftar","eror", JOptionPane.ERROR_MESSAGE);
-            }
-        }catch(Exception e){
-                e.printStackTrace();
+        if (connection == null) {
+        JOptionPane.showMessageDialog(this, "Database tidak terhubung!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String query = "SELECT * FROM user WHERE rfid = ? LIMIT 1";
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, rfid);
+        ResultSet hasil = ps.executeQuery();
+        if (hasil.next()) {
+            jusername.setText(hasil.getString("username"));
+            jpassword.setText(hasil.getString("password"));
+            System.out.println("User ditemukan: " + hasil.getString("username"));
+        } else {
+            JOptionPane.showMessageDialog(this, "RFID tidak terdaftar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
     /**
      * @param args the command line arguments

@@ -24,14 +24,18 @@ public class databasee {
     private final String pwd = "";
 
 
-public void koneksi(){
+public Connection koneksiDB() {
     try {
-        Class .forName(driver);
-        con = DriverManager.getConnection(url, user, pwd);
-        System.out.println("Koneksi Berhasil");
-    } catch (Exception e){
-        System.out.println("Error:\nKoneksi Data Gagal\n"+e.getMessage());
-        
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/aditkasir"; // Ganti dengan nama database
+        String user = "root"; // Ganti dengan user database
+        String password = ""; // Ganti jika ada password database
+        Connection conn = DriverManager.getConnection(url, user, password);
+        System.out.println("Koneksi database berhasil!");
+        return conn;
+    } catch (Exception e) {
+        System.out.println("Koneksi database gagal: " + e.getMessage());
+        return null;
     }
 }
 
@@ -76,18 +80,18 @@ public boolean aksi(String SQL) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public Connection koneksiDB() {
-    try {
-        Class.forName(driver);
-        con = DriverManager.getConnection(url, user, pwd);
-        System.out.println("Koneksi ke database berhasil.");
-        return con;
-    } catch (ClassNotFoundException | SQLException e) {
-        System.out.println("Koneksi database gagal: " + e.getMessage());
-        JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
-        return null;
-    }
-}
+//    public Connection koneksiDB() {
+//    try {
+//        Class.forName(driver);
+//        con = DriverManager.getConnection(url, user, pwd);
+//        System.out.println("Koneksi ke database berhasil.");
+//        return con;
+//    } catch (ClassNotFoundException | SQLException e) {
+//        System.out.println("Koneksi database gagal: " + e.getMessage());
+//        JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
+//        return null;
+//    }
+//}
     
 
    
