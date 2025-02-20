@@ -4,22 +4,54 @@
  */
 package kasirbfmm;
 
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author user
  */
 public class dashboard extends javax.swing.JFrame {
-
+    private String userName;
+   
     /**
      * Creates new form dashboard
      */
+    
     public dashboard() {
+        this(""); // Kalau dipanggil tanpa parameter, default "Guest"
+    }
+    
+    public dashboard(String userName) {
         initComponents();
+          this.userName = (userName != null && !userName.isEmpty()) ? userName : " "; 
+        nama.setText(this.userName); // Set nama user di JTextField
+
+        // Styling JTextField (readonly, transparan)
+        nama.setEditable(false); 
+        nama.setOpaque(false); 
+        nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        
+        
+        
+        // Styling tombol logout transparan
         jlogout.setOpaque(false);
         jlogout.setContentAreaFilled(false);
         jlogout.setBorderPainted(false);
-    }
+        nama.setText(this.userName); // Set nama user di JTextField
 
+        // Styling JTextField (readonly, transparan)
+        nama.setEditable(false); 
+        nama.setOpaque(false); 
+        nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        // Styling tombol logout transparan
+        jlogout.setOpaque(false);
+        jlogout.setContentAreaFilled(false);
+        jlogout.setBorderPainted(false);
+
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,6 +61,7 @@ public class dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        nama = new javax.swing.JTextField();
         jlogout = new javax.swing.JButton();
         tombolLaba = new javax.swing.JButton();
         tombolDasbor = new javax.swing.JButton();
@@ -43,6 +76,13 @@ public class dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        nama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 40, -1, -1));
+
         jlogout.setBorder(null);
         jlogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,7 +94,6 @@ public class dashboard extends javax.swing.JFrame {
         tombolLaba.setBorderPainted(false);
         tombolLaba.setContentAreaFilled(false);
         tombolLaba.setFocusPainted(false);
-        tombolLaba.setOpaque(false);
         tombolLaba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tombolLabaActionPerformed(evt);
@@ -132,6 +171,7 @@ public class dashboard extends javax.swing.JFrame {
         });
         getContentPane().add(tombolPenjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 30));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/desktop.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -178,6 +218,10 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tombolPenjualan1ActionPerformed
 
+    private void namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_namaActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -217,6 +261,7 @@ public class dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jlogout;
+    private javax.swing.JTextField nama;
     private javax.swing.JButton tombolBarang1;
     private javax.swing.JButton tombolBeli1;
     private javax.swing.JButton tombolDasbor;

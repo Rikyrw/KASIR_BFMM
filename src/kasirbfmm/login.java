@@ -120,6 +120,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
         if (jusername.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(null, "Username harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
         return; // Hentikan eksekusi jika ada yang kosong
+        
     }
          if (jpassword.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(null, "Passwor harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -146,6 +147,8 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
 
             if (rs.next()) {
                 dispose();
+                String userName = rs.getString("nama"); // Ambil nama user
+                 new dashboard(userName).setVisible(true); // Kirim ke dashboard
                 new dashboard().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau Password salah");
@@ -205,7 +208,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
 
         if (c == '\n' || c
                 == '\r') { // RFID biasanya mengakhiri input dengan Enter
-            if (buffer.length() >= 9) { // Anggap RFID minimal 8 karakter
+            if (buffer.length() >= 10) { // Anggap RFID minimal 8 karakter
                 RFIDInput.setText(buffer); // Pindahkan ke textField tersembunyi
                 jusername.setText(""); // Kosongkan kembali username
                 ambilData(RFIDInput.getText().trim());
