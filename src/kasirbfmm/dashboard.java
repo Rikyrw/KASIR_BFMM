@@ -18,18 +18,19 @@ public class dashboard extends javax.swing.JFrame {
      */
     
     public dashboard() {
-        this(""); // Kalau dipanggil tanpa parameter, default "Guest"
+        this("Guest"); // Kalau dipanggil tanpa parameter, default "Guest"
     }
     
     public dashboard(String userName) {
         initComponents();
-          this.userName = (userName != null && !userName.isEmpty()) ? userName : " "; 
+          this.userName = (userName != null && !userName.isEmpty()) ? userName : "Guest"; 
         nama.setText(this.userName); // Set nama user di JTextField
 
         // Styling JTextField (readonly, transparan)
         nama.setEditable(false); 
         nama.setOpaque(false); 
         nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        nama.setFocusable(false); // Biar nggak bisa di-klik
         
         
         
@@ -76,12 +77,14 @@ public class dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        nama.setEditable(false);
+        nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         nama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 namaActionPerformed(evt);
             }
         });
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 40, -1, -1));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 40, 90, 20));
 
         jlogout.setBorder(null);
         jlogout.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +256,7 @@ public class dashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new dashboard().setVisible(true);
+                new dashboard("Guest").setVisible(true);
             }
         });
     }

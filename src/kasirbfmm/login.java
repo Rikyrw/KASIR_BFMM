@@ -149,7 +149,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
                 dispose();
                 String userName = rs.getString("nama"); // Ambil nama user
                  new dashboard(userName).setVisible(true); // Kirim ke dashboard
-                new dashboard().setVisible(true);
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau Password salah");
                 jusername.requestFocus();
