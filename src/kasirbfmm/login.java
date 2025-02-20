@@ -36,7 +36,8 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
         jpassword.setBackground(new Color(0, 0, 0, 0));
         
         jinvisible.setVisible(false);
-        
+        // Fokus otomatis ke jusername biar langsung bisa scan tanpa pencet
+    SwingUtilities.invokeLater(() -> jusername.requestFocusInWindow());
     }
 
     /**
@@ -237,6 +238,8 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
             jusername.setText(hasil.getString("username"));
             jpassword.setText(hasil.getString("password"));
             System.out.println("User ditemukan: " + hasil.getString("username"));
+            // Langsung eksekusi login setelah data diisi
+            jloginActionPerformed(null);
         } else {
             JOptionPane.showMessageDialog(this, "RFID tidak terdaftar", "Error", JOptionPane.ERROR_MESSAGE);
         }
