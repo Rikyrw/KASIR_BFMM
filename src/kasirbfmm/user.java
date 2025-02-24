@@ -28,18 +28,21 @@ public class user extends javax.swing.JFrame {
 
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
-        restok1 = new javax.swing.JButton();
-        jual1 = new javax.swing.JButton();
+        jual = new javax.swing.JButton();
+        user = new javax.swing.JButton();
         user1 = new javax.swing.JButton();
-        pembelian2 = new javax.swing.JButton();
+        laporan = new javax.swing.JButton();
         cari = new javax.swing.JButton();
-        penjualan1 = new javax.swing.JButton();
-        laba1 = new javax.swing.JButton();
-        logout1 = new javax.swing.JButton();
+        hapus = new javax.swing.JButton();
         simpan1 = new javax.swing.JButton();
         hapus1 = new javax.swing.JButton();
+        kataSandi = new javax.swing.JTextField();
+        idUserbaeu1 = new javax.swing.JTextField();
+        username1 = new javax.swing.JTextField();
+        nama1 = new javax.swing.JTextField();
+        logout2 = new javax.swing.JButton();
+        simpan2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -54,45 +57,35 @@ public class user extends javax.swing.JFrame {
         barang1.setFocusPainted(false);
         getContentPane().add(barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 20));
 
-        restok1.setBorderPainted(false);
-        restok1.setContentAreaFilled(false);
-        restok1.setFocusPainted(false);
-        getContentPane().add(restok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
+        jual.setBorderPainted(false);
+        jual.setContentAreaFilled(false);
+        jual.setFocusPainted(false);
+        getContentPane().add(jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
 
-        jual1.setBorderPainted(false);
-        jual1.setContentAreaFilled(false);
-        jual1.setFocusPainted(false);
-        getContentPane().add(jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 80, 20));
+        user.setBorderPainted(false);
+        user.setContentAreaFilled(false);
+        user.setFocusPainted(false);
+        getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 80, 20));
 
         user1.setBorderPainted(false);
         user1.setContentAreaFilled(false);
         user1.setFocusPainted(false);
         getContentPane().add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 80, 20));
 
-        pembelian2.setBorderPainted(false);
-        pembelian2.setContentAreaFilled(false);
-        pembelian2.setFocusPainted(false);
-        getContentPane().add(pembelian2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 130, 20));
+        laporan.setBorderPainted(false);
+        laporan.setContentAreaFilled(false);
+        laporan.setFocusPainted(false);
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 120, 20));
 
         cari.setBorderPainted(false);
         cari.setContentAreaFilled(false);
         cari.setFocusPainted(false);
         getContentPane().add(cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 80, 60, 40));
 
-        penjualan1.setBorderPainted(false);
-        penjualan1.setContentAreaFilled(false);
-        penjualan1.setFocusPainted(false);
-        getContentPane().add(penjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 30));
-
-        laba1.setBorderPainted(false);
-        laba1.setContentAreaFilled(false);
-        laba1.setFocusPainted(false);
-        getContentPane().add(laba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 90, 30));
-
-        logout1.setBorderPainted(false);
-        logout1.setContentAreaFilled(false);
-        logout1.setFocusPainted(false);
-        getContentPane().add(logout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 720, 100, 30));
+        hapus.setBorderPainted(false);
+        hapus.setContentAreaFilled(false);
+        hapus.setFocusPainted(false);
+        getContentPane().add(hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 120, 40));
 
         simpan1.setBorderPainted(false);
         simpan1.setContentAreaFilled(false);
@@ -104,12 +97,35 @@ public class user extends javax.swing.JFrame {
         hapus1.setFocusPainted(false);
         getContentPane().add(hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 130, 40));
 
+        kataSandi.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        kataSandi.setOpaque(false);
+        getContentPane().add(kataSandi, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 190, 450, 40));
+
+        idUserbaeu1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        idUserbaeu1.setOpaque(false);
+        getContentPane().add(idUserbaeu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 430, 40));
+
+        username1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        username1.setOpaque(false);
+        getContentPane().add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 440, 30));
+
+        nama1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        nama1.setOpaque(false);
+        getContentPane().add(nama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 100, 450, 40));
+
+        logout2.setBorderPainted(false);
+        logout2.setContentAreaFilled(false);
+        logout2.setFocusPainted(false);
+        getContentPane().add(logout2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 690, 100, 30));
+
+        simpan2.setBorderPainted(false);
+        simpan2.setContentAreaFilled(false);
+        simpan2.setFocusPainted(false);
+        getContentPane().add(simpan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 120, 40));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/user.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 79, 920, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -153,16 +169,19 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JButton barang1;
     private javax.swing.JButton cari;
     private javax.swing.JButton dasbor1;
+    private javax.swing.JButton hapus;
     private javax.swing.JButton hapus1;
+    private javax.swing.JTextField idUserbaeu1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JButton jual1;
-    private javax.swing.JButton laba1;
-    private javax.swing.JButton logout1;
-    private javax.swing.JButton pembelian2;
-    private javax.swing.JButton penjualan1;
-    private javax.swing.JButton restok1;
+    private javax.swing.JButton jual;
+    private javax.swing.JTextField kataSandi;
+    private javax.swing.JButton laporan;
+    private javax.swing.JButton logout2;
+    private javax.swing.JTextField nama1;
     private javax.swing.JButton simpan1;
+    private javax.swing.JButton simpan2;
+    private javax.swing.JButton user;
     private javax.swing.JButton user1;
+    private javax.swing.JTextField username1;
     // End of variables declaration//GEN-END:variables
 }

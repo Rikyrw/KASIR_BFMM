@@ -29,12 +29,9 @@ public class barang extends javax.swing.JFrame {
         tombolHapus = new javax.swing.JButton();
         tombolDasbor1 = new javax.swing.JButton();
         tombolBarang1 = new javax.swing.JButton();
-        tombolrestok1 = new javax.swing.JButton();
-        tombolJual1 = new javax.swing.JButton();
-        tombolUser1 = new javax.swing.JButton();
-        tombolPembelian1 = new javax.swing.JButton();
-        tombolPenjualan1 = new javax.swing.JButton();
-        tombolLaba1 = new javax.swing.JButton();
+        tombolJual = new javax.swing.JButton();
+        tombollUser = new javax.swing.JButton();
+        tombolLaporan = new javax.swing.JButton();
         tombolLogout1 = new javax.swing.JButton();
         tombolCari1 = new javax.swing.JButton();
         tombolTambah1 = new javax.swing.JButton();
@@ -63,40 +60,25 @@ public class barang extends javax.swing.JFrame {
         tombolBarang1.setFocusPainted(false);
         getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 20));
 
-        tombolrestok1.setBorderPainted(false);
-        tombolrestok1.setContentAreaFilled(false);
-        tombolrestok1.setFocusPainted(false);
-        getContentPane().add(tombolrestok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 120, 20));
+        tombolJual.setBorderPainted(false);
+        tombolJual.setContentAreaFilled(false);
+        tombolJual.setFocusPainted(false);
+        getContentPane().add(tombolJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 120, 20));
 
-        tombolJual1.setBorderPainted(false);
-        tombolJual1.setContentAreaFilled(false);
-        tombolJual1.setFocusPainted(false);
-        getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 20));
+        tombollUser.setBorderPainted(false);
+        tombollUser.setContentAreaFilled(false);
+        tombollUser.setFocusPainted(false);
+        getContentPane().add(tombollUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 20));
 
-        tombolUser1.setBorderPainted(false);
-        tombolUser1.setContentAreaFilled(false);
-        tombolUser1.setFocusPainted(false);
-        getContentPane().add(tombolUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 120, 20));
-
-        tombolPembelian1.setBorderPainted(false);
-        tombolPembelian1.setContentAreaFilled(false);
-        tombolPembelian1.setFocusPainted(false);
-        getContentPane().add(tombolPembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 130, 20));
-
-        tombolPenjualan1.setBorderPainted(false);
-        tombolPenjualan1.setContentAreaFilled(false);
-        tombolPenjualan1.setFocusPainted(false);
-        getContentPane().add(tombolPenjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 130, 30));
-
-        tombolLaba1.setBorderPainted(false);
-        tombolLaba1.setContentAreaFilled(false);
-        tombolLaba1.setFocusPainted(false);
-        getContentPane().add(tombolLaba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 130, 30));
+        tombolLaporan.setBorderPainted(false);
+        tombolLaporan.setContentAreaFilled(false);
+        tombolLaporan.setFocusPainted(false);
+        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 120, 20));
 
         tombolLogout1.setBorderPainted(false);
         tombolLogout1.setContentAreaFilled(false);
         tombolLogout1.setFocusPainted(false);
-        getContentPane().add(tombolLogout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 720, 130, 30));
+        getContentPane().add(tombolLogout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 130, 20));
 
         tombolCari1.setBorderPainted(false);
         tombolCari1.setContentAreaFilled(false);
@@ -224,13 +206,10 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JButton tombolDasbor1;
     private javax.swing.JButton tombolEdit1;
     private javax.swing.JButton tombolHapus;
-    private javax.swing.JButton tombolJual1;
-    private javax.swing.JButton tombolLaba1;
+    private javax.swing.JButton tombolJual;
+    private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolLogout1;
-    private javax.swing.JButton tombolPembelian1;
-    private javax.swing.JButton tombolPenjualan1;
     private javax.swing.JButton tombolTambah1;
-    private javax.swing.JButton tombolUser1;
-    private javax.swing.JButton tombolrestok1;
+    private javax.swing.JButton tombollUser;
     // End of variables declaration//GEN-END:variables
 }

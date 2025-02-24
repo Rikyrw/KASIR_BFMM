@@ -29,12 +29,9 @@ public class jual extends javax.swing.JFrame {
         barang = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
-        restok1 = new javax.swing.JButton();
-        jual1 = new javax.swing.JButton();
-        user1 = new javax.swing.JButton();
-        pembelian1 = new javax.swing.JButton();
-        penjualan1 = new javax.swing.JButton();
-        laba1 = new javax.swing.JButton();
+        jual = new javax.swing.JButton();
+        user = new javax.swing.JButton();
+        laporan = new javax.swing.JButton();
         logout1 = new javax.swing.JButton();
         simpan = new javax.swing.JButton();
         hapus1 = new javax.swing.JButton();
@@ -74,40 +71,25 @@ public class jual extends javax.swing.JFrame {
         barang1.setFocusPainted(false);
         getContentPane().add(barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 110, 20));
 
-        restok1.setBorderPainted(false);
-        restok1.setContentAreaFilled(false);
-        restok1.setFocusPainted(false);
-        getContentPane().add(restok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
+        jual.setBorderPainted(false);
+        jual.setContentAreaFilled(false);
+        jual.setFocusPainted(false);
+        getContentPane().add(jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
 
-        jual1.setBorderPainted(false);
-        jual1.setContentAreaFilled(false);
-        jual1.setFocusPainted(false);
-        getContentPane().add(jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
+        user.setBorderPainted(false);
+        user.setContentAreaFilled(false);
+        user.setFocusPainted(false);
+        getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
 
-        user1.setBorderPainted(false);
-        user1.setContentAreaFilled(false);
-        user1.setFocusPainted(false);
-        getContentPane().add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 110, 20));
-
-        pembelian1.setBorderPainted(false);
-        pembelian1.setContentAreaFilled(false);
-        pembelian1.setFocusPainted(false);
-        getContentPane().add(pembelian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 130, 30));
-
-        penjualan1.setBorderPainted(false);
-        penjualan1.setContentAreaFilled(false);
-        penjualan1.setFocusPainted(false);
-        getContentPane().add(penjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 130, 30));
-
-        laba1.setBorderPainted(false);
-        laba1.setContentAreaFilled(false);
-        laba1.setFocusPainted(false);
-        getContentPane().add(laba1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 130, 30));
+        laporan.setBorderPainted(false);
+        laporan.setContentAreaFilled(false);
+        laporan.setFocusPainted(false);
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 110, 20));
 
         logout1.setBorderPainted(false);
         logout1.setContentAreaFilled(false);
         logout1.setFocusPainted(false);
-        getContentPane().add(logout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 720, 130, 30));
+        getContentPane().add(logout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 130, 30));
 
         simpan.setBorderPainted(false);
         simpan.setContentAreaFilled(false);
@@ -264,23 +246,20 @@ public class jual extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton jual1;
+    private javax.swing.JButton jual;
     private javax.swing.JTextField jumlahHarga1;
     private javax.swing.JTextField kembalian;
     private javax.swing.JTextField kodeBarang2;
-    private javax.swing.JButton laba1;
+    private javax.swing.JButton laporan;
     private javax.swing.JButton logout1;
     private javax.swing.JTextField namaBarang;
     private javax.swing.JTextField noTransaksi1;
-    private javax.swing.JButton pembelian1;
-    private javax.swing.JButton penjualan1;
     private javax.swing.JTextField qty1;
-    private javax.swing.JButton restok1;
     private javax.swing.JButton simpan;
     private javax.swing.JTextField stok1;
     private javax.swing.JButton tambah2;
     private javax.swing.JTextField tanggal;
     private javax.swing.JTextField total1;
-    private javax.swing.JButton user1;
+    private javax.swing.JButton user;
     // End of variables declaration//GEN-END:variables
 }
