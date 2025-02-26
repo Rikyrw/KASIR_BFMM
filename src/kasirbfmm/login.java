@@ -7,8 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class login extends javax.swing.JFrame {     databasee db = new databasee();
-       Connection connection = null;
+public class login extends javax.swing.JFrame {     
+        databasee db = new databasee();
+        Connection connection = null;
 //       Main mainf = null;
      
     public login() {
@@ -139,7 +140,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
         System.out.println("Database terhubung!");
     }
 
-            String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+            String sql = "SELECT * FROM tb_user WHERE username = ? AND password = ?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, jusername.getText());
             pst.setString(2, jpassword.getText());
@@ -233,7 +234,7 @@ public class login extends javax.swing.JFrame {     databasee db = new databasee
         return;
     }
 
-    String query = "SELECT * FROM user WHERE rfid = ? LIMIT 1";
+    String query = "SELECT * FROM tb_user WHERE rfid = ? LIMIT 1";
     try (PreparedStatement ps = connection.prepareStatement(query)) {
         ps.setString(1, rfid);
         ResultSet hasil = ps.executeQuery();
