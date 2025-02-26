@@ -13,11 +13,13 @@ public class barang extends javax.swing.JFrame
 {
     
     public barang() {
+        this.setUndecorated(true);
         initComponents();
         setTanggalOtomatis(); // Memanggil method untuk set tanggal otomatis
         tanggal.setEditable(false);
         
-        jbarang1.setUndecorated(true);
+        
+
         
         
         jcancel.setOpaque(false);
@@ -240,6 +242,7 @@ public class barang extends javax.swing.JFrame
         jbarang1.getContentPane().add(a, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tombolHapus.setBorderPainted(false);

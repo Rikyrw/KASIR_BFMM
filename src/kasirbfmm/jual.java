@@ -14,6 +14,7 @@ public class jual extends javax.swing.JFrame {
      * Creates new form jual
      */
     public jual() {
+        this.setUndecorated(true);
         initComponents();
     }
 

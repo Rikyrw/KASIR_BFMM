@@ -14,6 +14,7 @@ public class user extends javax.swing.JFrame {
      * Creates new form user
      */
     public user() {
+        this.setUndecorated(true);
         initComponents();
     }
 

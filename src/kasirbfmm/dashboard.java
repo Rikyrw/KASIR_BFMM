@@ -22,6 +22,7 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     public dashboard(String userName) {
+        this.setUndecorated(true);
         initComponents();
           this.userName = (userName != null && !userName.isEmpty()) ? userName : "Guest"; 
         nama.setText(this.userName); // Set nama user di JTextField

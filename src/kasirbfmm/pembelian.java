@@ -14,6 +14,7 @@ public class pembelian extends javax.swing.JFrame {
      * Creates new form pembelian
      */
     public pembelian() {
+        this.setUndecorated(true);
         initComponents();
     }
 
