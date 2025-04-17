@@ -56,7 +56,7 @@ public class login extends javax.swing.JFrame {
         jusername = new javax.swing.JTextField();
         jlogin = new javax.swing.JButton();
         RFIDInput = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -110,9 +110,9 @@ public class login extends javax.swing.JFrame {
         });
         getContentPane().add(RFIDInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 50, 10, 10));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/logiin(1).png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 770));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/logiin (1).png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -288,7 +288,7 @@ public class login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RFIDInput;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jeye;
     private javax.swing.JLabel jinvisible;
     private javax.swing.JButton jlogin;

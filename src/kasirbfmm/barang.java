@@ -28,7 +28,8 @@ public class barang extends javax.swing.JFrame
         setTanggalOtomatis(); // Memanggil method untuk set tanggal otomatis
         tanggal.setEditable(false);
         
-        jbarang1.setUndecorated(true);
+        
+
         
         jcancel.setOpaque(false);
         jcancel.setContentAreaFilled(false);
@@ -172,8 +173,7 @@ public class barang extends javax.swing.JFrame
         a1 = new javax.swing.JLabel();
         tombolHapus = new javax.swing.JButton();
         tombolDasbor1 = new javax.swing.JButton();
-        tombolBarang1 = new javax.swing.JButton();
-        tombolJual = new javax.swing.JButton();
+        tombolretur = new javax.swing.JButton();
         tombollUser = new javax.swing.JButton();
         tombolLaporan = new javax.swing.JButton();
         tombolLogout1 = new javax.swing.JButton();
@@ -184,7 +184,8 @@ public class barang extends javax.swing.JFrame
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        tombolJual1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jbarang1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -443,6 +444,7 @@ public class barang extends javax.swing.JFrame
         jbarang2.getContentPane().add(a1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tombolHapus.setBorderPainted(false);
@@ -460,25 +462,15 @@ public class barang extends javax.swing.JFrame
         });
         getContentPane().add(tombolDasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 150, 120, 20));
 
-        tombolBarang1.setBorderPainted(false);
-        tombolBarang1.setContentAreaFilled(false);
-        tombolBarang1.setFocusPainted(false);
-        tombolBarang1.addActionListener(new java.awt.event.ActionListener() {
+        tombolretur.setBorderPainted(false);
+        tombolretur.setContentAreaFilled(false);
+        tombolretur.setFocusPainted(false);
+        tombolretur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolBarang1ActionPerformed(evt);
+                tombolreturActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 20));
-
-        tombolJual.setBorderPainted(false);
-        tombolJual.setContentAreaFilled(false);
-        tombolJual.setFocusPainted(false);
-        tombolJual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolJualActionPerformed(evt);
-            }
-        });
-        getContentPane().add(tombolJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 120, 20));
+        getContentPane().add(tombolretur, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
 
         tombollUser.setBorderPainted(false);
         tombollUser.setContentAreaFilled(false);
@@ -488,12 +480,12 @@ public class barang extends javax.swing.JFrame
                 tombollUserActionPerformed(evt);
             }
         });
-        getContentPane().add(tombollUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 20));
+        getContentPane().add(tombollUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 20));
 
         tombolLaporan.setBorderPainted(false);
         tombolLaporan.setContentAreaFilled(false);
         tombolLaporan.setFocusPainted(false);
-        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 120, 20));
+        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 120, 20));
 
         tombolLogout1.setBorderPainted(false);
         tombolLogout1.setContentAreaFilled(false);
@@ -580,9 +572,19 @@ public class barang extends javax.swing.JFrame
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 1020, 540));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/barangg.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
+        tombolJual1.setBorderPainted(false);
+        tombolJual1.setContentAreaFilled(false);
+        tombolJual1.setFocusPainted(false);
+        tombolJual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolJual1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 100, 20));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/barangg.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -597,11 +599,11 @@ public class barang extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_tombolDasbor1ActionPerformed
 
-    private void tombolJualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolJualActionPerformed
+    private void tombolreturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolreturActionPerformed
         jual jual = new jual();
         jual.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_tombolJualActionPerformed
+    }//GEN-LAST:event_tombolreturActionPerformed
 
     private void tombollUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombollUserActionPerformed
        user user = new user();
@@ -751,10 +753,6 @@ public class barang extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_tombolLogout1ActionPerformed
 
-    private void tombolBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolBarang1ActionPerformed
-
-    }//GEN-LAST:event_tombolBarang1ActionPerformed
-
     private void tombolEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolEdit1ActionPerformed
                                  
 
@@ -816,6 +814,10 @@ public class barang extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_simpan1ActionPerformed
 
+    private void tombolJual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolJual1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tombolJual1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -859,7 +861,7 @@ public class barang extends javax.swing.JFrame
     private javax.swing.JTextField c;
     private javax.swing.JTextField c1;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
@@ -895,16 +897,16 @@ public class barang extends javax.swing.JFrame
     private javax.swing.JButton simpan1;
     private javax.swing.JTextField tanggal;
     private javax.swing.JTextField tanggal1;
-    private javax.swing.JButton tombolBarang1;
     private javax.swing.JButton tombolCari1;
     private javax.swing.JButton tombolDasbor1;
     private javax.swing.JButton tombolEdit1;
     private javax.swing.JButton tombolHapus;
-    private javax.swing.JButton tombolJual;
+    private javax.swing.JButton tombolJual1;
     private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolLogout1;
     private javax.swing.JButton tombolTambah1;
     private javax.swing.JButton tombollUser;
+    private javax.swing.JButton tombolretur;
     // End of variables declaration//GEN-END:variables
 
 }

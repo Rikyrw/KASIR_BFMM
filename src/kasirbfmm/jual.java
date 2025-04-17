@@ -30,7 +30,7 @@ public class jual extends javax.swing.JFrame {
         barang = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
-        jual = new javax.swing.JButton();
+        retur = new javax.swing.JButton();
         user = new javax.swing.JButton();
         laporan = new javax.swing.JButton();
         logout1 = new javax.swing.JButton();
@@ -52,7 +52,7 @@ public class jual extends javax.swing.JFrame {
         bayar1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,20 +82,20 @@ public class jual extends javax.swing.JFrame {
         });
         getContentPane().add(barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 110, 20));
 
-        jual.setBorderPainted(false);
-        jual.setContentAreaFilled(false);
-        jual.setFocusPainted(false);
-        getContentPane().add(jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
+        retur.setBorderPainted(false);
+        retur.setContentAreaFilled(false);
+        retur.setFocusPainted(false);
+        getContentPane().add(retur, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
 
         user.setBorderPainted(false);
         user.setContentAreaFilled(false);
         user.setFocusPainted(false);
-        getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
+        getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 80, 20));
 
         laporan.setBorderPainted(false);
         laporan.setContentAreaFilled(false);
         laporan.setFocusPainted(false);
-        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 110, 20));
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 110, 20));
 
         logout1.setBorderPainted(false);
         logout1.setContentAreaFilled(false);
@@ -192,11 +192,9 @@ public class jual extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 422, 1020, 230));
 
-        jLabel1.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/jual.png"))); // NOI18N
-        jLabel1.setText(" ");
-        jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, -10, 1380, 780));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/jual.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -257,10 +255,9 @@ public class jual extends javax.swing.JFrame {
     private javax.swing.JButton ekspor1;
     private javax.swing.JButton hapus1;
     private javax.swing.JTextField harga1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton jual;
     private javax.swing.JTextField jumlahHarga1;
     private javax.swing.JTextField kembalian;
     private javax.swing.JTextField kodeBarang2;
@@ -269,6 +266,7 @@ public class jual extends javax.swing.JFrame {
     private javax.swing.JTextField namaBarang;
     private javax.swing.JTextField noTransaksi1;
     private javax.swing.JTextField qty1;
+    private javax.swing.JButton retur;
     private javax.swing.JButton simpan;
     private javax.swing.JTextField stok1;
     private javax.swing.JButton tambah2;
