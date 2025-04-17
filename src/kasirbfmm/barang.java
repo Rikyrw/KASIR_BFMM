@@ -1,24 +1,34 @@
 package kasirbfmm;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+
 
 public class barang extends javax.swing.JFrame 
 {
-    
+  DefaultTableModel model = new DefaultTableModel();
+  
+  databasee db = new databasee ();
     public barang() {
+        this.setUndecorated(true);
         initComponents();
+        
+        viewdata();
+        isianBersih();
+        
+        db.koneksiDB();
+        
         setTanggalOtomatis(); // Memanggil method untuk set tanggal otomatis
         tanggal.setEditable(false);
         
         jbarang1.setUndecorated(true);
-        
         
         jcancel.setOpaque(false);
         jcancel.setContentAreaFilled(false);
@@ -30,26 +40,26 @@ public class barang extends javax.swing.JFrame
         simpan.setContentAreaFilled(false);
         simpan.setFocusPainted(false);
 
-        nama_barang1.setOpaque(false);
-        nama_barang1.setBackground(new Color(0, 0, 0, 0));
-        kode_barang.setOpaque(false);
-        kode_barang.setBackground(new Color(0, 0, 0, 0));
-        stok.setOpaque(false);
-        stok.setBackground(new Color(0, 0, 0, 0));
-        harga_jual.setOpaque(false);
-        harga_jual.setBackground(new Color(0, 0, 0, 0));
-        harga_beli.setOpaque(false);
-        harga_beli.setBackground(new Color(0, 0, 0, 0));
-        nama_pemasok.setOpaque(false);
-        nama_pemasok.setBackground(new Color(0, 0, 0, 0));
-        varian.setOpaque(false);
-        varian.setBackground(new Color(0, 0, 0, 0));
-        berat.setOpaque(false);
-        berat.setBackground(new Color(0, 0, 0, 0));
-        exp.setOpaque(false);
-        exp.setBackground(new Color(0, 0, 0, 0));
-        barcode.setOpaque(false);
-        barcode.setBackground(new Color(0, 0, 0, 0));   
+        jnm_barang.setOpaque(false);
+        jnm_barang.setBackground(new Color(0, 0, 0, 0));
+        jkd_barang.setOpaque(false);
+        jkd_barang.setBackground(new Color(0, 0, 0, 0));
+        jstok.setOpaque(false);
+        jstok.setBackground(new Color(0, 0, 0, 0));
+        jhrg_jual.setOpaque(false);
+        jhrg_jual.setBackground(new Color(0, 0, 0, 0));
+        jhrg_beli.setOpaque(false);
+        jhrg_beli.setBackground(new Color(0, 0, 0, 0));
+        jnm_pemasok.setOpaque(false);
+        jnm_pemasok.setBackground(new Color(0, 0, 0, 0));
+        jvarian.setOpaque(false);
+        jvarian.setBackground(new Color(0, 0, 0, 0));
+        jberat.setOpaque(false);
+        jberat.setBackground(new Color(0, 0, 0, 0));
+        jexp.setOpaque(false);
+        jexp.setBackground(new Color(0, 0, 0, 0));
+        jbarcode.setOpaque(false);
+        jbarcode.setBackground(new Color(0, 0, 0, 0));   
         
         b.setEditable(false); 
         b.setOpaque(false); 
@@ -60,8 +70,54 @@ public class barang extends javax.swing.JFrame
         c.setOpaque(false); 
         c.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         c.setFocusable(false); // Biar nggak bisa di-klik
+        
+        db.koneksiDB();
+        
     }
     
+     public void viewdata() {
+        model.addColumn("Kode");
+        model.addColumn("Nama");
+        model.addColumn("Harga");
+        model.addColumn("Stok");
+        model.addColumn("Kategori");
+        
+        try {
+            ResultSet rs=db.ambildata("select * from tb_barang");
+            while (rs.next()) {
+                model.addRow(new Object[] 
+                {rs.getString("kode_barang"),
+                    rs.getString("nama_barang"),
+//                    rs.getString("varian"),
+//                    rs.getString("berat"),
+                    rs.getString("harga_jual"),
+//                    rs.getString("exp"),
+                    rs.getString("stok"),
+//                    rs.getString("harga_beli"),
+//                    rs.getString("barcode"),
+//                    rs.getString("nama_pemasok"),
+                    rs.getString("kategori")
+                });
+                jTable1.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Debug", JOptionPane.ERROR_MESSAGE);
+        }
+    
+    }
+          private void isianBersih(){
+            jkd_barang.setText("");
+            jnm_barang.setText("");
+//            jvarian.setText("");
+//            jberat.setText("");
+            jhrg_jual.setText("");
+//            jexp.setText("");
+            jstok.setText("");
+//            jhrg_beli.setText("");
+//            jbarcode.setText("");
+//            jnm_pemasok.setText("");
+            jkategori.setSelectedItem("");
+           }
     
     public void setTanggalOtomatis() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format tanggal
@@ -79,22 +135,41 @@ public class barang extends javax.swing.JFrame
         jbarang1 = new javax.swing.JDialog();
         jcancel = new javax.swing.JButton();
         tanggal = new javax.swing.JTextField();
+        jbarcode = new javax.swing.JTextField();
         noTrans = new javax.swing.JTextField();
-        barcode = new javax.swing.JTextField();
-        nama_barang1 = new javax.swing.JTextField();
-        kode_barang = new javax.swing.JTextField();
-        stok = new javax.swing.JTextField();
-        harga_jual = new javax.swing.JTextField();
-        harga_beli = new javax.swing.JTextField();
-        nama_pemasok = new javax.swing.JTextField();
-        varian = new javax.swing.JTextField();
-        berat = new javax.swing.JTextField();
-        exp = new javax.swing.JTextField();
+        jnm_barang = new javax.swing.JTextField();
+        jkd_barang = new javax.swing.JTextField();
+        jstok = new javax.swing.JTextField();
+        jhrg_jual = new javax.swing.JTextField();
+        jhrg_beli = new javax.swing.JTextField();
+        jnm_pemasok = new javax.swing.JTextField();
+        jvarian = new javax.swing.JTextField();
+        jberat = new javax.swing.JTextField();
+        jexp = new javax.swing.JTextField();
         simpan = new javax.swing.JButton();
-        kategori = new javax.swing.JComboBox<>();
+        jkategori = new javax.swing.JComboBox<>();
         c = new javax.swing.JTextField();
         b = new javax.swing.JTextField();
         a = new javax.swing.JLabel();
+        jbarang2 = new javax.swing.JDialog();
+        jcancel1 = new javax.swing.JButton();
+        tanggal1 = new javax.swing.JTextField();
+        jbarcode1 = new javax.swing.JTextField();
+        noTrans1 = new javax.swing.JTextField();
+        jnm_barang1 = new javax.swing.JTextField();
+        jkd_barang1 = new javax.swing.JTextField();
+        jstok1 = new javax.swing.JTextField();
+        jhrg_jual1 = new javax.swing.JTextField();
+        jhrg_beli1 = new javax.swing.JTextField();
+        jnm_pemasok1 = new javax.swing.JTextField();
+        jvarian1 = new javax.swing.JTextField();
+        jberat1 = new javax.swing.JTextField();
+        jexp1 = new javax.swing.JTextField();
+        simpan1 = new javax.swing.JButton();
+        jkategori1 = new javax.swing.JComboBox<>();
+        c1 = new javax.swing.JTextField();
+        b1 = new javax.swing.JTextField();
+        a1 = new javax.swing.JLabel();
         tombolHapus = new javax.swing.JButton();
         tombolDasbor1 = new javax.swing.JButton();
         tombolBarang1 = new javax.swing.JButton();
@@ -130,6 +205,14 @@ public class barang extends javax.swing.JFrame
         });
         jbarang1.getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 110, -1));
 
+        jbarcode.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jbarcode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbarcodeActionPerformed(evt);
+            }
+        });
+        jbarang1.getContentPane().add(jbarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 180, 50));
+
         noTrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noTransActionPerformed(evt);
@@ -137,85 +220,77 @@ public class barang extends javax.swing.JFrame
         });
         jbarang1.getContentPane().add(noTrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 110, -1));
 
-        barcode.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        barcode.addActionListener(new java.awt.event.ActionListener() {
+        jnm_barang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jnm_barang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                barcodeActionPerformed(evt);
+                jnm_barangActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(barcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 180, 50));
+        jbarang1.getContentPane().add(jnm_barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 180, 50));
 
-        nama_barang1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        nama_barang1.addActionListener(new java.awt.event.ActionListener() {
+        jkd_barang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jkd_barang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nama_barang1ActionPerformed(evt);
+                jkd_barangActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(nama_barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 180, 50));
+        jbarang1.getContentPane().add(jkd_barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 180, 50));
 
-        kode_barang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        kode_barang.addActionListener(new java.awt.event.ActionListener() {
+        jstok.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jstok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kode_barangActionPerformed(evt);
+                jstokActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(kode_barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 180, 50));
+        jbarang1.getContentPane().add(jstok, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 180, 50));
 
-        stok.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        stok.addActionListener(new java.awt.event.ActionListener() {
+        jhrg_jual.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jhrg_jual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stokActionPerformed(evt);
+                jhrg_jualActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(stok, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 180, 50));
+        jbarang1.getContentPane().add(jhrg_jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 180, 50));
 
-        harga_jual.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        harga_jual.addActionListener(new java.awt.event.ActionListener() {
+        jhrg_beli.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jhrg_beli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                harga_jualActionPerformed(evt);
+                jhrg_beliActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(harga_jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 180, 50));
+        jbarang1.getContentPane().add(jhrg_beli, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 180, 50));
 
-        harga_beli.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        harga_beli.addActionListener(new java.awt.event.ActionListener() {
+        jnm_pemasok.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jnm_pemasok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                harga_beliActionPerformed(evt);
+                jnm_pemasokActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(harga_beli, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 180, 50));
+        jbarang1.getContentPane().add(jnm_pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 530, 180, 50));
 
-        nama_pemasok.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        nama_pemasok.addActionListener(new java.awt.event.ActionListener() {
+        jvarian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jvarian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nama_pemasokActionPerformed(evt);
+                jvarianActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(nama_pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 530, 180, 50));
+        jbarang1.getContentPane().add(jvarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 180, 50));
 
-        varian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        varian.addActionListener(new java.awt.event.ActionListener() {
+        jberat.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jberat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                varianActionPerformed(evt);
+                jberatActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(varian, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 180, 50));
+        jbarang1.getContentPane().add(jberat, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 180, 50));
 
-        berat.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        berat.addActionListener(new java.awt.event.ActionListener() {
+        jexp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jexp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                beratActionPerformed(evt);
+                jexpActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(berat, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 180, 50));
-
-        exp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        exp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expActionPerformed(evt);
-            }
-        });
-        jbarang1.getContentPane().add(exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 180, 50));
+        jbarang1.getContentPane().add(jexp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 180, 50));
 
         simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,8 +299,8 @@ public class barang extends javax.swing.JFrame
         });
         jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
 
-        kategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jbarang1.getContentPane().add(kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 40));
+        jkategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jbarang1.getContentPane().add(jkategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 40));
 
         c.setBackground(new java.awt.Color(255, 255, 255));
         c.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -238,6 +313,134 @@ public class barang extends javax.swing.JFrame
         a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
         a.setText("jLabel2");
         jbarang1.getContentPane().add(a, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
+
+        jbarang2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jcancel1.setBackground(new java.awt.Color(255, 255, 255));
+        jcancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/Cancel.png"))); // NOI18N
+        jcancel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jcancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcancel1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jcancel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 50, 40));
+
+        tanggal1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tanggal1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(tanggal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 110, -1));
+
+        jbarcode1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jbarcode1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbarcode1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jbarcode1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 180, 50));
+
+        noTrans1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noTrans1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(noTrans1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 110, -1));
+
+        jnm_barang1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jnm_barang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jnm_barang1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jnm_barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 180, 50));
+
+        jkd_barang1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jkd_barang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jkd_barang1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jkd_barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 180, 50));
+
+        jstok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jstok1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jstok1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jstok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 180, 50));
+
+        jhrg_jual1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jhrg_jual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jhrg_jual1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jhrg_jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 180, 50));
+
+        jhrg_beli1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jhrg_beli1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jhrg_beli1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jhrg_beli1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 180, 50));
+
+        jnm_pemasok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jnm_pemasok1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jnm_pemasok1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jnm_pemasok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 530, 180, 50));
+
+        jvarian1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jvarian1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jvarian1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jvarian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 180, 50));
+
+        jberat1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jberat1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jberat1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jberat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 180, 50));
+
+        jexp1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jexp1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jexp1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(jexp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 180, 50));
+
+        simpan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpan1ActionPerformed(evt);
+            }
+        });
+        jbarang2.getContentPane().add(simpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
+
+        jkategori1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jbarang2.getContentPane().add(jkategori1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 40));
+
+        c1.setBackground(new java.awt.Color(255, 255, 255));
+        c1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jbarang2.getContentPane().add(c1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, -20, 160, 90));
+
+        b1.setBackground(new java.awt.Color(255, 255, 255));
+        b1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jbarang2.getContentPane().add(b1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-92, -34, 150, 60));
+
+        a1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
+        a1.setText("jLabel2");
+        jbarang2.getContentPane().add(a1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -260,6 +463,11 @@ public class barang extends javax.swing.JFrame
         tombolBarang1.setBorderPainted(false);
         tombolBarang1.setContentAreaFilled(false);
         tombolBarang1.setFocusPainted(false);
+        tombolBarang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolBarang1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 20));
 
         tombolJual.setBorderPainted(false);
@@ -290,6 +498,11 @@ public class barang extends javax.swing.JFrame
         tombolLogout1.setBorderPainted(false);
         tombolLogout1.setContentAreaFilled(false);
         tombolLogout1.setFocusPainted(false);
+        tombolLogout1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolLogout1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombolLogout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 130, 20));
 
         tombolCari1.setBorderPainted(false);
@@ -315,6 +528,11 @@ public class barang extends javax.swing.JFrame
         tombolEdit1.setBorderPainted(false);
         tombolEdit1.setContentAreaFilled(false);
         tombolEdit1.setFocusPainted(false);
+        tombolEdit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolEdit1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombolEdit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
@@ -333,7 +551,7 @@ public class barang extends javax.swing.JFrame
         });
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 110, 40));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setBackground(new java.awt.Color(102, 102, 102));
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -345,15 +563,7 @@ public class barang extends javax.swing.JFrame
             new String [] {
                 "Kode", "Nama", "Harga", "Stok", "Kategori"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jTable1.setFocusable(false);
         jTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
         jTable1.setSelectionForeground(new java.awt.Color(76, 52, 98));
@@ -424,54 +634,187 @@ public class barang extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_noTransActionPerformed
 
-    private void barcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barcodeActionPerformed
+    private void jbarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbarcodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_barcodeActionPerformed
+    }//GEN-LAST:event_jbarcodeActionPerformed
 
-    private void nama_barang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_barang1ActionPerformed
+    private void jnm_barangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnm_barangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nama_barang1ActionPerformed
+    }//GEN-LAST:event_jnm_barangActionPerformed
 
-    private void kode_barangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kode_barangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kode_barangActionPerformed
+    private void jkd_barangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jkd_barangActionPerformed
+       try {
 
-    private void stokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_stokActionPerformed
+            ResultSet rs=db.ambildata("select * from tb_barang where kode_barang='" + jkd_barang.getText() + "'");
+            if (rs.next()) {
+                jnm_barang.setText( rs.getString("nama_barang"));
+                jkd_barang.setText(rs.getString("kode_barang"));
+                jhrg_jual.setText( rs.getString("harga_jual"));
+                jhrg_beli.setText( rs.getString("harga_beli"));
+                jstok.setText( rs.getString("stok"));
+                jnm_pemasok.setText( rs.getString("nama_pemasok"));
+                jvarian.setText( rs.getString("varian"));
+                jberat.setText( rs.getString("berat"));
+                jexp.setText( rs.getString("exp"));
+                jbarcode.setText( rs.getString("barcode"));
+                jkategori.setSelectedItem(rs.getString("kategori"));
+                simpan.setEnabled(false);
+                // Simpan.setEnabled(false);
+                // hapus.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog( null, "Data Belum terdaftar, tambahkan");
+                jnm_barang.requestFocus();
 
-    private void harga_jualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_harga_jualActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_harga_jualActionPerformed
+            }
+        } catch (SQLException e) {
+        }
+    }//GEN-LAST:event_jkd_barangActionPerformed
 
-    private void harga_beliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_harga_beliActionPerformed
+    private void jstokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jstokActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_harga_beliActionPerformed
+    }//GEN-LAST:event_jstokActionPerformed
 
-    private void nama_pemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_pemasokActionPerformed
+    private void jhrg_jualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jhrg_jualActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nama_pemasokActionPerformed
+    }//GEN-LAST:event_jhrg_jualActionPerformed
 
-    private void varianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varianActionPerformed
+    private void jhrg_beliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jhrg_beliActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_varianActionPerformed
+    }//GEN-LAST:event_jhrg_beliActionPerformed
 
-    private void beratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beratActionPerformed
+    private void jnm_pemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnm_pemasokActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_beratActionPerformed
+    }//GEN-LAST:event_jnm_pemasokActionPerformed
 
-    private void expActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expActionPerformed
+    private void jvarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jvarianActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_expActionPerformed
+    }//GEN-LAST:event_jvarianActionPerformed
+
+    private void jberatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jberatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jberatActionPerformed
+
+    private void jexpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jexpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jexpActionPerformed
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
-    Window window = SwingUtilities.getWindowAncestor(simpan); // Dapatkan parent window
+   
+                try {
+            ResultSet rs = db.ambildata("select * from tb_barang where kode_barang='" + jkd_barang.getText() + "'");
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null,"Data telah terdaftar");
+                jnm_barang.setText( rs.getString("nama_barang"));
+                jstok.setText( rs.getString( "stok"));
+                jhrg_jual.setText( rs.getString( "harga_jual"));
+                jhrg_beli.setText( rs.getString( "harga_beli"));
+                jnm_pemasok.setText( rs.getString( "nama_pemasok"));
+                jvarian.setText( rs.getString( "varian"));
+                jberat.setText( rs.getString( "berat"));
+                jexp.setText( rs.getString( "exp"));
+                jbarcode.setText( rs.getString( "barcode"));
+                jkategori.setSelectedItem(rs.getString( "kategori"));
+
+            }else{
+                db.aksi("insert into tb_barang(kode_barang,nama_barang,kategori,varian,berat,stok,exp,harga_jual,harga_beli,barcode,nama_pemasok)values('"+jkd_barang.getText()+"','"+jnm_barang.getText()+"','"+jkategori.getSelectedItem()+"','"+jvarian.getText()+"','"+jberat.getText()+"','"+jstok.getText()+"','"+jexp.getText()+"','"+jhrg_jual.getText()+"','"+jhrg_beli.getText()+"','"+jbarcode.getText()+"','"+jnm_pemasok.getText()+"')");
+                JOptionPane.showMessageDialog(null,"Data telah Disimpan");
+                jkd_barang.setText("");
+                jnm_barang.setText("");
+                jstok.setText("");
+                jhrg_jual.setText("");
+                jhrg_beli.setText("");
+                jnm_pemasok.setText("");
+                jvarian.setText("");
+                jberat.setText("");
+                jexp.setText("");
+                jbarcode.setText("");
+                jkategori.setSelectedItem("");
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        
+                
+        Window window = SwingUtilities.getWindowAncestor(simpan); // Dapatkan parent window
     if (window instanceof JDialog) {
         window.dispose();  // Tutup JDialog
     }
-    this.setVisible(true); // Pastikan JFrame tetap terlihat
-    
+    this.setVisible(true); // Pastikan JFrame tetap terlihat                         
     }//GEN-LAST:event_simpanActionPerformed
+
+    private void tombolLogout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolLogout1ActionPerformed
+        login dashboard = new login();
+        dashboard.setVisible(true);
+        System.out.println("github perubahan");
+        this.dispose();
+    }//GEN-LAST:event_tombolLogout1ActionPerformed
+
+    private void tombolBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolBarang1ActionPerformed
+
+    }//GEN-LAST:event_tombolBarang1ActionPerformed
+
+    private void tombolEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolEdit1ActionPerformed
+                                 
+
+    }//GEN-LAST:event_tombolEdit1ActionPerformed
+
+    private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcancel1ActionPerformed
+
+    private void tanggal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanggal1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tanggal1ActionPerformed
+
+    private void jbarcode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbarcode1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbarcode1ActionPerformed
+
+    private void noTrans1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noTrans1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noTrans1ActionPerformed
+
+    private void jnm_barang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnm_barang1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jnm_barang1ActionPerformed
+
+    private void jkd_barang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jkd_barang1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jkd_barang1ActionPerformed
+
+    private void jstok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jstok1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jstok1ActionPerformed
+
+    private void jhrg_jual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jhrg_jual1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jhrg_jual1ActionPerformed
+
+    private void jhrg_beli1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jhrg_beli1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jhrg_beli1ActionPerformed
+
+    private void jnm_pemasok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnm_pemasok1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jnm_pemasok1ActionPerformed
+
+    private void jvarian1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jvarian1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jvarian1ActionPerformed
+
+    private void jberat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jberat1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jberat1ActionPerformed
+
+    private void jexp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jexp1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jexp1ActionPerformed
+
+    private void simpan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_simpan1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -510,28 +853,48 @@ public class barang extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel a;
+    private javax.swing.JLabel a1;
     private javax.swing.JTextField b;
-    private javax.swing.JTextField barcode;
-    private javax.swing.JTextField berat;
+    private javax.swing.JTextField b1;
     private javax.swing.JTextField c;
-    private javax.swing.JTextField exp;
-    private javax.swing.JTextField harga_beli;
-    private javax.swing.JTextField harga_jual;
+    private javax.swing.JTextField c1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jbarang1;
+    private javax.swing.JDialog jbarang2;
+    private javax.swing.JTextField jbarcode;
+    private javax.swing.JTextField jbarcode1;
+    private javax.swing.JTextField jberat;
+    private javax.swing.JTextField jberat1;
     private javax.swing.JButton jcancel;
-    private javax.swing.JComboBox<String> kategori;
-    private javax.swing.JTextField kode_barang;
-    private javax.swing.JTextField nama_barang1;
-    private javax.swing.JTextField nama_pemasok;
+    private javax.swing.JButton jcancel1;
+    private javax.swing.JTextField jexp;
+    private javax.swing.JTextField jexp1;
+    private javax.swing.JTextField jhrg_beli;
+    private javax.swing.JTextField jhrg_beli1;
+    private javax.swing.JTextField jhrg_jual;
+    private javax.swing.JTextField jhrg_jual1;
+    private javax.swing.JComboBox<String> jkategori;
+    private javax.swing.JComboBox<String> jkategori1;
+    private javax.swing.JTextField jkd_barang;
+    private javax.swing.JTextField jkd_barang1;
+    private javax.swing.JTextField jnm_barang;
+    private javax.swing.JTextField jnm_barang1;
+    private javax.swing.JTextField jnm_pemasok;
+    private javax.swing.JTextField jnm_pemasok1;
+    private javax.swing.JTextField jstok;
+    private javax.swing.JTextField jstok1;
+    private javax.swing.JTextField jvarian;
+    private javax.swing.JTextField jvarian1;
     private javax.swing.JTextField noTrans;
+    private javax.swing.JTextField noTrans1;
     private javax.swing.JButton simpan;
-    private javax.swing.JTextField stok;
+    private javax.swing.JButton simpan1;
     private javax.swing.JTextField tanggal;
+    private javax.swing.JTextField tanggal1;
     private javax.swing.JButton tombolBarang1;
     private javax.swing.JButton tombolCari1;
     private javax.swing.JButton tombolDasbor1;
@@ -542,6 +905,6 @@ public class barang extends javax.swing.JFrame
     private javax.swing.JButton tombolLogout1;
     private javax.swing.JButton tombolTambah1;
     private javax.swing.JButton tombollUser;
-    private javax.swing.JTextField varian;
     // End of variables declaration//GEN-END:variables
+
 }

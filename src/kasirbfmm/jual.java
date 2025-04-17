@@ -14,6 +14,7 @@ public class jual extends javax.swing.JFrame {
      * Creates new form jual
      */
     public jual() {
+        this.setUndecorated(true);
         initComponents();
     }
 
@@ -64,11 +65,21 @@ public class jual extends javax.swing.JFrame {
         dasbor1.setBorderPainted(false);
         dasbor1.setContentAreaFilled(false);
         dasbor1.setFocusPainted(false);
+        dasbor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dasbor1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(dasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 110, 20));
 
         barang1.setBorderPainted(false);
         barang1.setContentAreaFilled(false);
         barang1.setFocusPainted(false);
+        barang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barang1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 110, 20));
 
         jual.setBorderPainted(false);
@@ -125,39 +136,30 @@ public class jual extends javax.swing.JFrame {
         getContentPane().add(noTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 110, 20));
 
         namaBarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        namaBarang.setOpaque(false);
         getContentPane().add(namaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 210, 450, 30));
 
         kembalian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        kembalian.setOpaque(false);
         getContentPane().add(kembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 690, 100, 30));
 
         kodeBarang2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        kodeBarang2.setOpaque(false);
         getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 209, 450, 30));
 
         harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        harga1.setOpaque(false);
         getContentPane().add(harga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 190, 30));
 
         stok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        stok1.setOpaque(false);
         getContentPane().add(stok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 190, 30));
 
         qty1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        qty1.setOpaque(false);
         getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 300, 190, 30));
 
         jumlahHarga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jumlahHarga1.setOpaque(false);
         getContentPane().add(jumlahHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 300, 190, 30));
 
         total1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        total1.setOpaque(false);
         getContentPane().add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 690, 100, 30));
 
         bayar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        bayar1.setOpaque(false);
         getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 690, 100, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -194,10 +196,22 @@ public class jual extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/jual.png"))); // NOI18N
         jLabel1.setText(" ");
         jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, -10, 1380, 780));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void barang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barang1ActionPerformed
+        barang barang = new barang();
+        barang.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_barang1ActionPerformed
+
+    private void dasbor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dasbor1ActionPerformed
+        dashboard dashboard = new dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dasbor1ActionPerformed
 
     /**
      * @param args the command line arguments

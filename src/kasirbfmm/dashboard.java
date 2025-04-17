@@ -22,6 +22,7 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     public dashboard(String userName) {
+        this.setUndecorated(true);
         initComponents();
           this.userName = (userName != null && !userName.isEmpty()) ? userName : "Guest"; 
         nama.setText(this.userName); // Set nama user di JTextField
@@ -82,7 +83,7 @@ public class dashboard extends javax.swing.JFrame {
                 tombolJualActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 120, 20));
+        getContentPane().add(tombolJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 120, 20));
 
         nama.setEditable(false);
         nama.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -95,6 +96,7 @@ public class dashboard extends javax.swing.JFrame {
         });
         getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 40, 90, 20));
 
+        jlogout.setBackground(new java.awt.Color(51, 51, 51));
         jlogout.setBorder(null);
         jlogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,7 +113,7 @@ public class dashboard extends javax.swing.JFrame {
                 tombolDasborActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolDasbor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 120, 30));
+        getContentPane().add(tombolDasbor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 120, 30));
 
         tombolBarang1.setBorderPainted(false);
         tombolBarang1.setContentAreaFilled(false);
@@ -121,7 +123,7 @@ public class dashboard extends javax.swing.JFrame {
                 tombolBarang1ActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 120, 20));
+        getContentPane().add(tombolBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 20));
 
         tombolUser.setBorderPainted(false);
         tombolUser.setContentAreaFilled(false);
@@ -131,7 +133,7 @@ public class dashboard extends javax.swing.JFrame {
                 tombolUserActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 120, 20));
+        getContentPane().add(tombolUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 20));
 
         tombolLaporan.setBorderPainted(false);
         tombolLaporan.setContentAreaFilled(false);
@@ -141,7 +143,7 @@ public class dashboard extends javax.swing.JFrame {
                 tombolLaporanActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 120, 30));
+        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 120, 30));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/desktop.png"))); // NOI18N

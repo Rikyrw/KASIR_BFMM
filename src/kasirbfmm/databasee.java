@@ -21,36 +21,42 @@ public class databasee {
     private final String driver = "com.mysql.cj.jdbc.Driver";
     private final String url = "jdbc:mysql://localhost/aditkasir";
     private final String user = "root";
-    private final String pwd = "";
+    private final String password = "";
 
 
 public Connection koneksiDB() {
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/aditkasir"; // Ganti dengan nama database
-        String user = "root"; // Ganti dengan user database
-        String password = ""; // Ganti jika ada password database
-        Connection conn = DriverManager.getConnection(url, user, password);
+        Class.forName(driver);
+         con = DriverManager.getConnection(url, user, password);
         System.out.println("Koneksi database berhasil!");
-        return conn;
-    } catch (Exception e) {
-        System.out.println("Koneksi database gagal: " + e.getMessage());
-        return null;
+        return con;
+    } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Koneksi database gagal: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
+            return null;
     }
 }
 
 public ResultSet ambildata(String SQL) {
+    ResultSet rs = null;
     try {
-        Statement st=con.createStatement();
-        return st.executeQuery(SQL);
-    } catch (Exception e) {
-        System.out.println("Error:\nPengecekan data gagal diakses !");
-        return null;
+         if (con == null) { // Cek apakah koneksi sudah dibuat
+                koneksiDB();
+         }
+        Connection con = (Connection) getConnection(); // Ambil koneksi database
+        PreparedStatement pst = con.prepareStatement(SQL);
+        rs = pst.executeQuery();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error saat mengambil data: " + e.getMessage());
     }
+    return rs;
 }
 
 public boolean aksi(String SQL) {
     try {
+         if (con == null) { // Pastikan koneksi sudah dibuat
+                koneksiDB();
+            }
         Statement st = con.createStatement();
         st.executeUpdate(SQL);
         return true; // Jika berhasil
@@ -58,6 +64,10 @@ public boolean aksi(String SQL) {
         System.out.println("Error:\nAksi gagal diakses! " + e.getMessage());
         return false; // Jika gagal
     }
+}
+
+public Connection getConnection() {
+    return koneksiDB(); // Mengembalikan koneksi dari metode koneksiDB()
 }
 
     int ubahdata(String string) {
@@ -68,18 +78,20 @@ public boolean aksi(String SQL) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    boolean aksi(boolean query) {
+    static void aksi(boolean query) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    Object getConnection() {
+//    Object getConnection() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+
+    PreparedStatement prepareStatement(String sql) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    PreparedStatement prepareStatement(String query) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    private boolean validasiData() {
+    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+}
 //    public Connection koneksiDB() {
 //    try {
 //        Class.forName(driver);
