@@ -61,7 +61,7 @@ public class login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jeye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/Eye(1).png"))); // NOI18N
+        jeye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/eye.png"))); // NOI18N
         jeye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jeyeMouseClicked(evt);
@@ -110,7 +110,7 @@ public class login extends javax.swing.JFrame {
         });
         getContentPane().add(RFIDInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 50, 10, 10));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/logiin (1).png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/logiin(1).png"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

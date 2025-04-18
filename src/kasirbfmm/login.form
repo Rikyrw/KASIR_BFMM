@@ -28,7 +28,7 @@
     <Component class="javax.swing.JLabel" name="jeye">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/foto/Eye(1).png"/>
+          <Image iconType="3" name="/foto/eye.png"/>
         </Property>
       </Properties>
       <Events>
@@ -119,7 +119,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/fotoanyarrrrrr/logiin (1).png"/>
+          <Image iconType="3" name="/foto/logiin(1).png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel2"/>
       </Properties>
