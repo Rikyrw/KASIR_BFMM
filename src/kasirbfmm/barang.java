@@ -18,6 +18,7 @@ public class barang extends javax.swing.JFrame
   databasee db = new databasee ();
     public barang() {
         this.setUndecorated(true);
+        this.setUndecorated(true);
         initComponents();
         
         viewdata();
@@ -444,6 +445,7 @@ public class barang extends javax.swing.JFrame
         jbarang2.getContentPane().add(a1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
