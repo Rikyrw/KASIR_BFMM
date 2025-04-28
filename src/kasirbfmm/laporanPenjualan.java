@@ -28,7 +28,7 @@ public class laporanPenjualan extends javax.swing.JFrame {
 
         laba = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
-        retur1 = new javax.swing.JButton();
+        stokOpname = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
         jual1 = new javax.swing.JButton();
         user1 = new javax.swing.JButton();
@@ -40,7 +40,10 @@ public class laporanPenjualan extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        retur2 = new javax.swing.JButton();
+        totalPemasukan = new javax.swing.JTextField();
+        totalBarang1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -67,16 +70,16 @@ public class laporanPenjualan extends javax.swing.JFrame {
         });
         getContentPane().add(dasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 100, 20));
 
-        retur1.setBorderPainted(false);
-        retur1.setContentAreaFilled(false);
-        retur1.setFocusPainted(false);
-        retur1.setFocusable(false);
-        retur1.addActionListener(new java.awt.event.ActionListener() {
+        stokOpname.setBorderPainted(false);
+        stokOpname.setContentAreaFilled(false);
+        stokOpname.setFocusPainted(false);
+        stokOpname.setFocusable(false);
+        stokOpname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                retur1ActionPerformed(evt);
+                stokOpnameActionPerformed(evt);
             }
         });
-        getContentPane().add(retur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
+        getContentPane().add(stokOpname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 100, 20));
 
         barang1.setBorderPainted(false);
         barang1.setContentAreaFilled(false);
@@ -98,7 +101,7 @@ public class laporanPenjualan extends javax.swing.JFrame {
                 jual1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 100, 20));
+        getContentPane().add(jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 100, 20));
 
         user1.setBorderPainted(false);
         user1.setContentAreaFilled(false);
@@ -109,7 +112,7 @@ public class laporanPenjualan extends javax.swing.JFrame {
                 user1ActionPerformed(evt);
             }
         });
-        getContentPane().add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 100, 20));
+        getContentPane().add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 100, 20));
 
         logout1.setBorderPainted(false);
         logout1.setContentAreaFilled(false);
@@ -187,9 +190,32 @@ public class laporanPenjualan extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 162, 1000, 450));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/pembeliann dan penjualan.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
+        retur2.setBorderPainted(false);
+        retur2.setContentAreaFilled(false);
+        retur2.setFocusPainted(false);
+        retur2.setFocusable(false);
+        retur2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retur2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(retur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
+
+        totalPemasukan.setEditable(false);
+        totalPemasukan.setBorder(null);
+        totalPemasukan.setOpaque(false);
+        totalPemasukan.setRequestFocusEnabled(false);
+        getContentPane().add(totalPemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 680, 130, 40));
+
+        totalBarang1.setEditable(false);
+        totalBarang1.setBorder(null);
+        totalBarang1.setOpaque(false);
+        totalBarang1.setRequestFocusEnabled(false);
+        getContentPane().add(totalBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 680, 130, 40));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliann dan penjualan.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -206,9 +232,9 @@ public class laporanPenjualan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_barang1ActionPerformed
 
-    private void retur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retur1ActionPerformed
+    private void stokOpnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokOpnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_retur1ActionPerformed
+    }//GEN-LAST:event_stokOpnameActionPerformed
 
     private void jual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jual1ActionPerformed
         // TODO add your handling code here:
@@ -229,6 +255,10 @@ public class laporanPenjualan extends javax.swing.JFrame {
     private void pembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pembelianActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pembelianActionPerformed
+
+    private void retur2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retur2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retur2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,15 +302,18 @@ public class laporanPenjualan extends javax.swing.JFrame {
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton ekspor1;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jual1;
     private javax.swing.JButton laba;
     private javax.swing.JButton logout1;
     private javax.swing.JButton pembelian;
-    private javax.swing.JButton retur1;
+    private javax.swing.JButton retur2;
     private javax.swing.JTextField sampaitanggal;
+    private javax.swing.JButton stokOpname;
+    private javax.swing.JTextField totalBarang1;
+    private javax.swing.JTextField totalPemasukan;
     private javax.swing.JButton user1;
     // End of variables declaration//GEN-END:variables
 }

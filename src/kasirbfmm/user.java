@@ -30,7 +30,7 @@ public class user extends javax.swing.JFrame {
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
         jual = new javax.swing.JButton();
-        retur = new javax.swing.JButton();
+        stokOp = new javax.swing.JButton();
         laporan = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
         hapus1 = new javax.swing.JButton();
@@ -44,7 +44,8 @@ public class user extends javax.swing.JFrame {
         kataSandi1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        retur2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -62,17 +63,17 @@ public class user extends javax.swing.JFrame {
         jual.setBorderPainted(false);
         jual.setContentAreaFilled(false);
         jual.setFocusPainted(false);
-        getContentPane().add(jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 80, 20));
+        getContentPane().add(jual, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 80, 20));
 
-        retur.setBorderPainted(false);
-        retur.setContentAreaFilled(false);
-        retur.setFocusPainted(false);
-        getContentPane().add(retur, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 90, 20));
+        stokOp.setBorderPainted(false);
+        stokOp.setContentAreaFilled(false);
+        stokOp.setFocusPainted(false);
+        getContentPane().add(stokOp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
 
         laporan.setBorderPainted(false);
         laporan.setContentAreaFilled(false);
         laporan.setFocusPainted(false);
-        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 120, 20));
+        getContentPane().add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 20));
 
         hapus.setBorderPainted(false);
         hapus.setContentAreaFilled(false);
@@ -149,9 +150,14 @@ public class user extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 320, 1010, 380));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/user.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        retur2.setBorderPainted(false);
+        retur2.setContentAreaFilled(false);
+        retur2.setFocusPainted(false);
+        getContentPane().add(retur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 90, 20));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/user.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -197,7 +203,7 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JButton hapus;
     private javax.swing.JButton hapus1;
     private javax.swing.JTextField idUserbaeu1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jual;
@@ -205,10 +211,11 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JButton laporan;
     private javax.swing.JButton logout2;
     private javax.swing.JTextField nama1;
-    private javax.swing.JButton retur;
     private javax.swing.JButton retur1;
+    private javax.swing.JButton retur2;
     private javax.swing.JTextField rfid;
     private javax.swing.JButton simpan2;
+    private javax.swing.JButton stokOp;
     private javax.swing.JTextField username1;
     // End of variables declaration//GEN-END:variables
 }

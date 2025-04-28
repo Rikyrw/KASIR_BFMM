@@ -28,7 +28,7 @@ public class retur extends javax.swing.JFrame {
 
         tombolhapus = new javax.swing.JButton();
         tombollogout = new javax.swing.JButton();
-        tombolbarang1 = new javax.swing.JButton();
+        tombolstokOpname = new javax.swing.JButton();
         tomboljual1 = new javax.swing.JButton();
         tomboluser1 = new javax.swing.JButton();
         tombollaporan1 = new javax.swing.JButton();
@@ -39,7 +39,8 @@ public class retur extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        tombolbarang2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -61,29 +62,29 @@ public class retur extends javax.swing.JFrame {
         tombollogout.setFocusable(false);
         getContentPane().add(tombollogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 690, 110, 20));
 
-        tombolbarang1.setBorderPainted(false);
-        tombolbarang1.setContentAreaFilled(false);
-        tombolbarang1.setFocusPainted(false);
-        tombolbarang1.setFocusable(false);
-        getContentPane().add(tombolbarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 200, 100, 20));
+        tombolstokOpname.setBorderPainted(false);
+        tombolstokOpname.setContentAreaFilled(false);
+        tombolstokOpname.setFocusPainted(false);
+        tombolstokOpname.setFocusable(false);
+        getContentPane().add(tombolstokOpname, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 120, 20));
 
         tomboljual1.setBorderPainted(false);
         tomboljual1.setContentAreaFilled(false);
         tomboljual1.setFocusPainted(false);
         tomboljual1.setFocusable(false);
-        getContentPane().add(tomboljual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 90, 20));
+        getContentPane().add(tomboljual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 20));
 
         tomboluser1.setBorderPainted(false);
         tomboluser1.setContentAreaFilled(false);
         tomboluser1.setFocusPainted(false);
         tomboluser1.setFocusable(false);
-        getContentPane().add(tomboluser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 20));
+        getContentPane().add(tomboluser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 90, 20));
 
         tombollaporan1.setBorderPainted(false);
         tombollaporan1.setContentAreaFilled(false);
         tombollaporan1.setFocusPainted(false);
         tombollaporan1.setFocusable(false);
-        getContentPane().add(tombollaporan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 110, 20));
+        getContentPane().add(tombollaporan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 110, 20));
 
         tomboldasbor1.setBorderPainted(false);
         tomboldasbor1.setContentAreaFilled(false);
@@ -163,9 +164,15 @@ public class retur extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 162, 1020, 530));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/retur.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
+        tombolbarang2.setBorderPainted(false);
+        tombolbarang2.setContentAreaFilled(false);
+        tombolbarang2.setFocusPainted(false);
+        tombolbarang2.setFocusable(false);
+        getContentPane().add(tombolbarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 200, 100, 20));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/retur.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -227,10 +234,10 @@ public class retur extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton tombolbarang1;
+    private javax.swing.JButton tombolbarang2;
     private javax.swing.JButton tombolcari1;
     private javax.swing.JButton tomboldasbor1;
     private javax.swing.JButton tomboledit1;
@@ -238,6 +245,7 @@ public class retur extends javax.swing.JFrame {
     private javax.swing.JButton tomboljual1;
     private javax.swing.JButton tombollaporan1;
     private javax.swing.JButton tombollogout;
+    private javax.swing.JButton tombolstokOpname;
     private javax.swing.JButton tomboltambah1;
     private javax.swing.JButton tomboluser1;
     // End of variables declaration//GEN-END:variables

@@ -25,19 +25,23 @@ public class barang extends javax.swing.JFrame {
   databasee db = new databasee ();
     public barang() {
         this.setUndecorated(true);
-        this.setUndecorated(true);
-        initComponents();
-        
-        viewdata();
-        isianBersih();
-        
-        db.koneksiDB();
-        
-        setTanggalOtomatis(); // Memanggil method untuk set tanggal otomatis
-        tanggal.setEditable(false);
-        
-        
+    initComponents();
 
+    db.koneksiDB(); // <-- koneksi database harus dipanggil dulu sebelum viewdata()!
+
+    model = new DefaultTableModel();
+    model.addColumn("Kode");
+    model.addColumn("Nama");
+    model.addColumn("Harga");
+    model.addColumn("Stok");
+    model.addColumn("Kategori");
+    jTable1.setModel(model);
+
+    viewdata(); // baru tampilkan data
+
+    isianBersih();
+    setTanggalOtomatis();
+    tanggal.setEditable(false);
         
         jcancel.setOpaque(false);
         jcancel.setContentAreaFilled(false);
@@ -84,34 +88,35 @@ public class barang extends javax.swing.JFrame {
         
     }
     
+    private void tampilData(){
+    
+    model = new DefaultTableModel();
+    model.addColumn("Kode");
+    model.addColumn("Nama");
+    model.addColumn("Harga");
+    model.addColumn("Stok");
+    model.addColumn("Kategori");
+
+    jTable1.setModel(model);
+}
+
      public void viewdata() {
-        model.addColumn("Kode");
-        model.addColumn("Nama");
-        model.addColumn("Harga");
-        model.addColumn("Stok");
-        model.addColumn("Kategori");
-        
-        try {
-            ResultSet rs=db.ambildata("select * from tb_barang");
-            while (rs.next()) {
-                model.addRow(new Object[] 
-                {rs.getString("kode_barang"),
-                    rs.getString("nama_barang"),
-//                    rs.getString("varian"),
-//                    rs.getString("berat"),
-                    rs.getString("harga_jual"),
-//                    rs.getString("exp"),
-                    rs.getString("stok"),
-//                    rs.getString("harga_beli"),
-//                    rs.getString("barcode"),
-//                    rs.getString("nama_pemasok"),
-                    rs.getString("kategori")
-                });
-                jTable1.setModel(model);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Debug", JOptionPane.ERROR_MESSAGE);
+         model.setRowCount(0); // hapus data lama
+
+    try {
+        ResultSet rs = db.ambildata("SELECT * FROM tb_barang");
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("kode_barang"),
+                rs.getString("nama_barang"),
+                rs.getString("harga_jual"),
+                rs.getString("stok"),
+                rs.getString("kategori")
+            });
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Gagal load data: " + e.getMessage());
+    }
     
     }
           private void isianBersih(){
@@ -133,6 +138,45 @@ public class barang extends javax.swing.JFrame {
     String tanggalSekarang = sdf.format(new Date()); // Ambil tanggal sekarang
     tanggal.setText(tanggalSekarang); // Set ke JTextField (ganti dengan nama variabel JTextField tanggal kamu)
 }
+    private void updateData() {
+    try {
+        String sql = "UPDATE tb_barang SET " +
+                "nama_barang = '" + jnm_barang.getText() + "', " +
+                "kategori = '" + jkategori.getSelectedItem() + "', " +
+                "varian = '" + jvarian.getText() + "', " +
+                "berat = '" + jberat.getText() + "', " +
+                "stok = '" + jstok.getText() + "', " +
+                "exp = '" + jexp.getText() + "', " +
+                "harga_jual = '" + jhrg_jual.getText() + "', " +
+                "harga_beli = '" + jhrg_beli.getText() + "', " +
+                "barcode = '" + jbarcode.getText() + "', " +
+                "nama_pemasok = '" + jnm_pemasok.getText() + "' " +
+                "WHERE kode_barang = '" + jkd_barang.getText() + "'";
+        
+        db.aksi(sql);
+        JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+        isianBersih();
+        viewdata();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Gagal update data: " + e.getMessage());
+    }
+}
+
+    private void deleteData() {
+    int pilihan = JOptionPane.showConfirmDialog(null, "Yakin mau hapus data ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+    if (pilihan == JOptionPane.YES_OPTION) {
+        try {
+            String sql = "DELETE FROM tb_barang WHERE kode_barang = '" + jkd_barang.getText() + "'";
+            db.aksi(sql);
+            JOptionPane.showMessageDialog(null, "Data berhasil dihapus!");
+            isianBersih();
+            viewdata();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal hapus data: " + e.getMessage());
+        }
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,21 +223,20 @@ public class barang extends javax.swing.JFrame {
         c1 = new javax.swing.JTextField();
         b1 = new javax.swing.JTextField();
         a1 = new javax.swing.JLabel();
-        tombolHapus = new javax.swing.JButton();
         tombolDasbor1 = new javax.swing.JButton();
-        tombolretur = new javax.swing.JButton();
         tombollUser = new javax.swing.JButton();
         tombolLaporan = new javax.swing.JButton();
         tombolLogout1 = new javax.swing.JButton();
         tombolCari1 = new javax.swing.JButton();
         tombolTambah1 = new javax.swing.JButton();
-        tombolEdit1 = new javax.swing.JButton();
+        tombolHapus = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         tombolJual1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        tombolEdit2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jbarang1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -308,7 +351,7 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
 
-        jkategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jkategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Minuman", "Sembako" }));
         jbarang1.getContentPane().add(jkategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 40));
 
         c.setBackground(new java.awt.Color(255, 255, 255));
@@ -455,11 +498,6 @@ public class barang extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tombolHapus.setBorderPainted(false);
-        tombolHapus.setContentAreaFilled(false);
-        tombolHapus.setFocusPainted(false);
-        getContentPane().add(tombolHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
-
         tombolDasbor1.setBorderPainted(false);
         tombolDasbor1.setContentAreaFilled(false);
         tombolDasbor1.setFocusPainted(false);
@@ -470,16 +508,6 @@ public class barang extends javax.swing.JFrame {
         });
         getContentPane().add(tombolDasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 150, 120, 20));
 
-        tombolretur.setBorderPainted(false);
-        tombolretur.setContentAreaFilled(false);
-        tombolretur.setFocusPainted(false);
-        tombolretur.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolreturActionPerformed(evt);
-            }
-        });
-        getContentPane().add(tombolretur, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
-
         tombollUser.setBorderPainted(false);
         tombollUser.setContentAreaFilled(false);
         tombollUser.setFocusPainted(false);
@@ -488,12 +516,12 @@ public class barang extends javax.swing.JFrame {
                 tombollUserActionPerformed(evt);
             }
         });
-        getContentPane().add(tombollUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 20));
+        getContentPane().add(tombollUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 90, 20));
 
         tombolLaporan.setBorderPainted(false);
         tombolLaporan.setContentAreaFilled(false);
         tombolLaporan.setFocusPainted(false);
-        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 120, 20));
+        getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 20));
 
         tombolLogout1.setBorderPainted(false);
         tombolLogout1.setContentAreaFilled(false);
@@ -525,15 +553,15 @@ public class barang extends javax.swing.JFrame {
         });
         getContentPane().add(tombolTambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
 
-        tombolEdit1.setBorderPainted(false);
-        tombolEdit1.setContentAreaFilled(false);
-        tombolEdit1.setFocusPainted(false);
-        tombolEdit1.addActionListener(new java.awt.event.ActionListener() {
+        tombolHapus.setBorderPainted(false);
+        tombolHapus.setContentAreaFilled(false);
+        tombolHapus.setFocusPainted(false);
+        tombolHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolEdit1ActionPerformed(evt);
+                tombolHapusActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolEdit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+        getContentPane().add(tombolHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
@@ -569,6 +597,11 @@ public class barang extends javax.swing.JFrame {
         jTable1.setSelectionForeground(new java.awt.Color(76, 52, 98));
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -588,11 +621,22 @@ public class barang extends javax.swing.JFrame {
                 tombolJual1ActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 100, 20));
+        getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 100, 20));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoanyarrrrrr/barangg.jpg"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        tombolEdit2.setText(" ");
+        tombolEdit2.setBorderPainted(false);
+        tombolEdit2.setContentAreaFilled(false);
+        tombolEdit2.setFocusPainted(false);
+        tombolEdit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolEdit2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tombolEdit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/barangg.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -711,47 +755,49 @@ public class barang extends javax.swing.JFrame {
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
    
                 try {
-            ResultSet rs = db.ambildata("select * from tb_barang where kode_barang='" + jkd_barang.getText() + "'");
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null,"Data telah terdaftar");
-                jnm_barang.setText( rs.getString("nama_barang"));
-                jstok.setText( rs.getString( "stok"));
-                jhrg_jual.setText( rs.getString( "harga_jual"));
-                jhrg_beli.setText( rs.getString( "harga_beli"));
-                jnm_pemasok.setText( rs.getString( "nama_pemasok"));
-                jvarian.setText( rs.getString( "varian"));
-                jberat.setText( rs.getString( "berat"));
-                jexp.setText( rs.getString( "exp"));
-                jbarcode.setText( rs.getString( "barcode"));
-                jkategori.setSelectedItem(rs.getString( "kategori"));
+             ResultSet rs = db.ambildata("SELECT * FROM tb_barang WHERE kode_barang='" + jkd_barang.getText() + "'");
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(null, "Kode barang sudah terdaftar!");
+        } else {
+            String sql = "INSERT INTO tb_barang(kode_barang, nama_barang, kategori, varian, berat, stok, exp, harga_jual, harga_beli, barcode, nama_pemasok) VALUES ('"
+                    + jkd_barang.getText() + "','"
+                    + jnm_barang.getText() + "','"
+                    + jkategori.getSelectedItem() + "','"
+                    + jvarian.getText() + "','"
+                    + jberat.getText() + "','"
+                    + jstok.getText() + "','"
+                    + jexp.getText() + "','"
+                    + jhrg_jual.getText() + "','"
+                    + jhrg_beli.getText() + "','"
+                    + jbarcode.getText() + "','"
+                    + jnm_pemasok.getText() + "')";
 
-            }else{
-                db.aksi("insert into tb_barang(kode_barang,nama_barang,kategori,varian,berat,stok,exp,harga_jual,harga_beli,barcode,nama_pemasok)values('"+jkd_barang.getText()+"','"+jnm_barang.getText()+"','"+jkategori.getSelectedItem()+"','"+jvarian.getText()+"','"+jberat.getText()+"','"+jstok.getText()+"','"+jexp.getText()+"','"+jhrg_jual.getText()+"','"+jhrg_beli.getText()+"','"+jbarcode.getText()+"','"+jnm_pemasok.getText()+"')");
-                JOptionPane.showMessageDialog(null,"Data telah Disimpan");
-                jkd_barang.setText("");
-                jnm_barang.setText("");
-                jstok.setText("");
-                jhrg_jual.setText("");
-                jhrg_beli.setText("");
-                jnm_pemasok.setText("");
-                jvarian.setText("");
-                jberat.setText("");
-                jexp.setText("");
-                jbarcode.setText("");
-                jkategori.setSelectedItem("");
+            db.aksi(sql);
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
 
+            // setelah simpan, refresh tabel
+            model.setRowCount(0);
+            viewdata();
+
+            // kosongkan isian form
+            isianBersih();
+
+            // tutup form pop up
+            Window window = SwingUtilities.getWindowAncestor(simpan);
+            if (window instanceof JDialog) {
+                window.dispose();
             }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e.getMessage());
         }
-        
-                
-        Window window = SwingUtilities.getWindowAncestor(simpan); // Dapatkan parent window
+    } catch (Exception e) {
+    e.printStackTrace(); // biar error kelihatan di console
+    JOptionPane.showMessageDialog(null, "Gagal menyimpan data: " + e.getMessage());
+}
+
+    Window window = SwingUtilities.getWindowAncestor(simpan); 
     if (window instanceof JDialog) {
-        window.dispose();  // Tutup JDialog
+        window.dispose();
     }
-    this.setVisible(true); // Pastikan JFrame tetap terlihat                         
+    this.setVisible(true);                       
     }//GEN-LAST:event_simpanActionPerformed
 
     private void tombolLogout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolLogout1ActionPerformed
@@ -761,10 +807,11 @@ public class barang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tombolLogout1ActionPerformed
 
-    private void tombolEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolEdit1ActionPerformed
-                                 
+    private void tombolHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolHapusActionPerformed
+deleteData();
+                              
 
-    }//GEN-LAST:event_tombolEdit1ActionPerformed
+    }//GEN-LAST:event_tombolHapusActionPerformed
 
     private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
         // TODO add your handling code here:
@@ -826,6 +873,29 @@ public class barang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tombolJual1ActionPerformed
 
+    private void tombolEdit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolEdit2ActionPerformed
+        // TODO add your handling code here:
+                                                 
+    updateData(); 
+
+
+    }//GEN-LAST:event_tombolEdit2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+        int row = jTable1.getSelectedRow(); // ambil baris yang dipilih
+
+        // ngisi semua inputan dengan data dari tabel
+        jkd_barang.setText(model.getValueAt(row, 0).toString());
+        jnm_barang.setText(model.getValueAt(row, 1).toString());
+        jhrg_jual.setText(model.getValueAt(row, 2).toString());
+        jstok.setText(model.getValueAt(row, 3).toString());
+        jkategori.setSelectedItem(model.getValueAt(row, 4).toString());
+
+        // Kalau kamu mau auto nonaktifkan tombol simpan supaya gak dobel tambah
+        simpan.setEnabled(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -869,7 +939,7 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField c;
     private javax.swing.JTextField c1;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
@@ -907,14 +977,13 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField tanggal1;
     private javax.swing.JButton tombolCari1;
     private javax.swing.JButton tombolDasbor1;
-    private javax.swing.JButton tombolEdit1;
+    private javax.swing.JButton tombolEdit2;
     private javax.swing.JButton tombolHapus;
     private javax.swing.JButton tombolJual1;
     private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolLogout1;
     private javax.swing.JButton tombolTambah1;
     private javax.swing.JButton tombollUser;
-    private javax.swing.JButton tombolretur;
     // End of variables declaration//GEN-END:variables
 
 }
