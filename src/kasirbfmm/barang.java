@@ -2,8 +2,10 @@ package kasirbfmm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -11,8 +13,13 @@ import javax.swing.table.DefaultTableModel;
 
 
 
-public class barang extends javax.swing.JFrame 
-{
+public class barang extends javax.swing.JFrame {
+    
+    private Connection con;
+    private Statement st;
+    private ResultSet RSsupplier;
+    private String sql = "";
+    
   DefaultTableModel model = new DefaultTableModel();
   
   databasee db = new databasee ();
@@ -445,7 +452,6 @@ public class barang extends javax.swing.JFrame
         jbarang2.getContentPane().add(a1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

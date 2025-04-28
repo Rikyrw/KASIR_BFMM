@@ -15,6 +15,7 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
         // Tambahkan koneksi ke database di constructor
+        System.out.println("ok");
     try {
         connection = db.koneksiDB();
         if (connection == null) {

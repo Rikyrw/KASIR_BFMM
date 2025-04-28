@@ -98,12 +98,16 @@ public class dashboard extends javax.swing.JFrame {
 
         jlogout.setBackground(new java.awt.Color(51, 51, 51));
         jlogout.setBorder(null);
+        jlogout.setBorderPainted(false);
+        jlogout.setContentAreaFilled(false);
+        jlogout.setFocusPainted(false);
+        jlogout.setFocusable(false);
         jlogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jlogoutActionPerformed(evt);
             }
         });
-        getContentPane().add(jlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 680, 120, 30));
+        getContentPane().add(jlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 110, 20));
 
         tombolBarang1.setBorderPainted(false);
         tombolBarang1.setContentAreaFilled(false);
@@ -166,8 +170,8 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_tombolBarang1ActionPerformed
 
     private void tombolReturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolReturActionPerformed
-        jual jual = new jual ();
-        jual.setVisible(true);
+        retur retur = new retur ();
+        retur.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tombolReturActionPerformed
 
@@ -178,8 +182,8 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_tombolUserActionPerformed
 
     private void tombolLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolLaporanActionPerformed
-        pembelian pembelian = new pembelian();
-        pembelian.setVisible(true);
+        laporanPembelian laporanPembelian = new laporanPembelian();
+        laporanPembelian.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tombolLaporanActionPerformed
 
