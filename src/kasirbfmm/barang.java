@@ -10,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 
@@ -24,7 +27,7 @@ public class barang extends javax.swing.JFrame {
   
   databasee db = new databasee ();
     public barang() {
-        this.setUndecorated(true);
+    this.setUndecorated(true);
     initComponents();
 
     db.koneksiDB(); // <-- koneksi database harus dipanggil dulu sebelum viewdata()!
@@ -32,9 +35,15 @@ public class barang extends javax.swing.JFrame {
     model = new DefaultTableModel();
     model.addColumn("Kode");
     model.addColumn("Nama");
-    model.addColumn("Harga");
+    model.addColumn("Varian");
+    model.addColumn("Berat");
     model.addColumn("Stok");
+    model.addColumn("Exp");
+    model.addColumn("Harga Jual");
+    model.addColumn("Harga Beli");
+    model.addColumn("Barcode");
     model.addColumn("Kategori");
+    model.addColumn("Pemasok");
     jTable1.setModel(model);
 
     viewdata(); // baru tampilkan data
@@ -42,6 +51,7 @@ public class barang extends javax.swing.JFrame {
     isianBersih();
     setTanggalOtomatis();
     tanggal.setEditable(false);
+    tanggal1.setEditable(false);
         
         jcancel.setOpaque(false);
         jcancel.setContentAreaFilled(false);
@@ -55,24 +65,45 @@ public class barang extends javax.swing.JFrame {
 
         jnm_barang.setOpaque(false);
         jnm_barang.setBackground(new Color(0, 0, 0, 0));
+        jnm_barang1.setOpaque(false);
+        jnm_barang1.setBackground(new Color(0, 0, 0, 0));
         jkd_barang.setOpaque(false);
         jkd_barang.setBackground(new Color(0, 0, 0, 0));
+        jkd_barang1.setOpaque(false);
+        jkd_barang1.setBackground(new Color(0, 0, 0, 0));
         jstok.setOpaque(false);
         jstok.setBackground(new Color(0, 0, 0, 0));
+        jstok1.setOpaque(false);
+        jstok1.setBackground(new Color(0, 0, 0, 0));
         jhrg_jual.setOpaque(false);
         jhrg_jual.setBackground(new Color(0, 0, 0, 0));
+        jhrg_jual1.setOpaque(false);
+        jhrg_jual1.setBackground(new Color(0, 0, 0, 0));
         jhrg_beli.setOpaque(false);
         jhrg_beli.setBackground(new Color(0, 0, 0, 0));
+        jhrg_beli1.setOpaque(false);
+        jhrg_beli1.setBackground(new Color(0, 0, 0, 0));
         jnm_pemasok.setOpaque(false);
         jnm_pemasok.setBackground(new Color(0, 0, 0, 0));
+        jnm_pemasok1.setOpaque(false);
+        jnm_pemasok1.setBackground(new Color(0, 0, 0, 0));
         jvarian.setOpaque(false);
         jvarian.setBackground(new Color(0, 0, 0, 0));
+        jvarian1.setOpaque(false);
+        jvarian1.setBackground(new Color(0, 0, 0, 0));
         jberat.setOpaque(false);
         jberat.setBackground(new Color(0, 0, 0, 0));
-        jexp.setOpaque(false);
-        jexp.setBackground(new Color(0, 0, 0, 0));
+        jberat1.setOpaque(false);
+        jberat1.setBackground(new Color(0, 0, 0, 0));
+        jtgl_exp.setOpaque(false);
+        jtgl_exp.setBackground(new Color(0, 0, 0, 0));
+        jexp1.setOpaque(false);
+        jexp1.setBackground(new Color(0, 0, 0, 0));
         jbarcode.setOpaque(false);
         jbarcode.setBackground(new Color(0, 0, 0, 0));   
+        
+        jbarcode1.setOpaque(false);
+        jbarcode1.setBackground(new Color(0, 0, 0, 0));   
         
         b.setEditable(false); 
         b.setOpaque(false); 
@@ -86,6 +117,12 @@ public class barang extends javax.swing.JFrame {
         
         db.koneksiDB();
         
+        jtgl_exp.setBorder(BorderFactory.createEmptyBorder());
+        jtgl_exp.setOpaque(false);
+        jtgl_exp.getDateEditor().getUiComponent().setBackground(new Color(0, 0, 0, 0));
+        jtgl_exp.getDateEditor().getUiComponent().setOpaque(false);
+        jtgl_exp.getDateEditor().getUiComponent().setBorder(BorderFactory.createEmptyBorder());
+        jTable1.setFocusable(false); // Biar nggak bisa di-klik
     }
     
     private void tampilData(){
@@ -93,9 +130,15 @@ public class barang extends javax.swing.JFrame {
     model = new DefaultTableModel();
     model.addColumn("Kode");
     model.addColumn("Nama");
-    model.addColumn("Harga");
+    model.addColumn("Varian");
+    model.addColumn("Berat");
     model.addColumn("Stok");
+    model.addColumn("Exp");
+    model.addColumn("Harga Jual");
+    model.addColumn("Harga Beli");
+    model.addColumn("Barcode");
     model.addColumn("Kategori");
+    model.addColumn("Pemasok");
 
     jTable1.setModel(model);
 }
@@ -109,9 +152,15 @@ public class barang extends javax.swing.JFrame {
             model.addRow(new Object[]{
                 rs.getString("kode_barang"),
                 rs.getString("nama_barang"),
-                rs.getString("harga_jual"),
+                rs.getString("varian"),
+                rs.getString("berat"),
                 rs.getString("stok"),
-                rs.getString("kategori")
+                rs.getString("exp"),
+                rs.getString("harga_jual"),
+                rs.getString("harga_beli"),
+                rs.getString("barcode"),
+                rs.getString("kategori"),
+                rs.getString("nama_pemasok"),
             });
         }
     } catch (Exception e) {
@@ -137,22 +186,31 @@ public class barang extends javax.swing.JFrame {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format tanggal
     String tanggalSekarang = sdf.format(new Date()); // Ambil tanggal sekarang
     tanggal.setText(tanggalSekarang); // Set ke JTextField (ganti dengan nama variabel JTextField tanggal kamu)
+    tanggal1.setText(tanggalSekarang); // Set ke JTextField (ganti dengan nama variabel JTextField tanggal kamu)
 }
     private void updateData() {
     try {
+         int hargaBeli;
+        try {
+            hargaBeli = Integer.parseInt(jhrg_beli.getText().replace(",", ""));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Harga Beli harus berupa angka!");
+            return;
+        }
+
         String sql = "UPDATE tb_barang SET " +
                 "nama_barang = '" + jnm_barang.getText() + "', " +
                 "kategori = '" + jkategori.getSelectedItem() + "', " +
                 "varian = '" + jvarian.getText() + "', " +
                 "berat = '" + jberat.getText() + "', " +
                 "stok = '" + jstok.getText() + "', " +
-                "exp = '" + jexp.getText() + "', " +
+                "exp = '" + new java.sql.Date(jtgl_exp.getDate().getTime()) + "', " +
                 "harga_jual = '" + jhrg_jual.getText() + "', " +
-                "harga_beli = '" + jhrg_beli.getText() + "', " +
+                "harga_beli = " + hargaBeli + ", " + // Pastikan harga_beli berupa angka
                 "barcode = '" + jbarcode.getText() + "', " +
                 "nama_pemasok = '" + jnm_pemasok.getText() + "' " +
                 "WHERE kode_barang = '" + jkd_barang.getText() + "'";
-        
+
         db.aksi(sql);
         JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
         isianBersih();
@@ -163,10 +221,18 @@ public class barang extends javax.swing.JFrame {
 }
 
     private void deleteData() {
+         int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(null, "Pilih data yang ingin dihapus dari tabel!");
+        return;
+    }
+
+    String kode = model.getValueAt(selectedRow, 0).toString();
+
     int pilihan = JOptionPane.showConfirmDialog(null, "Yakin mau hapus data ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
     if (pilihan == JOptionPane.YES_OPTION) {
         try {
-            String sql = "DELETE FROM tb_barang WHERE kode_barang = '" + jkd_barang.getText() + "'";
+            String sql = "DELETE FROM tb_barang WHERE kode_barang = '" + kode + "'";
             db.aksi(sql);
             JOptionPane.showMessageDialog(null, "Data berhasil dihapus!");
             isianBersih();
@@ -176,6 +242,39 @@ public class barang extends javax.swing.JFrame {
         }
     }
 }
+    
+    private void updateData1() {
+    try {
+        int hargaBeli;
+        try {
+            hargaBeli = Integer.parseInt(jhrg_beli1.getText().replace(",", ""));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Harga Beli harus berupa angka!");
+            return;
+        }
+
+        String sql = "UPDATE tb_barang SET " +
+                "nama_barang = '" + jnm_barang1.getText() + "', " +
+                "kategori = '" + jkategori1.getSelectedItem() + "', " +
+                "varian = '" + jvarian1.getText() + "', " +
+                "berat = '" + jberat1.getText() + "', " +
+                "stok = '" + jstok1.getText() + "', " +
+                "exp = '" + jexp1.getText() + "', " +
+                "harga_jual = '" + jhrg_jual1.getText() + "', " +
+                "harga_beli = " + hargaBeli + ", " +
+                "barcode = '" + jbarcode1.getText() + "', " +
+                "nama_pemasok = '" + jnm_pemasok1.getText() + "' " +
+                "WHERE kode_barang = '" + jkd_barang1.getText() + "'";
+
+        db.aksi(sql);
+        JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+        viewdata();
+        jbarang2.dispose(); // Tutup form edit
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Gagal update data: " + e.getMessage());
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,11 +297,11 @@ public class barang extends javax.swing.JFrame {
         jnm_pemasok = new javax.swing.JTextField();
         jvarian = new javax.swing.JTextField();
         jberat = new javax.swing.JTextField();
-        jexp = new javax.swing.JTextField();
-        simpan = new javax.swing.JButton();
         jkategori = new javax.swing.JComboBox<>();
         c = new javax.swing.JTextField();
         b = new javax.swing.JTextField();
+        simpan = new javax.swing.JButton();
+        jtgl_exp = new com.toedter.calendar.JDateChooser();
         a = new javax.swing.JLabel();
         jbarang2 = new javax.swing.JDialog();
         jcancel1 = new javax.swing.JButton();
@@ -250,12 +349,13 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang1.getContentPane().add(jcancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 50, 40));
 
+        tanggal.setBorder(null);
         tanggal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tanggalActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 110, -1));
+        jbarang1.getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 110, 30));
 
         jbarcode.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jbarcode.addActionListener(new java.awt.event.ActionListener() {
@@ -265,12 +365,13 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang1.getContentPane().add(jbarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 180, 50));
 
+        noTrans.setBorder(null);
         noTrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noTransActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(noTrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 110, -1));
+        jbarang1.getContentPane().add(noTrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 110, 30));
 
         jnm_barang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jnm_barang.addActionListener(new java.awt.event.ActionListener() {
@@ -336,21 +437,6 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang1.getContentPane().add(jberat, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 180, 50));
 
-        jexp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jexp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jexpActionPerformed(evt);
-            }
-        });
-        jbarang1.getContentPane().add(jexp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 180, 50));
-
-        simpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                simpanActionPerformed(evt);
-            }
-        });
-        jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
-
         jkategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Minuman", "Sembako" }));
         jbarang1.getContentPane().add(jkategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 40));
 
@@ -361,6 +447,16 @@ public class barang extends javax.swing.JFrame {
         b.setBackground(new java.awt.Color(255, 255, 255));
         b.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jbarang1.getContentPane().add(b, new org.netbeans.lib.awtextra.AbsoluteConstraints(-92, -34, 150, 60));
+
+        simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanActionPerformed(evt);
+            }
+        });
+        jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
+
+        jtgl_exp.setFocusable(false);
+        jbarang1.getContentPane().add(jtgl_exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 180, 30));
 
         a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
         a.setText("jLabel2");
@@ -472,6 +568,8 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang2.getContentPane().add(jexp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 180, 50));
 
+        simpan1.setBorderPainted(false);
+        simpan1.setContentAreaFilled(false);
         simpan1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simpan1ActionPerformed(evt);
@@ -479,7 +577,7 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang2.getContentPane().add(simpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
 
-        jkategori1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jkategori1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Minuman", "Sembako", " " }));
         jbarang2.getContentPane().add(jkategori1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 40));
 
         c1.setBackground(new java.awt.Color(255, 255, 255));
@@ -583,15 +681,23 @@ public class barang extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Kode", "Nama", "Harga", "Stok", "Kategori"
+                "Kode", "Nama", "Varian", "Berat", "Stok", "Exp", "Harga jual", "Harga beli", "Barcode", "Kategori", "Pemasok"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setFocusable(false);
         jTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
         jTable1.setSelectionForeground(new java.awt.Color(76, 52, 98));
@@ -609,6 +715,12 @@ public class barang extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
+            jTable1.getColumnModel().getColumn(7).setResizable(false);
+            jTable1.getColumnModel().getColumn(8).setResizable(false);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
+            jTable1.getColumnModel().getColumn(10).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 1020, 540));
@@ -709,7 +821,7 @@ public class barang extends javax.swing.JFrame {
                 jnm_pemasok.setText( rs.getString("nama_pemasok"));
                 jvarian.setText( rs.getString("varian"));
                 jberat.setText( rs.getString("berat"));
-                jexp.setText( rs.getString("exp"));
+                jtgl_exp.setDate(rs.getDate("exp"));
                 jbarcode.setText( rs.getString("barcode"));
                 jkategori.setSelectedItem(rs.getString("kategori"));
                 simpan.setEnabled(false);
@@ -748,58 +860,6 @@ public class barang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jberatActionPerformed
 
-    private void jexpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jexpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jexpActionPerformed
-
-    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
-   
-                try {
-             ResultSet rs = db.ambildata("SELECT * FROM tb_barang WHERE kode_barang='" + jkd_barang.getText() + "'");
-        if (rs.next()) {
-            JOptionPane.showMessageDialog(null, "Kode barang sudah terdaftar!");
-        } else {
-            String sql = "INSERT INTO tb_barang(kode_barang, nama_barang, kategori, varian, berat, stok, exp, harga_jual, harga_beli, barcode, nama_pemasok) VALUES ('"
-                    + jkd_barang.getText() + "','"
-                    + jnm_barang.getText() + "','"
-                    + jkategori.getSelectedItem() + "','"
-                    + jvarian.getText() + "','"
-                    + jberat.getText() + "','"
-                    + jstok.getText() + "','"
-                    + jexp.getText() + "','"
-                    + jhrg_jual.getText() + "','"
-                    + jhrg_beli.getText() + "','"
-                    + jbarcode.getText() + "','"
-                    + jnm_pemasok.getText() + "')";
-
-            db.aksi(sql);
-            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
-
-            // setelah simpan, refresh tabel
-            model.setRowCount(0);
-            viewdata();
-
-            // kosongkan isian form
-            isianBersih();
-
-            // tutup form pop up
-            Window window = SwingUtilities.getWindowAncestor(simpan);
-            if (window instanceof JDialog) {
-                window.dispose();
-            }
-        }
-    } catch (Exception e) {
-    e.printStackTrace(); // biar error kelihatan di console
-    JOptionPane.showMessageDialog(null, "Gagal menyimpan data: " + e.getMessage());
-}
-
-    Window window = SwingUtilities.getWindowAncestor(simpan); 
-    if (window instanceof JDialog) {
-        window.dispose();
-    }
-    this.setVisible(true);                       
-    }//GEN-LAST:event_simpanActionPerformed
-
     private void tombolLogout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolLogout1ActionPerformed
         login dashboard = new login();
         dashboard.setVisible(true);
@@ -808,13 +868,14 @@ public class barang extends javax.swing.JFrame {
     }//GEN-LAST:event_tombolLogout1ActionPerformed
 
     private void tombolHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolHapusActionPerformed
-deleteData();
+    deleteData();
                               
 
     }//GEN-LAST:event_tombolHapusActionPerformed
 
     private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
-        // TODO add your handling code here:
+        jbarang2.dispose();  // Tutup JDialog
+        this.setVisible(true); // Pastikan JFrame tetap terlihat
     }//GEN-LAST:event_jcancel1ActionPerformed
 
     private void tanggal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanggal1ActionPerformed
@@ -866,7 +927,10 @@ deleteData();
     }//GEN-LAST:event_jexp1ActionPerformed
 
     private void simpan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan1ActionPerformed
-        // TODO add your handling code here:
+
+                                                 
+      updateData1(); // BUKAN updateData() biasa
+
     }//GEN-LAST:event_simpan1ActionPerformed
 
     private void tombolJual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolJual1ActionPerformed
@@ -874,27 +938,107 @@ deleteData();
     }//GEN-LAST:event_tombolJual1ActionPerformed
 
     private void tombolEdit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolEdit2ActionPerformed
-        // TODO add your handling code here:
-                                                 
-    updateData(); 
+  int row = jTable1.getSelectedRow();
+    if (row >= 0) {
+        // Isi form edit
+        jkd_barang1.setText(model.getValueAt(row, 0).toString());
+        jnm_barang1.setText(model.getValueAt(row, 1).toString());
+        jvarian1.setText(model.getValueAt(row, 2).toString());
+        jberat1.setText(model.getValueAt(row, 3).toString());
+        jstok1.setText(model.getValueAt(row, 4).toString());
+        jexp1.setText(model.getValueAt(row, 5).toString());
+        jhrg_jual1.setText(model.getValueAt(row, 6).toString());
+        jhrg_beli1.setText(model.getValueAt(row, 7).toString());
+        jbarcode1.setText(model.getValueAt(row, 8).toString());
+        jkategori1.setSelectedItem(model.getValueAt(row, 9).toString());
+        jnm_pemasok1.setText(model.getValueAt(row, 10).toString());
 
+        jbarang2.setSize(580, 660);
+        jbarang2.setLocationRelativeTo(this);
+        jbarang2.setModal(true);
+        jbarang2.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Pilih data yang mau diedit dulu!");
+    }
 
     }//GEN-LAST:event_tombolEdit2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
         int row = jTable1.getSelectedRow(); // ambil baris yang dipilih
+         // Set form tambah
+//    jkd_barang.setText(model.getValueAt(row, 0).toString());
+//    jnm_barang.setText(model.getValueAt(row, 1).toString());
+//    jstok.setText(model.getValueAt(row, 4).toString());
+//    jhrg_jual.setText(model.getValueAt(row, 6).toString());
+//    jhrg_beli.setText(model.getValueAt(row, 7).toString());
+//    jnm_pemasok.setText(model.getValueAt(row, 10).toString());
+//    jvarian.setText(model.getValueAt(row, 2).toString());
+//    jberat.setText(model.getValueAt(row, 3).toString());
+//    jtgl_exp.setDate(java.sql.Date.valueOf(model.getValueAt(row, 5).toString()));
+//    jbarcode.setText(model.getValueAt(row, 8).toString());
+//    jkategori.setSelectedItem(model.getValueAt(row, 9).toString());
 
-        // ngisi semua inputan dengan data dari tabel
-        jkd_barang.setText(model.getValueAt(row, 0).toString());
-        jnm_barang.setText(model.getValueAt(row, 1).toString());
-        jhrg_jual.setText(model.getValueAt(row, 2).toString());
-        jstok.setText(model.getValueAt(row, 3).toString());
-        jkategori.setSelectedItem(model.getValueAt(row, 4).toString());
+    // Set form edit
+    jkd_barang1.setText(model.getValueAt(row, 0).toString());
+    jnm_barang1.setText(model.getValueAt(row, 1).toString());
+    jstok1.setText(model.getValueAt(row, 4).toString());
+    jhrg_jual1.setText(model.getValueAt(row, 6).toString());
+    jhrg_beli1.setText(model.getValueAt(row, 7).toString());
+    jnm_pemasok1.setText(model.getValueAt(row, 10).toString());
+    jvarian1.setText(model.getValueAt(row, 2).toString());
+    jberat1.setText(model.getValueAt(row, 3).toString());
+    jexp1.setText(model.getValueAt(row, 5).toString());
+    jbarcode1.setText(model.getValueAt(row, 8).toString());
+    jkategori1.setSelectedItem(model.getValueAt(row, 9).toString());
 
-        // Kalau kamu mau auto nonaktifkan tombol simpan supaya gak dobel tambah
-        simpan.setEnabled(false);        // TODO add your handling code here:
+    simpan.setEnabled(false); // matikan simpan agar tidak nambah dobel
+    
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
+                        try {
+             ResultSet rs = db.ambildata("SELECT * FROM tb_barang WHERE kode_barang='" + jkd_barang.getText() + "'");
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(null, "Kode barang sudah terdaftar!");
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String expFormatted = sdf.format(jtgl_exp.getDate());
+
+        String sql = "INSERT INTO tb_barang(kode_barang, nama_barang, kategori, varian, berat, stok, exp, harga_jual, harga_beli, barcode, nama_pemasok) VALUES ('"
+        + jkd_barang.getText() + "','"
+        + jnm_barang.getText() + "','"
+        + jkategori.getSelectedItem() + "','"
+        + jvarian.getText() + "','"
+        + jberat.getText() + "','"
+        + jstok.getText() + "','"
+        + expFormatted + "','"
+        + jhrg_jual.getText() + "','"
+        + jhrg_beli.getText() + "','"
+        + jbarcode.getText() + "','"
+        + jnm_pemasok.getText() + "')";
+
+            db.aksi(sql);
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+
+            // setelah simpan, refresh tabel
+            model.setRowCount(0);
+            viewdata();
+
+            // kosongkan isian form
+            isianBersih();
+
+            // tutup form pop up
+            Window window = SwingUtilities.getWindowAncestor(simpan);
+            if (window instanceof JDialog) {
+                window.dispose();
+            }
+        }
+    } catch (Exception e) {
+    e.printStackTrace(); // biar error kelihatan di console
+    JOptionPane.showMessageDialog(null, "Gagal menyimpan data: " + e.getMessage());
+    }
+    }//GEN-LAST:event_simpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -951,7 +1095,6 @@ deleteData();
     private javax.swing.JTextField jberat1;
     private javax.swing.JButton jcancel;
     private javax.swing.JButton jcancel1;
-    private javax.swing.JTextField jexp;
     private javax.swing.JTextField jexp1;
     private javax.swing.JTextField jhrg_beli;
     private javax.swing.JTextField jhrg_beli1;
@@ -967,6 +1110,7 @@ deleteData();
     private javax.swing.JTextField jnm_pemasok1;
     private javax.swing.JTextField jstok;
     private javax.swing.JTextField jstok1;
+    private com.toedter.calendar.JDateChooser jtgl_exp;
     private javax.swing.JTextField jvarian;
     private javax.swing.JTextField jvarian1;
     private javax.swing.JTextField noTrans;
