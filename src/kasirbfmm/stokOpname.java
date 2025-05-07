@@ -36,6 +36,7 @@ public class stokOpname extends javax.swing.JFrame {
         logout1 = new javax.swing.JButton();
         cari1 = new javax.swing.JButton();
         tambah1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         edit1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -93,6 +94,10 @@ public class stokOpname extends javax.swing.JFrame {
         tambah1.setContentAreaFilled(false);
         tambah1.setFocusPainted(false);
         getContentPane().add(tambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
+
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.setBorder(null);
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 99, 540, 30));
 
         edit1.setBorderPainted(false);
         edit1.setContentAreaFilled(false);
@@ -181,6 +186,7 @@ public class stokOpname extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton jual1;
     private javax.swing.JButton laporan1;
     private javax.swing.JButton logout1;

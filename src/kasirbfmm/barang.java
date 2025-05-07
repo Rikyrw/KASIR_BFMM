@@ -301,7 +301,6 @@ public class barang extends javax.swing.JFrame {
         c = new javax.swing.JTextField();
         b = new javax.swing.JTextField();
         simpan = new javax.swing.JButton();
-        jtgl_exp = new com.toedter.calendar.JDateChooser();
         a = new javax.swing.JLabel();
         jbarang2 = new javax.swing.JDialog();
         jcancel1 = new javax.swing.JButton();
@@ -322,7 +321,7 @@ public class barang extends javax.swing.JFrame {
         c1 = new javax.swing.JTextField();
         b1 = new javax.swing.JTextField();
         a1 = new javax.swing.JLabel();
-        tombolDasbor1 = new javax.swing.JButton();
+        tombolstokop = new javax.swing.JButton();
         tombollUser = new javax.swing.JButton();
         tombolLaporan = new javax.swing.JButton();
         tombolLogout1 = new javax.swing.JButton();
@@ -333,8 +332,10 @@ public class barang extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        tombolDasbor2 = new javax.swing.JButton();
         tombolJual1 = new javax.swing.JButton();
         tombolEdit2 = new javax.swing.JButton();
+        tombolRetur1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jbarang1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -454,9 +455,6 @@ public class barang extends javax.swing.JFrame {
             }
         });
         jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
-
-        jtgl_exp.setFocusable(false);
-        jbarang1.getContentPane().add(jtgl_exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 180, 30));
 
         a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
         a.setText("jLabel2");
@@ -596,15 +594,15 @@ public class barang extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tombolDasbor1.setBorderPainted(false);
-        tombolDasbor1.setContentAreaFilled(false);
-        tombolDasbor1.setFocusPainted(false);
-        tombolDasbor1.addActionListener(new java.awt.event.ActionListener() {
+        tombolstokop.setBorderPainted(false);
+        tombolstokop.setContentAreaFilled(false);
+        tombolstokop.setFocusPainted(false);
+        tombolstokop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolDasbor1ActionPerformed(evt);
+                tombolstokopActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolDasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 150, 120, 20));
+        getContentPane().add(tombolstokop, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 120, 20));
 
         tombollUser.setBorderPainted(false);
         tombollUser.setContentAreaFilled(false);
@@ -725,6 +723,16 @@ public class barang extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 1020, 540));
 
+        tombolDasbor2.setBorderPainted(false);
+        tombolDasbor2.setContentAreaFilled(false);
+        tombolDasbor2.setFocusPainted(false);
+        tombolDasbor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolDasbor2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tombolDasbor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 150, 120, 20));
+
         tombolJual1.setBorderPainted(false);
         tombolJual1.setContentAreaFilled(false);
         tombolJual1.setFocusPainted(false);
@@ -746,6 +754,16 @@ public class barang extends javax.swing.JFrame {
         });
         getContentPane().add(tombolEdit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
 
+        tombolRetur1.setBorderPainted(false);
+        tombolRetur1.setContentAreaFilled(false);
+        tombolRetur1.setFocusPainted(false);
+        tombolRetur1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolRetur1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tombolRetur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 120, 20));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/barangg.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -757,11 +775,11 @@ public class barang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void tombolDasbor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolDasbor1ActionPerformed
+    private void tombolstokopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolstokopActionPerformed
         dashboard dashboard = new dashboard();
         dashboard.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_tombolDasbor1ActionPerformed
+    }//GEN-LAST:event_tombolstokopActionPerformed
 
     private void tombolreturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolreturActionPerformed
         jual jual = new jual();
@@ -1040,6 +1058,14 @@ public class barang extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_simpanActionPerformed
 
+    private void tombolDasbor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolDasbor2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tombolDasbor2ActionPerformed
+
+    private void tombolRetur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolRetur1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tombolRetur1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1110,7 +1136,6 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField jnm_pemasok1;
     private javax.swing.JTextField jstok;
     private javax.swing.JTextField jstok1;
-    private com.toedter.calendar.JDateChooser jtgl_exp;
     private javax.swing.JTextField jvarian;
     private javax.swing.JTextField jvarian1;
     private javax.swing.JTextField noTrans;
@@ -1120,14 +1145,16 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField tanggal;
     private javax.swing.JTextField tanggal1;
     private javax.swing.JButton tombolCari1;
-    private javax.swing.JButton tombolDasbor1;
+    private javax.swing.JButton tombolDasbor2;
     private javax.swing.JButton tombolEdit2;
     private javax.swing.JButton tombolHapus;
     private javax.swing.JButton tombolJual1;
     private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolLogout1;
+    private javax.swing.JButton tombolRetur1;
     private javax.swing.JButton tombolTambah1;
     private javax.swing.JButton tombollUser;
+    private javax.swing.JButton tombolstokop;
     // End of variables declaration//GEN-END:variables
 
 }

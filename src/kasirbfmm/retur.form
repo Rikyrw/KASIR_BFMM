@@ -210,7 +210,7 @@
                 <Column editable="false" title="Nama Barang" type="java.lang.Object"/>
                 <Column editable="false" title="Qty" type="java.lang.Object"/>
                 <Column editable="false" title="Kategori" type="java.lang.Object"/>
-                <Column editable="false" title="Alazan" type="java.lang.Object"/>
+                <Column editable="false" title="Alasan" type="java.lang.Object"/>
                 <Column editable="false" title="Tanggal" type="java.lang.Object"/>
               </Table>
             </Property>

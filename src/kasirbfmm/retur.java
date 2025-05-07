@@ -141,7 +141,7 @@ public class retur extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Kode Barang", "Nama Barang", "Qty", "Kategori", "Alazan", "Tanggal"
+                "Kode Barang", "Nama Barang", "Qty", "Kategori", "Alasan", "Tanggal"
             }
         ) {
             boolean[] canEdit = new boolean [] {

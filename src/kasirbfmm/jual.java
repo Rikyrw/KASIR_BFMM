@@ -141,30 +141,40 @@ public class jual extends javax.swing.JFrame {
         noTransaksi1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(noTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 110, 20));
 
+        namaBarang.setBackground(new java.awt.Color(255, 255, 255));
         namaBarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(namaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 210, 450, 30));
 
+        kembalian.setBackground(new java.awt.Color(255, 255, 255));
         kembalian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(kembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 690, 100, 30));
 
+        kodeBarang2.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 209, 450, 30));
 
+        harga1.setBackground(new java.awt.Color(255, 255, 255));
         harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(harga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 190, 30));
 
+        stok1.setBackground(new java.awt.Color(255, 255, 255));
         stok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(stok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 190, 30));
 
+        qty1.setBackground(new java.awt.Color(255, 255, 255));
         qty1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 300, 190, 30));
 
+        jumlahHarga1.setBackground(new java.awt.Color(255, 255, 255));
+        jumlahHarga1.setForeground(new java.awt.Color(255, 255, 255));
         jumlahHarga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jumlahHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 300, 190, 30));
 
+        total1.setBackground(new java.awt.Color(255, 255, 255));
         total1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 690, 100, 30));
 
+        bayar1.setBackground(new java.awt.Color(255, 255, 255));
         bayar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 690, 100, 30));
 
