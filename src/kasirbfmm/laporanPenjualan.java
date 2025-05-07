@@ -221,31 +221,46 @@ public class laporanPenjualan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labaActionPerformed
-        // TODO add your handling code here:
+        laporanLaba laporanLaba = new laporanLaba();
+        laporanLaba.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_labaActionPerformed
 
     private void dasbor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dasbor1ActionPerformed
-        // TODO add your handling code here:
+        dashboard dashboard = new dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_dasbor1ActionPerformed
 
     private void barang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barang1ActionPerformed
-        // TODO add your handling code here:
+        barang barang = new barang();
+        barang.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_barang1ActionPerformed
 
     private void stokOpnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokOpnameActionPerformed
-        // TODO add your handling code here:
+        stokOpname stokOpname = new stokOpname();
+        stokOpname.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_stokOpnameActionPerformed
 
     private void jual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jual1ActionPerformed
-        // TODO add your handling code here:
+        jual jual = new jual();
+        jual.dispose();
+        this.dispose();
     }//GEN-LAST:event_jual1ActionPerformed
 
     private void user1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user1ActionPerformed
-        // TODO add your handling code here:
+        user user = new user();
+        user.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_user1ActionPerformed
 
     private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
-        // TODO add your handling code here:
+        login dashboard = new login();
+        dashboard.setVisible(true);
+        System.out.println("github perubahan");
+        this.dispose();
     }//GEN-LAST:event_logout1ActionPerformed
 
     private void ekspor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ekspor1ActionPerformed
@@ -253,11 +268,15 @@ public class laporanPenjualan extends javax.swing.JFrame {
     }//GEN-LAST:event_ekspor1ActionPerformed
 
     private void pembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pembelianActionPerformed
-        // TODO add your handling code here:
+        laporanPembelian laporanPembelian = new laporanPembelian();
+        laporanPembelian.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_pembelianActionPerformed
 
     private void retur2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retur2ActionPerformed
-        // TODO add your handling code here:
+        retur retur = new retur();
+        retur.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_retur2ActionPerformed
 
     /**

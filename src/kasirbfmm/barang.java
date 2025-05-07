@@ -301,6 +301,7 @@ public class barang extends javax.swing.JFrame {
         c = new javax.swing.JTextField();
         b = new javax.swing.JTextField();
         simpan = new javax.swing.JButton();
+        jtgl_exp = new com.toedter.calendar.JDateChooser();
         a = new javax.swing.JLabel();
         jbarang2 = new javax.swing.JDialog();
         jcancel1 = new javax.swing.JButton();
@@ -455,6 +456,7 @@ public class barang extends javax.swing.JFrame {
             }
         });
         jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
+        jbarang1.getContentPane().add(jtgl_exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, 160, 30));
 
         a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
         a.setText("jLabel2");
@@ -617,6 +619,11 @@ public class barang extends javax.swing.JFrame {
         tombolLaporan.setBorderPainted(false);
         tombolLaporan.setContentAreaFilled(false);
         tombolLaporan.setFocusPainted(false);
+        tombolLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolLaporanActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombolLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 20));
 
         tombolLogout1.setBorderPainted(false);
@@ -776,8 +783,8 @@ public class barang extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void tombolstokopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolstokopActionPerformed
-        dashboard dashboard = new dashboard();
-        dashboard.setVisible(true);
+        stokOpname stokOpname = new stokOpname();
+        stokOpname.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tombolstokopActionPerformed
 
@@ -952,7 +959,9 @@ public class barang extends javax.swing.JFrame {
     }//GEN-LAST:event_simpan1ActionPerformed
 
     private void tombolJual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolJual1ActionPerformed
-        // TODO add your handling code here:
+        jual jual = new jual();
+        jual.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tombolJual1ActionPerformed
 
     private void tombolEdit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolEdit2ActionPerformed
@@ -1059,12 +1068,22 @@ public class barang extends javax.swing.JFrame {
     }//GEN-LAST:event_simpanActionPerformed
 
     private void tombolDasbor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolDasbor2ActionPerformed
-        // TODO add your handling code here:
+        dashboard dashboard = new dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tombolDasbor2ActionPerformed
 
     private void tombolRetur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolRetur1ActionPerformed
-        // TODO add your handling code here:
+        retur retur = new retur();
+        retur.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tombolRetur1ActionPerformed
+
+    private void tombolLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolLaporanActionPerformed
+        laporanPembelian laporanPembelian = new laporanPembelian();
+        laporanPembelian.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tombolLaporanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1136,6 +1155,7 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField jnm_pemasok1;
     private javax.swing.JTextField jstok;
     private javax.swing.JTextField jstok1;
+    private com.toedter.calendar.JDateChooser jtgl_exp;
     private javax.swing.JTextField jvarian;
     private javax.swing.JTextField jvarian1;
     private javax.swing.JTextField noTrans;

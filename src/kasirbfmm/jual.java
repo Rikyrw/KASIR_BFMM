@@ -86,11 +86,21 @@ public class jual extends javax.swing.JFrame {
         stokOpname.setBorderPainted(false);
         stokOpname.setContentAreaFilled(false);
         stokOpname.setFocusPainted(false);
+        stokOpname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stokOpnameActionPerformed(evt);
+            }
+        });
         getContentPane().add(stokOpname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 110, 20));
 
         user.setBorderPainted(false);
         user.setContentAreaFilled(false);
         user.setFocusPainted(false);
+        user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userActionPerformed(evt);
+            }
+        });
         getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 80, 30));
 
         laporan.setBorderPainted(false);
@@ -106,6 +116,11 @@ public class jual extends javax.swing.JFrame {
         logout1.setBorderPainted(false);
         logout1.setContentAreaFilled(false);
         logout1.setFocusPainted(false);
+        logout1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logout1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(logout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 130, 30));
 
         simpan.setBorderPainted(false);
@@ -211,6 +226,11 @@ public class jual extends javax.swing.JFrame {
         retur1.setBorderPainted(false);
         retur1.setContentAreaFilled(false);
         retur1.setFocusPainted(false);
+        retur1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retur1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(retur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/jual.png"))); // NOI18N
@@ -233,8 +253,35 @@ public class jual extends javax.swing.JFrame {
     }//GEN-LAST:event_dasbor1ActionPerformed
 
     private void laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanActionPerformed
-        // TODO add your handling code here:
+        laporanPembelian laporanPembelian = new laporanPembelian();
+        laporanPembelian.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_laporanActionPerformed
+
+    private void retur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retur1ActionPerformed
+        retur retur = new retur();
+        retur.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_retur1ActionPerformed
+
+    private void stokOpnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokOpnameActionPerformed
+        stokOpname stokOpname = new stokOpname();
+        stokOpname.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_stokOpnameActionPerformed
+
+    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+        user user = new user();
+        user.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_userActionPerformed
+
+    private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
+        login dashboard = new login();
+        dashboard.setVisible(true);
+        System.out.println("github perubahan");
+        this.dispose();
+    }//GEN-LAST:event_logout1ActionPerformed
 
     /**
      * @param args the command line arguments

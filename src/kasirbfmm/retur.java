@@ -60,30 +60,55 @@ public class retur extends javax.swing.JFrame {
         tombollogout.setContentAreaFilled(false);
         tombollogout.setFocusPainted(false);
         tombollogout.setFocusable(false);
+        tombollogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombollogoutActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombollogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 690, 110, 20));
 
         tombolstokOpname.setBorderPainted(false);
         tombolstokOpname.setContentAreaFilled(false);
         tombolstokOpname.setFocusPainted(false);
         tombolstokOpname.setFocusable(false);
+        tombolstokOpname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolstokOpnameActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombolstokOpname, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 120, 20));
 
         tomboljual1.setBorderPainted(false);
         tomboljual1.setContentAreaFilled(false);
         tomboljual1.setFocusPainted(false);
         tomboljual1.setFocusable(false);
+        tomboljual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tomboljual1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tomboljual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 20));
 
         tomboluser1.setBorderPainted(false);
         tomboluser1.setContentAreaFilled(false);
         tomboluser1.setFocusPainted(false);
         tomboluser1.setFocusable(false);
+        tomboluser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tomboluser1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tomboluser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 90, 20));
 
         tombollaporan1.setBorderPainted(false);
         tombollaporan1.setContentAreaFilled(false);
         tombollaporan1.setFocusPainted(false);
         tombollaporan1.setFocusable(false);
+        tombollaporan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombollaporan1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombollaporan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 110, 20));
 
         tomboldasbor1.setBorderPainted(false);
@@ -168,6 +193,11 @@ public class retur extends javax.swing.JFrame {
         tombolbarang2.setContentAreaFilled(false);
         tombolbarang2.setFocusPainted(false);
         tombolbarang2.setFocusable(false);
+        tombolbarang2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolbarang2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tombolbarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 200, 100, 20));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/retur.png"))); // NOI18N
@@ -182,7 +212,9 @@ public class retur extends javax.swing.JFrame {
     }//GEN-LAST:event_tombolhapusActionPerformed
 
     private void tomboldasbor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboldasbor1ActionPerformed
-        // TODO add your handling code here:
+        dashboard dashboard = new dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tomboldasbor1ActionPerformed
 
     private void tombolcari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolcari1ActionPerformed
@@ -196,6 +228,43 @@ public class retur extends javax.swing.JFrame {
     private void tomboledit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboledit1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tomboledit1ActionPerformed
+
+    private void tombolbarang2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolbarang2ActionPerformed
+        barang barang = new barang();
+        barang.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tombolbarang2ActionPerformed
+
+    private void tombolstokOpnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolstokOpnameActionPerformed
+        stokOpname stokOpname = new stokOpname();
+        stokOpname.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tombolstokOpnameActionPerformed
+
+    private void tomboljual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboljual1ActionPerformed
+        jual jual = new jual();
+        jual.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tomboljual1ActionPerformed
+
+    private void tomboluser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboluser1ActionPerformed
+        user user = new user();
+        user.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tomboluser1ActionPerformed
+
+    private void tombollaporan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombollaporan1ActionPerformed
+        laporanPembelian laporanPembelian = new laporanPembelian();
+        laporanPembelian.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tombollaporan1ActionPerformed
+
+    private void tombollogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombollogoutActionPerformed
+        login dashboard = new login();
+        dashboard.setVisible(true);
+        System.out.println("github perubahan");
+        this.dispose();
+    }//GEN-LAST:event_tombollogoutActionPerformed
 
     /**
      * @param args the command line arguments
