@@ -53,36 +53,71 @@ public class stokOpname extends javax.swing.JFrame {
         dasbor1.setBorderPainted(false);
         dasbor1.setContentAreaFilled(false);
         dasbor1.setFocusPainted(false);
+        dasbor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dasbor1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(dasbor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 110, 20));
 
         barang1.setBorderPainted(false);
         barang1.setContentAreaFilled(false);
         barang1.setFocusPainted(false);
+        barang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barang1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(barang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 110, 20));
 
         retur1.setBorderPainted(false);
         retur1.setContentAreaFilled(false);
         retur1.setFocusPainted(false);
+        retur1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retur1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(retur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 90, 20));
 
         jual1.setBorderPainted(false);
         jual1.setContentAreaFilled(false);
         jual1.setFocusPainted(false);
+        jual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jual1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 20));
 
         user1.setBorderPainted(false);
         user1.setContentAreaFilled(false);
         user1.setFocusPainted(false);
+        user1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                user1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 90, 20));
 
         laporan1.setBorderPainted(false);
         laporan1.setContentAreaFilled(false);
         laporan1.setFocusPainted(false);
+        laporan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporan1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(laporan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 110, 20));
 
         logout1.setBorderPainted(false);
         logout1.setContentAreaFilled(false);
         logout1.setFocusPainted(false);
+        logout1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logout1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(logout1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 110, 20));
 
         cari1.setBorderPainted(false);
@@ -141,6 +176,49 @@ public class stokOpname extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void dasbor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dasbor1ActionPerformed
+        dashboard dashboard = new dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dasbor1ActionPerformed
+
+    private void barang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barang1ActionPerformed
+        barang barang = new barang();
+        barang.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_barang1ActionPerformed
+
+    private void retur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retur1ActionPerformed
+        retur retur = new retur();
+        retur.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_retur1ActionPerformed
+
+    private void jual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jual1ActionPerformed
+        jual jual = new jual();
+        jual.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jual1ActionPerformed
+
+    private void user1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user1ActionPerformed
+        user user = new user();
+        user.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_user1ActionPerformed
+
+    private void laporan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporan1ActionPerformed
+        laporanPembelian laporanPembelian = new laporanPembelian();
+        laporanPembelian.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_laporan1ActionPerformed
+
+    private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
+        login dashboard = new login();
+        dashboard.setVisible(true);
+        System.out.println("github perubahan");
+        this.dispose();
+    }//GEN-LAST:event_logout1ActionPerformed
 
     /**
      * @param args the command line arguments

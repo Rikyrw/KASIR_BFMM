@@ -181,8 +181,8 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_tombolBarang1ActionPerformed
 
     private void tombolStokopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolStokopActionPerformed
-        retur retur = new retur ();
-        retur.setVisible(true);
+        stokOpname stokOpname = new stokOpname ();
+        stokOpname.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tombolStokopActionPerformed
 
@@ -203,11 +203,15 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_namaActionPerformed
 
     private void tombolJual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolJual1ActionPerformed
-        // TODO add your handling code here:
+        jual jual = new jual();
+        jual.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tombolJual1ActionPerformed
 
     private void tombolRetur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolRetur1ActionPerformed
-        // TODO add your handling code here:
+        retur retur = new retur();
+        retur.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tombolRetur1ActionPerformed
 
     
