@@ -4,20 +4,94 @@
  */
 package kasirbfmm;
 
+import java.awt.Font;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.sql.SQLException;
+import java.text.MessageFormat;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 /**
  *
  * @author Dhimas Ananta
  */
 public class jual extends javax.swing.JFrame {
-
+    databasee db = new databasee();
+    DefaultTableModel model = new DefaultTableModel();
+        long sumTotal = 0;
     /**
      * Creates new form jual
      */
     public jual() {
         this.setUndecorated(true);
         initComponents();
+                //tampilkan tanggal transaksi
+        tglskrg();
+                //tampilkan nomor transaksi
+        buatnomor();
+                //tampilkan tabel
+        aturTabel();
+    }
+public void tglskrg(){
+    Date skrg = new Date();
+    // Format untuk tampilan di form (readable)
+    SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
+    // Format untuk database (SQL)
+    SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+    // Simpan format SQL dalam variable yang bisa diakses class
+    String tanggalSQL = sqlFormat.format(skrg);
+    // Tampilkan format readable di form
+    tanggal.setText(displayFormat.format(skrg));
+}
+
+ public void buatnomor(){
+        try {
+            ResultSet rs = db.ambildata("Select no_transaksi as auto from tb_jual ORDER by no_transaksi desc");
+            
+            if (rs.next()){
+                int no_urut = Integer.parseInt(rs.getString("auto")) + 1;
+                noTransaksi1.setText(Integer.toString(no_urut));
+            } else {
+                int not_t = 1;
+                noTransaksi1.setText(Integer.toString(not_t));
+            }
+            rs.close();
+        } catch (Exception e) {
+        }
     }
 
+    // Tambahkan method baru untuk mendapatkan tanggal SQL
+    public String getTanggalSQL() {
+        Date skrg = new Date();
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return sqlFormat.format(skrg);
+}
+    
+    //perintah membuat judul tabel pada form transaksi jual
+        public void aturTabel(){
+        model.addColumn("KODE BARANG");
+        model.addColumn("NAMA BARANG");
+        model.addColumn("HARGA BARANG");
+        model.addColumn("JUMLAH BARANG");
+        jTable1.setModel(model);
+    }
+        
+        private void isianBersih(){
+        kodeBarang2.setText("");
+        namaBarang.setText("");
+        stok1.setText("");
+        harga1.setText("");
+        qty1.setText("");
+        jumlahHarga1.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +116,7 @@ public class jual extends javax.swing.JFrame {
         tanggal = new javax.swing.JTextField();
         noTransaksi1 = new javax.swing.JTextField();
         namaBarang = new javax.swing.JTextField();
-        kembalian = new javax.swing.JTextField();
+        kembalian1 = new javax.swing.JTextField();
         kodeBarang2 = new javax.swing.JTextField();
         harga1 = new javax.swing.JTextField();
         stok1 = new javax.swing.JTextField();
@@ -126,21 +200,41 @@ public class jual extends javax.swing.JFrame {
         simpan.setBorderPainted(false);
         simpan.setContentAreaFilled(false);
         simpan.setFocusPainted(false);
+        simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanActionPerformed(evt);
+            }
+        });
         getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 680, 130, 40));
 
         hapus1.setBorderPainted(false);
         hapus1.setContentAreaFilled(false);
         hapus1.setFocusPainted(false);
+        hapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapus1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, 130, 40));
 
         tambah2.setBorderPainted(false);
         tambah2.setContentAreaFilled(false);
         tambah2.setFocusPainted(false);
+        tambah2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambah2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 130, 40));
 
         cetak1.setBorderPainted(false);
         cetak1.setContentAreaFilled(false);
         cetak1.setFocusPainted(false);
+        cetak1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cetak1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(cetak1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 680, 130, 40));
 
         ekspor1.setBorderPainted(false);
@@ -160,12 +254,17 @@ public class jual extends javax.swing.JFrame {
         namaBarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(namaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 210, 450, 30));
 
-        kembalian.setBackground(new java.awt.Color(255, 255, 255));
-        kembalian.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(kembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 690, 100, 30));
+        kembalian1.setBackground(new java.awt.Color(255, 255, 255));
+        kembalian1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(kembalian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 690, 100, 30));
 
         kodeBarang2.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        kodeBarang2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeBarang2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 209, 450, 30));
 
         harga1.setBackground(new java.awt.Color(255, 255, 255));
@@ -178,12 +277,16 @@ public class jual extends javax.swing.JFrame {
 
         qty1.setBackground(new java.awt.Color(255, 255, 255));
         qty1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        qty1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qty1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 300, 190, 30));
 
         jumlahHarga1.setBackground(new java.awt.Color(255, 255, 255));
-        jumlahHarga1.setForeground(new java.awt.Color(255, 255, 255));
         jumlahHarga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(jumlahHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 300, 190, 30));
+        getContentPane().add(jumlahHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 300, 190, 20));
 
         total1.setBackground(new java.awt.Color(255, 255, 255));
         total1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -191,6 +294,11 @@ public class jual extends javax.swing.JFrame {
 
         bayar1.setBackground(new java.awt.Color(255, 255, 255));
         bayar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bayar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bayar1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 690, 100, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -201,7 +309,7 @@ public class jual extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Kode", "Nama", "Qty", "Harga satuan"
+                "Kode Barang", "Nama Barang", "Jumlah Barang", "Harga Barang"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -283,6 +391,431 @@ public class jual extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_logout1ActionPerformed
 
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
+       sumTotal = 0;
+    int row = jTable1.getRowCount();
+    boolean isDiskon = false;
+    boolean isEsKrimGratis = false;
+
+    try {
+        // Validasi input
+        if (noTransaksi1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nomor transaksi tidak boleh kosong!");
+            return;
+        }
+
+        if (row == 0) {
+            JOptionPane.showMessageDialog(null, "Tabel transaksi kosong, tidak ada data untuk disimpan!");
+            return;
+        }
+
+        // Periksa diskon dan promo
+        LocalDate today = LocalDate.now();
+        if (today.getDayOfMonth() == today.getMonthValue()) {
+            isDiskon = true;
+        }
+        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
+            isEsKrimGratis = true;
+        }
+
+        // Hitung total harga
+        int totalHarga = Integer.parseInt(total1.getText());
+        if (isDiskon) {
+            totalHarga /= 2;
+            JOptionPane.showMessageDialog(null, "Diskon 50% diterapkan! Total setelah diskon: " + totalHarga);
+        }
+
+        // Dapatkan id_user dari session (contoh menggunakan id_user = 1)
+        int id_user = 1; // Ganti dengan cara mendapatkan id_user yang login
+
+        // Simpan data transaksi ke tb_jual
+        String sqlTransaksi = "INSERT INTO tb_jual (no_transaksi, id_user, tanggal, qty, total, bayar) VALUES (" + 
+                "'" + noTransaksi1.getText() + "', " + 
+                "'" + id_user + "', " + 
+                "'" + getTanggalSQL() + "', " + 
+                "'" + row + "', " + 
+                "'" + totalHarga + "', " + 
+                "'" + bayar1.getText() + "')"; 
+        db.aksi(sqlTransaksi); 
+
+        // Simpan data ke tabel detail transaksi 
+        for (int i = 0; i < row; i++) { 
+            String kodeBarang = jTable1.getValueAt(i, 0).toString(); 
+            String namaBarang = jTable1.getValueAt(i, 1).toString();
+            String hargaBarang = jTable1.getValueAt(i, 2).toString(); 
+            String jumlahBarang = jTable1.getValueAt(i, 3).toString(); 
+
+            // Ambil data tambahan dari tb_barang
+            ResultSet rsBarang = db.ambildata("SELECT harga_beli, varian FROM tb_barang WHERE kode_barang = '" + kodeBarang + "'");
+            int hargaBeli = 0;
+            String varian = "-";
+            if (rsBarang.next()) {
+                hargaBeli = rsBarang.getInt("harga_beli");
+                varian = rsBarang.getString("varian");
+            }
+            rsBarang.close();
+
+            // Hitung total harga per item
+            double totalHargaItem = Double.parseDouble(jumlahBarang) * Double.parseDouble(hargaBarang);
+
+            // Query insert detail transaksi (sesuai struktur baru tanpa no_detail)
+            String sqlDetail = "INSERT INTO detail_transaksijual " +
+                    "(no_transaksi, kode_barang, nama_barang, harga_barang, harga_beli, varian, total) VALUES (" + 
+                    "'" + noTransaksi1.getText() + "', " + 
+                    "'" + kodeBarang + "', " + 
+                    "'" + namaBarang + "', " + 
+                    "'" + hargaBarang + "', " +
+                    "'" + hargaBeli + "', " +
+                    "'" + varian + "', " +
+                    "'" + totalHargaItem + "')";
+            db.aksi(sqlDetail); 
+
+            // Update stok barang 
+            String sqlUpdate = "UPDATE tb_barang SET stok = stok - " + jumlahBarang + 
+                    " WHERE kode_barang = '" + kodeBarang + "'"; 
+            db.aksi(sqlUpdate); 
+        }
+
+        // Promo es krim
+        if (isEsKrimGratis) {
+            JOptionPane.showMessageDialog(null, "Selamat! Anda mendapatkan es krim gratis karena hari ini Jumat!");
+        }
+
+        JOptionPane.showMessageDialog(null, "Data telah berhasil disimpan!");
+
+        // Reset form dan tabel
+        model.setRowCount(0);
+        buatnomor();
+        
+        // Clear semua fields
+        total1.setText("");
+        bayar1.setText("");
+        kembalian1.setText("");
+        kodeBarang2.setText("");
+        namaBarang.setText("");
+        harga1.setText("");
+        stok1.setText("");
+        jumlahHarga1.setText("");
+        
+        sumTotal = 0;
+
+    } catch (SQLException ex) {
+        Logger.getLogger(jual.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, "Terjadi kesalahan database: " + ex.getMessage());
+    } catch (Exception ex) {
+        Logger.getLogger(jual.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_simpanActionPerformed
+
+    private void bayar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bayar1ActionPerformed
+        // TODO add your handling code here:
+        int b1, b2, kembalian, bayar = Integer.parseInt(bayar1.getText());
+        b1 = Integer.parseInt(bayar1.getText());
+        b2 = Integer.parseInt(total1.getText());
+        kembalian = b1 - b2;
+        kembalian1.setText(String.valueOf(kembalian));
+    }//GEN-LAST:event_bayar1ActionPerformed
+
+    private void kodeBarang2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarang2ActionPerformed
+try {
+            ResultSet rs = db.ambildata("select * from tb_barang where kode_barang='" +kodeBarang2.getText()+"'");
+             if (rs.next()) {
+                 namaBarang.setText(rs.getString("nama_barang"));
+                 harga1.setText(rs.getString("harga_jual"));
+                 stok1.setText(rs.getString("stok"));
+                 qty1.requestFocus();
+             }else{
+                 JOptionPane.showMessageDialog(null, "Kode Belum terdaftar");
+                 kodeBarang2.selectAll();
+             }       
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_kodeBarang2ActionPerformed
+
+    private void qty1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qty1ActionPerformed
+        // TODO add your handling code here:
+        int a1, a2, total, stok_barang = Integer.parseInt(stok1.getText());
+        if (stok_barang > 1) {
+            a1 = Integer.parseInt(harga1.getText());
+            a2 = Integer.parseInt(qty1.getText());
+            total = a1 * a2;
+            jumlahHarga1.setText(String.valueOf(total));
+            tambah2.requestFocus();
+    }else{
+            JOptionPane.showMessageDialog(null, "Maaf, \nstok sudah mencapai stok minimum!");   
+        }
+    }//GEN-LAST:event_qty1ActionPerformed
+
+    private void tambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambah2ActionPerformed
+     // TODO add your handling code here:
+        try {
+            //konfirmasi tambah
+         int n = JOptionPane.showConfirmDialog(this, "Tambah lagi?", "riky",
+                 JOptionPane.YES_NO_OPTION,
+                 JOptionPane.QUESTION_MESSAGE, null);
+         if (n == JOptionPane.YES_OPTION){
+             long qyt, hrg;
+             
+             model.addRow(new Object[]{kodeBarang2.getText(), namaBarang.getText(), harga1.getText(), qty1.getText()});
+             jTable1.setModel(model);
+             qyt = Long.parseLong(qty1.getText());
+             hrg = Long.parseLong(harga1.getText());
+             sumTotal += (hrg * qyt);
+             total1.setText(String.valueOf(sumTotal));
+             kodeBarang2.requestFocus();
+             kodeBarang2.setText("");
+             namaBarang.setText("");
+             harga1.setText("");
+             qty1.setText("");
+             jumlahHarga1.setText("");
+         }else if (n == JOptionPane.NO_OPTION){
+             long qyt, hrg;
+             model.addRow(new Object[]{kodeBarang2.getText(), namaBarang.getText(), harga1.getText(), qty1.getText()});
+             jTable1.setModel(model);
+             qyt = Long.parseLong(qty1.getText());
+             hrg = Long.parseLong(harga1.getText());
+             sumTotal += (hrg * qyt);
+             total1.setText(String.valueOf(sumTotal));
+             kodeBarang2.requestFocus();
+             kodeBarang2.setText("");
+             namaBarang.setText("");
+             harga1.setText("");
+             qty1.setText("");
+             stok1.setText("");
+             jumlahHarga1.setText("");
+             bayar1.requestFocus();
+             
+         }else{
+             bayar1.requestFocus();
+         }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_tambah2ActionPerformed
+
+    private void cetak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetak1ActionPerformed
+       // TODO add your handling code here:
+    try {
+        // Periksa apakah ada transaksi
+        if (noTransaksi1.getText().isEmpty() || jTable1.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Tidak ada transaksi untuk dicetak.");
+            return;
+        }
+
+        // Hitung total harga setelah diskon
+        int totalHarga = Integer.parseInt(total1.getText());
+        int diskon = 0;
+        boolean isDiskon = false;
+        boolean isFreeIceCream = false;
+
+        // Periksa apakah tanggal "cantik" (hari dan bulan sama)
+        LocalDate today = LocalDate.now();
+        if (today.getDayOfMonth() == today.getMonthValue()) {
+            isDiskon = true;
+            diskon = totalHarga / 2; // Diskon 50%
+            totalHarga -= diskon;
+        }
+
+        // Periksa apakah hari ini adalah Jumat
+        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
+            isFreeIceCream = true;
+        }
+
+        // Format waktu
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        String waktu = timeFormat.format(new Date());
+
+        // Membuat header nota
+        StringBuilder nota = new StringBuilder();
+        nota.append("       BUNDA FIENS MART       \n");
+        nota.append("----------------------------------\n");
+        nota.append("Jl. Jombang no 29, Ajung Jember Utara\n");
+        nota.append("081234567890\n");
+        nota.append("Aditya Fadni Athaullah (kasir)\n");
+        nota.append("----------------------------------\n\n");
+        
+        nota.append("No Transaksi : ").append(noTransaksi1.getText()).append("\n");
+        nota.append("Waktu        : ").append(tanggal.getText()).append(" ").append(waktu).append("\n");
+        nota.append("----------------------------------\n");
+
+        // Iterasi data tabel untuk isi nota
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            String barang = jTable1.getValueAt(i, 1).toString(); // Nama barang
+            int jumlah = Integer.parseInt(jTable1.getValueAt(i, 3).toString()); // Jumlah
+            int harga = Integer.parseInt(jTable1.getValueAt(i, 2).toString());  // Harga satuan
+            int total = jumlah * harga; // Total harga
+
+            // Format nama barang (maksimal 30 karakter)
+            String formattedBarang = barang.length() > 30 ? barang.substring(0, 27) + "..." : barang;
+            
+            nota.append(String.format("%-30s\n", formattedBarang));
+            nota.append(String.format("%-4d %9s %9s\n", 
+                jumlah, 
+                String.format("%,d", harga), 
+                String.format("%,d", total)));
+        }
+
+        // Tambahkan total pembayaran
+        nota.append("----------------------------------\n");
+        if (isDiskon) {
+            nota.append(String.format("%-15s %15s\n", "DISKON :", "(" + String.format("%,d", diskon) + ")"));
+        }
+        nota.append(String.format("%-15s %15s\n", "HARGA JUAL :", String.format("%,d", Integer.parseInt(total1.getText()))));
+        nota.append("----------------------------------\n");
+        nota.append(String.format("%-15s %15s\n", "TOTAL :", String.format("%,d", totalHarga)));
+        nota.append(String.format("%-15s %15s\n", "TUNAI :", String.format("%,d", Integer.parseInt(bayar1.getText()))));
+        
+        // Hitung kembalian dengan total harga setelah diskon
+        int kembalian = Integer.parseInt(bayar1.getText()) - totalHarga;
+        nota.append(String.format("%-15s %15s\n", "KEMBALI :", String.format("%,d", kembalian)));
+        
+        if (isDiskon) {
+            nota.append(String.format("%-15s %15s\n", "ANDA HEMAT :", String.format("%,d", diskon)));
+        }
+        
+        nota.append("======= LAYANAN KONSUMEN =======\n");
+        nota.append("SMS : 081234567890\n");
+        nota.append("WA : 081234567890\n");
+        nota.append("EMAIL : adityfn@gmail.com\n");
+
+        // Menampilkan nota di JTextArea
+        JTextArea textArea = new JTextArea(nota.toString());
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 6));
+        JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Nota Pembelian", JOptionPane.INFORMATION_MESSAGE);
+
+        // Konfirmasi cetak
+        int printConfirm = JOptionPane.showConfirmDialog(null, "Cetak nota ini?", "Konfirmasi Cetak", JOptionPane.YES_NO_OPTION);
+        if (printConfirm == JOptionPane.YES_OPTION) {
+            try {
+                textArea.print(); // Cetak nota
+                JOptionPane.showMessageDialog(null, "Nota berhasil dicetak.");
+            } catch (java.awt.print.PrinterException e) {
+                JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mencetak: " + e.getMessage());
+    }
+    }//GEN-LAST:event_cetak1ActionPerformed
+
+    private void hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapus1ActionPerformed
+       // TODO add your handling code here:
+// TODO add your handling code here:
+try {
+    // Periksa apakah ada transaksi
+    if (noTransaksi1.getText().isEmpty() || jTable1.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(null, "Tidak ada transaksi untuk dicetak.");
+        return;
+    }
+
+    // Hitung total harga setelah diskon
+    int totalHarga = Integer.parseInt(total1.getText());
+    int diskon = 0;
+    boolean isDiskon = false;
+
+    // Format waktu
+    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    String waktu = timeFormat.format(new Date());
+
+    // Membuat header nota dengan format thermal printer
+    StringBuilder nota = new StringBuilder();
+    nota.append("     BUNDA FIENS MART     \n");
+    nota.append("============================\n");
+    nota.append("Jl. Jombang no 29\n");
+    nota.append("Ajung Jember Utara\n");
+    nota.append("Telp: 081234567890\n");
+    nota.append("Kasir: Aditya F.A.\n");
+    nota.append("============================\n");
+    
+    // Informasi transaksi
+    nota.append("No.Trx : ").append(noTransaksi1.getText()).append("\n");
+    nota.append("Waktu  : ").append(tanggal.getText()).append(" ").append(waktu).append("\n");
+    nota.append("----------------------------\n");
+    
+    // Header kolom
+    nota.append(String.format("%-20s %3s %7s\n", "NAMA BARANG", "QTY", "TOTAL"));
+
+    // Iterasi data tabel untuk isi nota
+    for (int i = 0; i < jTable1.getRowCount(); i++) {
+        String barang = jTable1.getValueAt(i, 1).toString();
+        int jumlah = Integer.parseInt(jTable1.getValueAt(i, 3).toString());
+        int harga = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
+        int total = jumlah * harga;
+
+        // Format nama barang (maksimal 20 karakter)
+        String formattedBarang = barang.length() > 20 ? barang.substring(0, 17) + "..." : barang;
+        
+        // Format baris item
+        nota.append(String.format("%-20s\n", formattedBarang));
+        nota.append(String.format("%20sx%2s %,9d\n", "", jumlah, total));
+    }
+
+    // Footer nota
+    nota.append("----------------------------\n");
+    
+    // Hitung diskon jika ada
+    int hargaJual = Integer.parseInt(total1.getText());
+    if (diskon > 0) {
+        nota.append(String.format("%-15s %,12d\n", "DISKON :", -diskon));
+    }
+    
+    nota.append(String.format("%-15s %,12d\n", "HARGA JUAL :", hargaJual));
+    nota.append("----------------------------\n");
+    nota.append(String.format("%-15s %,12d\n", "TOTAL :", totalHarga));
+    nota.append(String.format("%-15s %,12d\n", "TUNAI :", Integer.parseInt(bayar1.getText())));
+    
+    // Hitung kembalian
+    int kembalian = Integer.parseInt(bayar1.getText()) - totalHarga;
+    nota.append(String.format("%-15s %,12d\n", "KEMBALI :", kembalian));
+    
+    if (diskon > 0) {
+        nota.append(String.format("%-15s %,12d\n", "ANDA HEMAT :", diskon));
+    }
+    
+    nota.append("============================\n");
+    nota.append("TERIMA KASIH TELAH BERBELANJA\n");
+    nota.append("DI TOKO KAMI\n");
+    nota.append("============================\n");
+    nota.append("LAYANAN KONSUMEN\n");
+    nota.append("SMS/WA: 081234567890\n");
+    nota.append("Email: adityfn@gmail.com\n");
+    nota.append("============================\n");
+
+    // Menampilkan preview struk
+    JTextArea textArea = new JTextArea(nota.toString());
+    textArea.setEditable(false);
+    textArea.setFont(new Font("Monospaced", Font.PLAIN, 2));
+    
+    // Konfigurasi halaman untuk cetak
+    MessageFormat header = new MessageFormat("Bunda Fiens Mart - Nota Penjualan");
+    MessageFormat footer = new MessageFormat("Halaman {0}");
+    
+    // Konfirmasi cetak
+    int printConfirm = JOptionPane.showConfirmDialog(null, new JScrollPane(textArea), "Preview Struk", JOptionPane.YES_NO_OPTION);
+    if (printConfirm == JOptionPane.YES_OPTION) {
+        try {
+            // Set font khusus untuk printer thermal
+            textArea.setFont(new Font("Monospaced", Font.PLAIN, 2));
+            
+            // Cetak dengan dialog printer
+            boolean complete = textArea.print(header, footer);
+            if (complete) {
+                JOptionPane.showMessageDialog(null, "Struk berhasil dicetak.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Pencetakan dibatalkan.");
+            }
+        } catch (java.awt.print.PrinterException e) {
+            JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
+        }
+    }
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    e.printStackTrace();
+}
+    }//GEN-LAST:event_hapus1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -331,7 +864,7 @@ public class jual extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jumlahHarga1;
-    private javax.swing.JTextField kembalian;
+    private javax.swing.JTextField kembalian1;
     private javax.swing.JTextField kodeBarang2;
     private javax.swing.JButton laporan;
     private javax.swing.JButton logout1;

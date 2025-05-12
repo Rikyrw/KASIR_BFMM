@@ -365,7 +365,7 @@ public class barang extends javax.swing.JFrame {
                 jbarcodeActionPerformed(evt);
             }
         });
-        jbarang1.getContentPane().add(jbarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 180, 50));
+        jbarang1.getContentPane().add(jbarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 180, 40));
 
         noTrans.setBorder(null);
         noTrans.addActionListener(new java.awt.event.ActionListener() {
@@ -456,7 +456,7 @@ public class barang extends javax.swing.JFrame {
             }
         });
         jbarang1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, 130, 50));
-        jbarang1.getContentPane().add(jtgl_exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, 160, 30));
+        jbarang1.getContentPane().add(jtgl_exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 180, 30));
 
         a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
         a.setText("jLabel2");

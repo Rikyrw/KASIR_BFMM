@@ -59,7 +59,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="320" y="380" width="180" height="50"/>
+              <AbsoluteConstraints x="320" y="380" width="180" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -280,7 +280,7 @@
         <Component class="com.toedter.calendar.JDateChooser" name="jtgl_exp">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="330" y="300" width="160" height="30"/>
+              <AbsoluteConstraints x="320" y="300" width="180" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
