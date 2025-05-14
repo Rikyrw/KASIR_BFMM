@@ -26,6 +26,16 @@ public class retur extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        simpan = new javax.swing.JButton();
+        alasan = new javax.swing.JTextField();
+        namaBarang1 = new javax.swing.JTextField();
+        qty1 = new javax.swing.JTextField();
+        kodeBarang1 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        noTrans = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         tombolhapus = new javax.swing.JButton();
         tombollogout = new javax.swing.JButton();
         tombolstokOpname = new javax.swing.JButton();
@@ -37,10 +47,56 @@ public class retur extends javax.swing.JFrame {
         tomboltambah1 = new javax.swing.JButton();
         tomboledit1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        cri = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         tombolbarang2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+
+        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jDialog1.getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 220, 30));
+
+        simpan.setBorder(null);
+        simpan.setBorderPainted(false);
+        simpan.setContentAreaFilled(false);
+        simpan.setFocusPainted(false);
+        simpan.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, 120, 40));
+
+        alasan.setBackground(new java.awt.Color(255, 255, 255));
+        alasan.setBorder(null);
+        alasan.setOpaque(false);
+        alasan.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        jDialog1.getContentPane().add(alasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 200, 80));
+
+        namaBarang1.setBackground(new java.awt.Color(255, 255, 255));
+        namaBarang1.setBorder(null);
+        namaBarang1.setOpaque(false);
+        namaBarang1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 20));
+
+        qty1.setBackground(new java.awt.Color(255, 255, 255));
+        qty1.setBorder(null);
+        qty1.setOpaque(false);
+        qty1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        jDialog1.getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 200, 20));
+
+        kodeBarang1.setBackground(new java.awt.Color(255, 255, 255));
+        kodeBarang1.setBorder(null);
+        kodeBarang1.setOpaque(false);
+        kodeBarang1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 200, 20));
+        jDialog1.getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 59, 100, 20));
+
+        noTrans.setBackground(new java.awt.Color(153, 153, 153));
+        noTrans.setBorder(null);
+        jDialog1.getContentPane().add(noTrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 100, 20));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jDialog1.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 580, 490));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,6 +213,11 @@ public class retur extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, 130, 40));
+
+        cri.setBorder(null);
+        cri.setOpaque(false);
+        cri.setRequestFocusEnabled(false);
+        getContentPane().add(cri, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 99, 410, 40));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -302,10 +363,21 @@ public class retur extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField alasan;
+    private javax.swing.JTextField cri;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField kodeBarang1;
+    private javax.swing.JTextField namaBarang1;
+    private javax.swing.JTextField noTrans;
+    private javax.swing.JTextField qty1;
+    private javax.swing.JButton simpan;
     private javax.swing.JButton tombolbarang2;
     private javax.swing.JButton tombolcari1;
     private javax.swing.JButton tomboldasbor1;

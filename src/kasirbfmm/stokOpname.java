@@ -26,6 +26,17 @@ public class stokOpname extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        selisih = new javax.swing.JTextField();
+        kodeBarang1 = new javax.swing.JTextField();
+        namaBarang1 = new javax.swing.JTextField();
+        kartuStok1 = new javax.swing.JTextField();
+        stokSistem1 = new javax.swing.JTextField();
+        keterangan1 = new javax.swing.JTextField();
+        simpan = new javax.swing.JButton();
+        cari2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         hapus = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
@@ -35,12 +46,62 @@ public class stokOpname extends javax.swing.JFrame {
         laporan1 = new javax.swing.JButton();
         logout1 = new javax.swing.JButton();
         cari1 = new javax.swing.JButton();
-        tambah1 = new javax.swing.JButton();
+        ekspor = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         edit1 = new javax.swing.JButton();
+        tambah2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+
+        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jDialog1.getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 100, 30));
+
+        selisih.setBorder(null);
+        selisih.setOpaque(false);
+        selisih.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(selisih, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, 100, 30));
+
+        kodeBarang1.setBorder(null);
+        kodeBarang1.setOpaque(false);
+        kodeBarang1.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 190, 30));
+
+        namaBarang1.setBorder(null);
+        namaBarang1.setOpaque(false);
+        namaBarang1.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 190, 30));
+
+        kartuStok1.setBorder(null);
+        kartuStok1.setOpaque(false);
+        kartuStok1.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(kartuStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 190, 30));
+
+        stokSistem1.setBorder(null);
+        stokSistem1.setOpaque(false);
+        stokSistem1.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(stokSistem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 190, 30));
+
+        keterangan1.setBorder(null);
+        keterangan1.setOpaque(false);
+        keterangan1.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(keterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 190, 30));
+
+        simpan.setBorder(null);
+        simpan.setBorderPainted(false);
+        simpan.setContentAreaFilled(false);
+        simpan.setFocusPainted(false);
+        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 110, 30));
+
+        cari2.setBorder(null);
+        cari2.setBorderPainted(false);
+        cari2.setContentAreaFilled(false);
+        cari2.setFocusPainted(false);
+        jDialog1.getContentPane().add(cari2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 70, 40));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/stokkop (1).png"))); // NOI18N
+        jLabel3.setText("jLabel3");
+        jDialog1.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, -1, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -123,21 +184,26 @@ public class stokOpname extends javax.swing.JFrame {
         cari1.setBorderPainted(false);
         cari1.setContentAreaFilled(false);
         cari1.setFocusPainted(false);
-        getContentPane().add(cari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 100, 60, 40));
+        getContentPane().add(cari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 30, 40));
 
-        tambah1.setBorderPainted(false);
-        tambah1.setContentAreaFilled(false);
-        tambah1.setFocusPainted(false);
-        getContentPane().add(tambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
+        ekspor.setBorderPainted(false);
+        ekspor.setContentAreaFilled(false);
+        ekspor.setFocusPainted(false);
+        getContentPane().add(ekspor, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 120, 40));
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setBorder(null);
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 99, 540, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 99, 410, 30));
 
         edit1.setBorderPainted(false);
         edit1.setContentAreaFilled(false);
         edit1.setFocusPainted(false);
         getContentPane().add(edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+
+        tambah2.setBorderPainted(false);
+        tambah2.setContentAreaFilled(false);
+        tambah2.setFocusPainted(false);
+        getContentPane().add(tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,9 +236,9 @@ public class stokOpname extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 162, 1010, 530));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/Stok opname.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/Stok opnameeee.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -258,18 +324,30 @@ public class stokOpname extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton barang1;
     private javax.swing.JButton cari1;
+    private javax.swing.JButton cari2;
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton edit1;
+    private javax.swing.JButton ekspor;
     private javax.swing.JButton hapus;
-    private javax.swing.JLabel jLabel1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton jual1;
+    private javax.swing.JTextField kartuStok1;
+    private javax.swing.JTextField keterangan1;
+    private javax.swing.JTextField kodeBarang1;
     private javax.swing.JButton laporan1;
     private javax.swing.JButton logout1;
+    private javax.swing.JTextField namaBarang1;
     private javax.swing.JButton retur1;
-    private javax.swing.JButton tambah1;
+    private javax.swing.JTextField selisih;
+    private javax.swing.JButton simpan;
+    private javax.swing.JTextField stokSistem1;
+    private javax.swing.JButton tambah2;
     private javax.swing.JButton user1;
     // End of variables declaration//GEN-END:variables
 }
