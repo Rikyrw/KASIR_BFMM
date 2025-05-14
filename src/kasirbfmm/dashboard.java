@@ -95,7 +95,7 @@ public class dashboard extends javax.swing.JFrame {
                 namaActionPerformed(evt);
             }
         });
-        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 40, 90, 20));
+        getContentPane().add(nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 40, 130, 20));
 
         jlogout.setBackground(new java.awt.Color(51, 51, 51));
         jlogout.setBorder(null);

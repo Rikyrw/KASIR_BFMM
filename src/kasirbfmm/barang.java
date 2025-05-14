@@ -39,6 +39,7 @@ public class barang extends javax.swing.JFrame {
     model.addColumn("Berat");
     model.addColumn("Stok");
     model.addColumn("Exp");
+    model.addColumn("Tanggal");
     model.addColumn("Harga Jual");
     model.addColumn("Harga Beli");
     model.addColumn("Barcode");
@@ -134,6 +135,7 @@ public class barang extends javax.swing.JFrame {
     model.addColumn("Berat");
     model.addColumn("Stok");
     model.addColumn("Exp");
+    model.addColumn("Tanggal");
     model.addColumn("Harga Jual");
     model.addColumn("Harga Beli");
     model.addColumn("Barcode");
@@ -156,6 +158,7 @@ public class barang extends javax.swing.JFrame {
                 rs.getString("berat"),
                 rs.getString("stok"),
                 rs.getString("exp"),
+                rs.getString("tanggal"),
                 rs.getString("harga_jual"),
                 rs.getString("harga_beli"),
                 rs.getString("barcode"),
@@ -259,7 +262,7 @@ public class barang extends javax.swing.JFrame {
                 "varian = '" + jvarian1.getText() + "', " +
                 "berat = '" + jberat1.getText() + "', " +
                 "stok = '" + jstok1.getText() + "', " +
-                "exp = '" + jexp1.getText() + "', " +
+                "exp = '" + jexp1.getDate() + "', " +
                 "harga_jual = '" + jhrg_jual1.getText() + "', " +
                 "harga_beli = " + hargaBeli + ", " +
                 "barcode = '" + jbarcode1.getText() + "', " +
@@ -316,10 +319,10 @@ public class barang extends javax.swing.JFrame {
         jnm_pemasok1 = new javax.swing.JTextField();
         jvarian1 = new javax.swing.JTextField();
         jberat1 = new javax.swing.JTextField();
-        jexp1 = new javax.swing.JTextField();
         simpan1 = new javax.swing.JButton();
         jkategori1 = new javax.swing.JComboBox<>();
         c1 = new javax.swing.JTextField();
+        jexp1 = new com.toedter.calendar.JDateChooser();
         b1 = new javax.swing.JTextField();
         a1 = new javax.swing.JLabel();
         tombolstokop = new javax.swing.JButton();
@@ -328,7 +331,7 @@ public class barang extends javax.swing.JFrame {
         tombolLogout1 = new javax.swing.JButton();
         tombolCari1 = new javax.swing.JButton();
         tombolTambah1 = new javax.swing.JButton();
-        tombolKartustok = new javax.swing.JButton();
+        tombolhapussss = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -337,7 +340,7 @@ public class barang extends javax.swing.JFrame {
         tombolJual1 = new javax.swing.JButton();
         tombolEdit2 = new javax.swing.JButton();
         tombolRetur1 = new javax.swing.JButton();
-        tombolHapus1 = new javax.swing.JButton();
+        tombolKartustokk = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         jbarang1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -561,14 +564,6 @@ public class barang extends javax.swing.JFrame {
         });
         jbarang2.getContentPane().add(jberat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 180, 50));
 
-        jexp1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jexp1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jexp1ActionPerformed(evt);
-            }
-        });
-        jbarang2.getContentPane().add(jexp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 180, 50));
-
         simpan1.setBorderPainted(false);
         simpan1.setContentAreaFilled(false);
         simpan1.addActionListener(new java.awt.event.ActionListener() {
@@ -584,6 +579,7 @@ public class barang extends javax.swing.JFrame {
         c1.setBackground(new java.awt.Color(255, 255, 255));
         c1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jbarang2.getContentPane().add(c1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, -20, 160, 90));
+        jbarang2.getContentPane().add(jexp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 299, 190, 30));
 
         b1.setBackground(new java.awt.Color(255, 255, 255));
         b1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -657,15 +653,15 @@ public class barang extends javax.swing.JFrame {
         });
         getContentPane().add(tombolTambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 120, 40));
 
-        tombolKartustok.setBorderPainted(false);
-        tombolKartustok.setContentAreaFilled(false);
-        tombolKartustok.setFocusPainted(false);
-        tombolKartustok.addActionListener(new java.awt.event.ActionListener() {
+        tombolhapussss.setBorderPainted(false);
+        tombolhapussss.setContentAreaFilled(false);
+        tombolhapussss.setFocusPainted(false);
+        tombolhapussss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolKartustokActionPerformed(evt);
+                tombolhapussssActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolKartustok, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
+        getContentPane().add(tombolhapussss, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
@@ -687,17 +683,17 @@ public class barang extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Kode", "Nama", "Varian", "Berat", "Stok", "Exp", "Harga jual", "Harga beli", "Barcode", "Kategori", "Pemasok"
+                "Kode", "Nama", "Varian", "Berat", "Stok", "Exp", "Tanggal", "Harga jual", "Harga beli", "Barcode", "Kategori", "Pemasok"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, false, false, false, false, false, false
+                true, false, false, false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -772,15 +768,15 @@ public class barang extends javax.swing.JFrame {
         });
         getContentPane().add(tombolRetur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 120, 20));
 
-        tombolHapus1.setBorderPainted(false);
-        tombolHapus1.setContentAreaFilled(false);
-        tombolHapus1.setFocusPainted(false);
-        tombolHapus1.addActionListener(new java.awt.event.ActionListener() {
+        tombolKartustokk.setBorderPainted(false);
+        tombolKartustokk.setContentAreaFilled(false);
+        tombolKartustokk.setFocusPainted(false);
+        tombolKartustokk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolHapus1ActionPerformed(evt);
+                tombolKartustokkActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolHapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+        getContentPane().add(tombolKartustokk, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 100, 120, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/barangg (1).jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -903,11 +899,11 @@ public class barang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tombolLogout1ActionPerformed
 
-    private void tombolKartustokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolKartustokActionPerformed
+    private void tombolhapussssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolhapussssActionPerformed
     deleteData();
                               
 
-    }//GEN-LAST:event_tombolKartustokActionPerformed
+    }//GEN-LAST:event_tombolhapussssActionPerformed
 
     private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
         jbarang2.dispose();  // Tutup JDialog
@@ -958,10 +954,6 @@ public class barang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jberat1ActionPerformed
 
-    private void jexp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jexp1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jexp1ActionPerformed
-
     private void simpan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan1ActionPerformed
 
                                                  
@@ -984,7 +976,7 @@ public class barang extends javax.swing.JFrame {
         jvarian1.setText(model.getValueAt(row, 2).toString());
         jberat1.setText(model.getValueAt(row, 3).toString());
         jstok1.setText(model.getValueAt(row, 4).toString());
-        jexp1.setText(model.getValueAt(row, 5).toString());
+        jexp1.setDate(java.sql.Date.valueOf(model.getValueAt(row, 5).toString()));
         jhrg_jual1.setText(model.getValueAt(row, 6).toString());
         jhrg_beli1.setText(model.getValueAt(row, 7).toString());
         jbarcode1.setText(model.getValueAt(row, 8).toString());
@@ -1026,7 +1018,7 @@ public class barang extends javax.swing.JFrame {
     jnm_pemasok1.setText(model.getValueAt(row, 10).toString());
     jvarian1.setText(model.getValueAt(row, 2).toString());
     jberat1.setText(model.getValueAt(row, 3).toString());
-    jexp1.setText(model.getValueAt(row, 5).toString());
+    jexp1.setDate(java.sql.Date.valueOf(model.getValueAt(row, 5).toString()));
     jbarcode1.setText(model.getValueAt(row, 8).toString());
     jkategori1.setSelectedItem(model.getValueAt(row, 9).toString());
 
@@ -1096,9 +1088,9 @@ public class barang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tombolLaporanActionPerformed
 
-    private void tombolHapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolHapus1ActionPerformed
+    private void tombolKartustokkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolKartustokkActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tombolHapus1ActionPerformed
+    }//GEN-LAST:event_tombolKartustokkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1155,7 +1147,7 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField jberat1;
     private javax.swing.JButton jcancel;
     private javax.swing.JButton jcancel1;
-    private javax.swing.JTextField jexp1;
+    private com.toedter.calendar.JDateChooser jexp1;
     private javax.swing.JTextField jhrg_beli;
     private javax.swing.JTextField jhrg_beli1;
     private javax.swing.JTextField jhrg_jual;
@@ -1182,13 +1174,13 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JButton tombolCari1;
     private javax.swing.JButton tombolDasbor2;
     private javax.swing.JButton tombolEdit2;
-    private javax.swing.JButton tombolHapus1;
     private javax.swing.JButton tombolJual1;
-    private javax.swing.JButton tombolKartustok;
+    private javax.swing.JButton tombolKartustokk;
     private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolLogout1;
     private javax.swing.JButton tombolRetur1;
     private javax.swing.JButton tombolTambah1;
+    private javax.swing.JButton tombolhapussss;
     private javax.swing.JButton tombollUser;
     private javax.swing.JButton tombolstokop;
     // End of variables declaration//GEN-END:variables
