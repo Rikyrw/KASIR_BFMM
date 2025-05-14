@@ -322,13 +322,17 @@ public class barang extends javax.swing.JFrame {
         c1 = new javax.swing.JTextField();
         b1 = new javax.swing.JTextField();
         a1 = new javax.swing.JLabel();
+        jDialog1 = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         tombolstokop = new javax.swing.JButton();
         tombollUser = new javax.swing.JButton();
         tombolLaporan = new javax.swing.JButton();
         tombolLogout1 = new javax.swing.JButton();
         tombolCari1 = new javax.swing.JButton();
         tombolTambah1 = new javax.swing.JButton();
-        tombolHapus = new javax.swing.JButton();
+        tombolKartustok = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -337,7 +341,8 @@ public class barang extends javax.swing.JFrame {
         tombolJual1 = new javax.swing.JButton();
         tombolEdit2 = new javax.swing.JButton();
         tombolRetur1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        tombolHapus1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jbarang1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -592,6 +597,45 @@ public class barang extends javax.swing.JFrame {
         a1.setText("jLabel2");
         jbarang2.getContentPane().add(a1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
 
+        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Id kartu", "Tanggal", "Kode barang", "Jenis transaksi", "Barang masuk", "Barang keluar", "Stok akhir", "Keterangan"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
+            jTable2.getColumnModel().getColumn(5).setResizable(false);
+            jTable2.getColumnModel().getColumn(6).setResizable(false);
+            jTable2.getColumnModel().getColumn(7).setResizable(false);
+        }
+
+        jDialog1.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 42, 970, 440));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/tabel kartu stok.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jDialog1.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 0, 1130, -1));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -639,7 +683,7 @@ public class barang extends javax.swing.JFrame {
         tombolCari1.setBorderPainted(false);
         tombolCari1.setContentAreaFilled(false);
         tombolCari1.setFocusPainted(false);
-        getContentPane().add(tombolCari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 40, 40));
+        getContentPane().add(tombolCari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 40, 40));
 
         tombolTambah1.setBorderPainted(false);
         tombolTambah1.setContentAreaFilled(false);
@@ -654,17 +698,17 @@ public class barang extends javax.swing.JFrame {
                 tombolTambah1ActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolTambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
+        getContentPane().add(tombolTambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 120, 40));
 
-        tombolHapus.setBorderPainted(false);
-        tombolHapus.setContentAreaFilled(false);
-        tombolHapus.setFocusPainted(false);
-        tombolHapus.addActionListener(new java.awt.event.ActionListener() {
+        tombolKartustok.setBorderPainted(false);
+        tombolKartustok.setContentAreaFilled(false);
+        tombolKartustok.setFocusPainted(false);
+        tombolKartustok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tombolHapusActionPerformed(evt);
+                tombolKartustokActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
+        getContentPane().add(tombolKartustok, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
@@ -672,7 +716,7 @@ public class barang extends javax.swing.JFrame {
         jTextField1.setCaretColor(new java.awt.Color(255, 255, 255));
         jTextField1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField1.setSelectionColor(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 410, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 260, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -680,7 +724,7 @@ public class barang extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 110, 40));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 110, 40));
 
         jTable1.setBackground(new java.awt.Color(102, 102, 102));
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
@@ -759,7 +803,7 @@ public class barang extends javax.swing.JFrame {
                 tombolEdit2ActionPerformed(evt);
             }
         });
-        getContentPane().add(tombolEdit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+        getContentPane().add(tombolEdit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 100, 120, 40));
 
         tombolRetur1.setBorderPainted(false);
         tombolRetur1.setContentAreaFilled(false);
@@ -771,9 +815,19 @@ public class barang extends javax.swing.JFrame {
         });
         getContentPane().add(tombolRetur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 120, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/barangg.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        tombolHapus1.setBorderPainted(false);
+        tombolHapus1.setContentAreaFilled(false);
+        tombolHapus1.setFocusPainted(false);
+        tombolHapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tombolHapus1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tombolHapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/barangg (1).jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -892,11 +946,11 @@ public class barang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tombolLogout1ActionPerformed
 
-    private void tombolHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolHapusActionPerformed
+    private void tombolKartustokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolKartustokActionPerformed
     deleteData();
                               
 
-    }//GEN-LAST:event_tombolHapusActionPerformed
+    }//GEN-LAST:event_tombolKartustokActionPerformed
 
     private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
         jbarang2.dispose();  // Tutup JDialog
@@ -1085,6 +1139,10 @@ public class barang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tombolLaporanActionPerformed
 
+    private void tombolHapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolHapus1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tombolHapus1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1128,9 +1186,13 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField c;
     private javax.swing.JTextField c1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jbarang1;
     private javax.swing.JDialog jbarang2;
@@ -1167,8 +1229,9 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JButton tombolCari1;
     private javax.swing.JButton tombolDasbor2;
     private javax.swing.JButton tombolEdit2;
-    private javax.swing.JButton tombolHapus;
+    private javax.swing.JButton tombolHapus1;
     private javax.swing.JButton tombolJual1;
+    private javax.swing.JButton tombolKartustok;
     private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolLogout1;
     private javax.swing.JButton tombolRetur1;
