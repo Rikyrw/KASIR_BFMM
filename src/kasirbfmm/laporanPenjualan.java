@@ -35,14 +35,14 @@ public class laporanPenjualan extends javax.swing.JFrame {
         logout1 = new javax.swing.JButton();
         ekspor1 = new javax.swing.JButton();
         pembelian = new javax.swing.JButton();
-        sampaitanggal = new javax.swing.JTextField();
-        daritanggal = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         retur2 = new javax.swing.JButton();
         totalPemasukan = new javax.swing.JTextField();
         totalBarang1 = new javax.swing.JTextField();
+        daritanggal = new com.toedter.calendar.JDateChooser();
+        sampai_tanggal = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,14 +147,6 @@ public class laporanPenjualan extends javax.swing.JFrame {
         });
         getContentPane().add(pembelian, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, 120, 30));
 
-        sampaitanggal.setBackground(new java.awt.Color(153, 153, 153));
-        sampaitanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(sampaitanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 100, 20));
-
-        daritanggal.setBackground(new java.awt.Color(153, 153, 153));
-        daritanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(daritanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 109, 100, 20));
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 120, 40));
 
@@ -203,15 +195,15 @@ public class laporanPenjualan extends javax.swing.JFrame {
 
         totalPemasukan.setEditable(false);
         totalPemasukan.setBorder(null);
-        totalPemasukan.setOpaque(false);
         totalPemasukan.setRequestFocusEnabled(false);
         getContentPane().add(totalPemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 680, 130, 40));
 
         totalBarang1.setEditable(false);
         totalBarang1.setBorder(null);
-        totalBarang1.setOpaque(false);
         totalBarang1.setRequestFocusEnabled(false);
         getContentPane().add(totalBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 680, 130, 40));
+        getContentPane().add(daritanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, -1));
+        getContentPane().add(sampai_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 100, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliann dan penjualan.png"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -317,7 +309,7 @@ public class laporanPenjualan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton barang1;
-    private javax.swing.JTextField daritanggal;
+    private com.toedter.calendar.JDateChooser daritanggal;
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton ekspor1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -329,7 +321,7 @@ public class laporanPenjualan extends javax.swing.JFrame {
     private javax.swing.JButton logout1;
     private javax.swing.JButton pembelian;
     private javax.swing.JButton retur2;
-    private javax.swing.JTextField sampaitanggal;
+    private com.toedter.calendar.JDateChooser sampai_tanggal;
     private javax.swing.JButton stokOpname;
     private javax.swing.JTextField totalBarang1;
     private javax.swing.JTextField totalPemasukan;

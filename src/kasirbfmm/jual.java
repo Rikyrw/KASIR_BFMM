@@ -16,6 +16,12 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 /**
@@ -92,6 +98,10 @@ public void tglskrg(){
         qty1.setText("");
         jumlahHarga1.setText("");
     }
+        
+    private String formatCurrency(int amount) {
+    return String.format("%,d", amount).replace(",", ".");
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -595,105 +605,132 @@ try {
     }//GEN-LAST:event_tambah2ActionPerformed
 
     private void cetak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetak1ActionPerformed
-       // TODO add your handling code here:
-    try {
-        // Periksa apakah ada transaksi
+try {
+        // Check if there's a transaction to print
         if (noTransaksi1.getText().isEmpty() || jTable1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Tidak ada transaksi untuk dicetak.");
             return;
         }
 
-        // Hitung total harga setelah diskon
+        // Calculate total price after discounts
         int totalHarga = Integer.parseInt(total1.getText());
         int diskon = 0;
         boolean isDiskon = false;
         boolean isFreeIceCream = false;
 
-        // Periksa apakah tanggal "cantik" (hari dan bulan sama)
+        // Check for "pretty date" discount (day = month)
         LocalDate today = LocalDate.now();
         if (today.getDayOfMonth() == today.getMonthValue()) {
             isDiskon = true;
-            diskon = totalHarga / 2; // Diskon 50%
+            diskon = totalHarga / 2; // 50% discount
             totalHarga -= diskon;
         }
 
-        // Periksa apakah hari ini adalah Jumat
+        // Check for Friday free ice cream
         if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
             isFreeIceCream = true;
         }
 
-        // Format waktu
+        // Format time
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        String waktu = timeFormat.format(new Date());
+        String tanggalStr = dateFormat.format(new Date());
+        String waktuStr = timeFormat.format(new Date());
 
-        // Membuat header nota
+        // Build receipt with thermal printer formatting
         StringBuilder nota = new StringBuilder();
-        nota.append("       BUNDA FIENS MART       \n");
-        nota.append("----------------------------------\n");
+        
+        // ESC/POS commands for printer formatting
+        nota.append((char)27).append((char)97).append((char)1); // Center align
+        nota.append((char)27).append((char)33).append((char)16); // Double height
+        
+        // Store header
+        nota.append("BUNDA FIENS MART\n");
+        
+        
+        // Reset to normal font and left align
+        nota.append("--------------------------------\n");
+        nota.append((char)27).append((char)33).append((char)0);
+        nota.append((char)27).append((char)97).append((char)0);
+        
+        // Store information
         nota.append("Jl. Jombang no 29, Ajung Jember Utara\n");
-        nota.append("081234567890\n");
-        nota.append("Aditya Fadni Athaullah (kasir)\n");
-        nota.append("----------------------------------\n\n");
+        nota.append("Telp: 081234567890\n");
+        nota.append("Kasir: Aditya Fadni Athaullah\n");
         
-        nota.append("No Transaksi : ").append(noTransaksi1.getText()).append("\n");
-        nota.append("Waktu        : ").append(tanggal.getText()).append(" ").append(waktu).append("\n");
-        nota.append("----------------------------------\n");
+        // Transaction details
+        nota.append("--------------------------------\n");
+        nota.append(String.format("%-12s: %s\n", "No Transaksi", noTransaksi1.getText()));
+        nota.append(String.format("%-12s: %s-%s\n", "Waktu",tanggalStr, waktuStr));
+        
 
-        // Iterasi data tabel untuk isi nota
+        // Item list
+        nota.append("--------------------------------\n");
         for (int i = 0; i < jTable1.getRowCount(); i++) {
-            String barang = jTable1.getValueAt(i, 1).toString(); // Nama barang
-            int jumlah = Integer.parseInt(jTable1.getValueAt(i, 3).toString()); // Jumlah
-            int harga = Integer.parseInt(jTable1.getValueAt(i, 2).toString());  // Harga satuan
-            int total = jumlah * harga; // Total harga
+            String barang = jTable1.getValueAt(i, 1).toString();
+            int jumlah = Integer.parseInt(jTable1.getValueAt(i, 3).toString());
+            int harga = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
+            int total = jumlah * harga;
 
-            // Format nama barang (maksimal 30 karakter)
-            String formattedBarang = barang.length() > 30 ? barang.substring(0, 27) + "..." : barang;
-            
-            nota.append(String.format("%-30s\n", formattedBarang));
-            nota.append(String.format("%-4d %9s %9s\n", 
+            nota.append(barang).append("\n");
+            nota.append(String.format("%5d  %8s  %8s\n", 
                 jumlah, 
-                String.format("%,d", harga), 
-                String.format("%,d", total)));
+                formatCurrency(harga), 
+                formatCurrency(total)));
         }
 
-        // Tambahkan total pembayaran
-        nota.append("----------------------------------\n");
-        if (isDiskon) {
-            nota.append(String.format("%-15s %15s\n", "DISKON :", "(" + String.format("%,d", diskon) + ")"));
-        }
-        nota.append(String.format("%-15s %15s\n", "HARGA JUAL :", String.format("%,d", Integer.parseInt(total1.getText()))));
-        nota.append("----------------------------------\n");
-        nota.append(String.format("%-15s %15s\n", "TOTAL :", String.format("%,d", totalHarga)));
-        nota.append(String.format("%-15s %15s\n", "TUNAI :", String.format("%,d", Integer.parseInt(bayar1.getText()))));
+        // Payment summary
+//        nota.append("\n");
+        nota.append("--------------------------------\n");
+        nota.append(String.format("%-12s: %12s\n", "HARGA JUAL", formatCurrency(Integer.parseInt(total1.getText()))));
         
-        // Hitung kembalian dengan total harga setelah diskon
+        if (isDiskon) {
+            nota.append(String.format("%-12s: %12s\n", "DISKON 50%", formatCurrency(diskon)));
+        }
+        
+        nota.append("--------------------------------\n");
+        nota.append(String.format("%-12s: %12s\n", "TOTAL", formatCurrency(totalHarga)));
+        nota.append(String.format("%-12s: %12s\n", "TUNAI", formatCurrency(Integer.parseInt(bayar1.getText()))));
+        
         int kembalian = Integer.parseInt(bayar1.getText()) - totalHarga;
-        nota.append(String.format("%-15s %15s\n", "KEMBALI :", String.format("%,d", kembalian)));
+        nota.append(String.format("%-12s: %12s\n", "KEMBALI", formatCurrency(kembalian)));
+        nota.append("--------------------------------\n\n");
         
+        // Promo information
         if (isDiskon) {
-            nota.append(String.format("%-15s %15s\n", "ANDA HEMAT :", String.format("%,d", diskon)));
+            nota.append("  ANDA HEMAT: ").append(formatCurrency(diskon)).append("\n\n");
         }
         
-        nota.append("======= LAYANAN KONSUMEN =======\n");
-        nota.append("SMS : 081234567890\n");
-        nota.append("WA : 081234567890\n");
-        nota.append("EMAIL : adityfn@gmail.com\n");
+        if (isFreeIceCream) {
+            nota.append("  FREE ICE CREAM (JUMAT BERKAH)\n\n");
+        }
+        
+        // Footer
+        nota.append("=== LAYANAN KONSUMEN ===\n");
+        nota.append("SMS/WA : 081234567890\n");
+        nota.append("Email  : adityfn@gmail.com\n\n");
 
-        // Menampilkan nota di JTextArea
-        JTextArea textArea = new JTextArea(nota.toString());
-        textArea.setEditable(false);
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 6));
-        JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Nota Pembelian", JOptionPane.INFORMATION_MESSAGE);
+        // Paper cut command
+        nota.append((char)29).append((char)86).append((char)65).append((char)3);
 
-        // Konfirmasi cetak
-        int printConfirm = JOptionPane.showConfirmDialog(null, "Cetak nota ini?", "Konfirmasi Cetak", JOptionPane.YES_NO_OPTION);
-        if (printConfirm == JOptionPane.YES_OPTION) {
-            try {
-                textArea.print(); // Cetak nota
-                JOptionPane.showMessageDialog(null, "Nota berhasil dicetak.");
-            } catch (java.awt.print.PrinterException e) {
-                JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
+        // Print directly to thermal printer
+        try {
+            PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+            if (printService != null) {
+                DocPrintJob job = printService.createPrintJob();
+                byte[] bytes = nota.toString().getBytes("CP437");
+                Doc doc = new SimpleDoc(bytes, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
+                
+                int printConfirm = JOptionPane.showConfirmDialog(null, "Cetak nota sekarang?", "Konfirmasi Cetak", JOptionPane.YES_NO_OPTION);
+                if (printConfirm == JOptionPane.YES_OPTION) {
+                    job.print(doc, null);
+                    JOptionPane.showMessageDialog(null, "Nota berhasil dicetak.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Tidak ada printer yang terdeteksi.");
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mencetak: " + e.getMessage());

@@ -4,19 +4,196 @@
  */
 package kasirbfmm;
 
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dhimas Ananta
  */
 public class user extends javax.swing.JFrame {
 
+    private databasee db;
+    private Connection conn;
+    private PreparedStatement pst;
+    private ResultSet rs;
     /**
      * Creates new form user
      */
     public user() {
         this.setUndecorated(true);
         initComponents();
+        db = new databasee();
+        conn = db.koneksiDB();
+        loadUserData();
     }
+    
+     private void loadUserData() {
+        try {
+            String sql = "SELECT * FROM tb_user";
+            rs = db.ambildata(sql);
+            
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Clear existing data
+            
+            while (rs.next()) {
+                Vector<Object> row = new Vector<>();
+                row.add(rs.getInt("id_user"));
+                row.add(rs.getString("nama"));
+                row.add(rs.getString("username"));
+                row.add(rs.getString("password"));
+                row.add(rs.getString("rfid"));
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error loading user data: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+     
+        private void clearFields() {
+            idUserbaeu1.setText("");
+            nama1.setText("");
+            username1.setText("");
+            kataSandi1.setText("");
+            rfid.setText("");
+        }
+      
+private void addUser() {
+    try {
+        String sql = "INSERT INTO tb_user (nama, username, password, rfid) VALUES (?, ?, ?, ?)";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, nama1.getText());
+        pst.setString(2, username1.getText());
+        pst.setString(3, kataSandi1.getText());
+        pst.setString(4, rfid.getText());
+        
+        int rowsAffected = pst.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "User added successfully!");
+            clearFields();
+            loadUserData();
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error adding user: " + e.getMessage());
+    } finally {
+        try {
+            if (pst != null) pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+      
+private void updateUser() {
+    try {
+        // Validasi ID user harus numerik
+        if (!idUserbaeu1.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "ID User harus angka");
+            return;
+        }
+        
+        String sql = "UPDATE tb_user SET nama=?, username=?, password=?, rfid=? WHERE id_user=?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, nama1.getText());
+        pst.setString(2, username1.getText());
+        pst.setString(3, kataSandi1.getText());
+        pst.setString(4, rfid.getText());
+        pst.setInt(5, Integer.parseInt(idUserbaeu1.getText()));
+        
+        int rowsAffected = pst.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "User berhasil diupdate!");
+            clearFields();
+            loadUserData();
+        } else {
+            JOptionPane.showMessageDialog(null, "User dengan ID tersebut tidak ditemukan");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    } finally {
+        try {
+            if (pst != null) pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+        
+        private void deleteUser() {
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a user to delete");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this user?", 
+                "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        try {
+            int userId = (int) jTable1.getValueAt(selectedRow, 0);
+            String sql = "DELETE FROM tb_user WHERE id_user=" + userId;
+            
+            if (db.aksi(sql)) {
+                JOptionPane.showMessageDialog(null, "User deleted successfully!");
+                loadUserData();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error deleting user: " + e.getMessage());
+        }
+    }
+        
+        
+    
+        private void tambahUserBaru() {
+        try {
+            
+        // Validasi field
+        if(nama1.getText().isEmpty() || username1.getText().isEmpty() || 
+           kataSandi1.getText().isEmpty() || rfid.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Semua field harus diisi!");
+            return;
+        }
+
+        // Dapatkan ID berikutnya secara manual
+        String getMaxId = "SELECT MAX(id_user) FROM tb_user";
+        rs = conn.createStatement().executeQuery(getMaxId);
+        int nextId = rs.next() ? rs.getInt(1) + 1 : 1; // Jika tabel kosong, mulai dari 1
+
+        // Insert dengan ID eksplisit
+        String sql = "INSERT INTO tb_user (id_user, nama, username, password, rfid) VALUES (?, ?, ?, ?, ?)";
+        pst = conn.prepareStatement(sql);
+        pst.setInt(1, nextId);
+        pst.setString(2, nama1.getText());
+        pst.setString(3, username1.getText());
+        pst.setString(4, kataSandi1.getText());
+        pst.setString(5, rfid.getText());
+        
+        pst.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "User baru berhasil ditambahkan dengan ID: " + nextId);
+        clearFields();
+        loadUserData();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    }
+}
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +210,6 @@ public class user extends javax.swing.JFrame {
         stokOp = new javax.swing.JButton();
         laporan = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
-        hapus1 = new javax.swing.JButton();
         rfid = new javax.swing.JTextField();
         idUserbaeu1 = new javax.swing.JTextField();
         username1 = new javax.swing.JTextField();
@@ -103,23 +279,43 @@ public class user extends javax.swing.JFrame {
         hapus.setBorderPainted(false);
         hapus.setContentAreaFilled(false);
         hapus.setFocusPainted(false);
-        getContentPane().add(hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 120, 40));
-
-        hapus1.setBorderPainted(false);
-        hapus1.setContentAreaFilled(false);
-        hapus1.setFocusPainted(false);
-        getContentPane().add(hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 130, 40));
+        hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusActionPerformed(evt);
+            }
+        });
+        getContentPane().add(hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 100, 30));
 
         rfid.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(rfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 190, 210, 40));
+        rfid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rfidActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 200, 190, 30));
 
         idUserbaeu1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        idUserbaeu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idUserbaeu1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(idUserbaeu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 430, 40));
 
         username1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        username1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                username1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 440, 30));
 
         nama1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        nama1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nama1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(nama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 100, 450, 40));
 
         logout2.setBorderPainted(false);
@@ -135,7 +331,12 @@ public class user extends javax.swing.JFrame {
         simpan2.setBorderPainted(false);
         simpan2.setContentAreaFilled(false);
         simpan2.setFocusPainted(false);
-        getContentPane().add(simpan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 130, 40));
+        simpan2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpan2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(simpan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 100, 30));
 
         retur1.setBorderPainted(false);
         retur1.setContentAreaFilled(false);
@@ -148,7 +349,12 @@ public class user extends javax.swing.JFrame {
         getContentPane().add(retur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
 
         kataSandi1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(kataSandi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 190, 210, 40));
+        kataSandi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kataSandi1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(kataSandi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 200, 200, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -169,6 +375,11 @@ public class user extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -178,7 +389,7 @@ public class user extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 320, 1010, 380));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 1010, 380));
 
         retur2.setBorderPainted(false);
         retur2.setContentAreaFilled(false);
@@ -235,6 +446,77 @@ public class user extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_logout2ActionPerformed
 
+    private void kataSandi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kataSandi1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kataSandi1ActionPerformed
+
+    private void idUserbaeu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idUserbaeu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idUserbaeu1ActionPerformed
+
+    private void nama1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nama1ActionPerformed
+
+    private void username1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_username1ActionPerformed
+
+    private void rfidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rfidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rfidActionPerformed
+
+    private void simpan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan2ActionPerformed
+        // Validasi field kosong
+    if (nama1.getText().isEmpty() || username1.getText().isEmpty() || 
+        kataSandi1.getText().isEmpty() || rfid.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Semua field harus diisi!");
+        return;
+    }
+
+    // Tampilkan dialog konfirmasi
+    int confirmation = JOptionPane.showConfirmDialog(
+        null, 
+        "Apakah Anda yakin ingin menyimpan data user ini?\n\n" +
+        "Nama: " + nama1.getText() + "\n" +
+        "Username: " + username1.getText(),
+        "Konfirmasi Simpan",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+
+    // Jika user memilih YES
+    if (confirmation == JOptionPane.YES_OPTION) {
+        if (idUserbaeu1.getText().isEmpty()) {
+            tambahUserBaru(); // Panggil method tambah user baru
+        } else {
+            updateUser(); // Panggil method update user
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Penyimpanan dibatalkan");
+    }
+        
+//        tambahUserBaru();
+    
+    }//GEN-LAST:event_simpan2ActionPerformed
+
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+         deleteUser();
+    }//GEN-LAST:event_hapusActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    // Kosongkan ID saat klik tabel agar selalu mode tambah user baru
+    idUserbaeu1.setText("");
+    
+    int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow >= 0) {
+        nama1.setText(jTable1.getValueAt(selectedRow, 1).toString());
+        username1.setText(jTable1.getValueAt(selectedRow, 2).toString());
+        kataSandi1.setText(jTable1.getValueAt(selectedRow, 3).toString());
+        rfid.setText(jTable1.getValueAt(selectedRow, 4).toString());
+    }
+    }//GEN-LAST:event_jTable1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -274,7 +556,6 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JButton barang1;
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton hapus;
-    private javax.swing.JButton hapus1;
     private javax.swing.JTextField idUserbaeu1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -58,32 +58,26 @@ public class stokOpname extends javax.swing.JFrame {
         jDialog1.getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 100, 30));
 
         selisih.setBorder(null);
-        selisih.setOpaque(false);
         selisih.setRequestFocusEnabled(false);
         jDialog1.getContentPane().add(selisih, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, 100, 30));
 
         kodeBarang1.setBorder(null);
-        kodeBarang1.setOpaque(false);
         kodeBarang1.setRequestFocusEnabled(false);
         jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 190, 30));
 
         namaBarang1.setBorder(null);
-        namaBarang1.setOpaque(false);
         namaBarang1.setRequestFocusEnabled(false);
         jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 190, 30));
 
         kartuStok1.setBorder(null);
-        kartuStok1.setOpaque(false);
         kartuStok1.setRequestFocusEnabled(false);
         jDialog1.getContentPane().add(kartuStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 190, 30));
 
         stokSistem1.setBorder(null);
-        stokSistem1.setOpaque(false);
         stokSistem1.setRequestFocusEnabled(false);
         jDialog1.getContentPane().add(stokSistem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 190, 30));
 
         keterangan1.setBorder(null);
-        keterangan1.setOpaque(false);
         keterangan1.setRequestFocusEnabled(false);
         jDialog1.getContentPane().add(keterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 190, 30));
 

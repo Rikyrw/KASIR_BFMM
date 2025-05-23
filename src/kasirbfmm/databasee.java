@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,7 +22,7 @@ public class databasee {
     ResultSet rs;
     
     private final String driver = "com.mysql.cj.jdbc.Driver";
-    private final String url = "jdbc:mysql://localhost/sedod_kasir"; // nama database kamu
+    private final String url = "jdbc:mysql://localhost/bfm_kasir1111"; // nama database kamu
     private final String user = "root";
     private final String password = "";
 
@@ -68,6 +68,23 @@ public boolean aksi(String SQL) {
             return false;
     }
 }
+
+public ResultSet cariBarangByBarcode(int barcode) {
+    try {
+        if (con == null || con.isClosed()) {
+            koneksiDB();
+        }
+        st = con.createStatement();
+        rs = st.executeQuery("SELECT * FROM tb_barang WHERE barcode = " + barcode);
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error saat mencari barang: " + e.getMessage());
+    }
+    return rs;
+}
+
+    Connection getConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
 //    public Connection koneksiDB() {

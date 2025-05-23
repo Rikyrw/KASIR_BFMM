@@ -39,7 +39,7 @@ public class barang extends javax.swing.JFrame {
     model.addColumn("Berat");
     model.addColumn("Stok");
     model.addColumn("Exp");
-    model.addColumn("Tanggal");
+//    model.addColumn("Tanggal");
     model.addColumn("Harga Jual");
     model.addColumn("Harga Beli");
     model.addColumn("Barcode");
@@ -135,7 +135,7 @@ public class barang extends javax.swing.JFrame {
     model.addColumn("Berat");
     model.addColumn("Stok");
     model.addColumn("Exp");
-    model.addColumn("Tanggal");
+//    model.addColumn("Tanggal");
     model.addColumn("Harga Jual");
     model.addColumn("Harga Beli");
     model.addColumn("Barcode");
@@ -158,7 +158,7 @@ public class barang extends javax.swing.JFrame {
                 rs.getString("berat"),
                 rs.getString("stok"),
                 rs.getString("exp"),
-                rs.getString("tanggal"),
+//                rs.getString("tanggal"),
                 rs.getString("harga_jual"),
                 rs.getString("harga_beli"),
                 rs.getString("barcode"),
@@ -683,17 +683,17 @@ public class barang extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Kode", "Nama", "Varian", "Berat", "Stok", "Exp", "Tanggal", "Harga jual", "Harga beli", "Barcode", "Kategori", "Pemasok"
+                "Kode", "Nama", "Varian", "Berat", "Stok", "Exp", "Harga jual", "Harga beli", "Barcode", "Kategori", "Title 11"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, false, false, false, false, false, false, true
+                true, false, false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1027,7 +1027,7 @@ public class barang extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
-                        try {
+        try {
              ResultSet rs = db.ambildata("SELECT * FROM tb_barang WHERE kode_barang='" + jkd_barang.getText() + "'");
         if (rs.next()) {
             JOptionPane.showMessageDialog(null, "Kode barang sudah terdaftar!");
