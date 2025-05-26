@@ -20,7 +20,7 @@ public class dashboard extends javax.swing.JFrame {
     public dashboard() {
         this("Guest"); // Kalau dipanggil tanpa parameter, default "Guest"
     }
-    
+    //dam dim dim dum
     public dashboard(String userName) {
         this.setUndecorated(true);
         initComponents();
