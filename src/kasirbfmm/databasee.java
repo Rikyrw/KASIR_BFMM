@@ -40,7 +40,7 @@ public class databasee {
         return con;
     
 }
-
+//indung indung kepala lele
 public ResultSet ambildata(String SQL) {
      try {
             if (con == null || con.isClosed()) {
