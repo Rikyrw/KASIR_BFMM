@@ -551,6 +551,11 @@ private javax.swing.JButton btnSimpanEdit;
 
         jtanggal.setBackground(new java.awt.Color(153, 153, 153));
         jtanggal.setBorder(null);
+        jtanggal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtanggalActionPerformed(evt);
+            }
+        });
         jDialog1.getContentPane().add(jtanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 100, 20));
 
         noTrans1.setBackground(new java.awt.Color(153, 153, 153));
@@ -842,7 +847,7 @@ private javax.swing.JButton btnSimpanEdit;
     }//GEN-LAST:event_tomboltambah1ActionPerformed
 
     private void tomboledit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboledit1ActionPerformed
-int selectedRow = jTable1.getSelectedRow();
+    int selectedRow = jTable1.getSelectedRow();
     if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Pilih data yang akan diedit terlebih dahulu!");
         return;
@@ -937,6 +942,10 @@ int selectedRow = jTable1.getSelectedRow();
     private void criActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_criActionPerformed
+
+    private void jtanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtanggalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtanggalActionPerformed
 
     
  

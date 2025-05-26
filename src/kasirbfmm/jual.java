@@ -470,10 +470,11 @@ public void tglskrg(){
 
             // Query insert detail transaksi (sesuai struktur baru tanpa no_detail)
             String sqlDetail = "INSERT INTO detail_transaksijual " +
-                    "(no_transaksi, kode_barang, nama_barang, harga_barang, harga_beli, varian, total) VALUES (" + 
+                    "(no_transaksi, kode_barang, nama_barang, jumlah_barang, harga_barang, harga_beli, varian, total) VALUES (" + 
                     "'" + noTransaksi1.getText() + "', " + 
                     "'" + kodeBarang + "', " + 
                     "'" + namaBarang + "', " + 
+                    "'" + jumlahBarang + "', " + 
                     "'" + hargaBarang + "', " +
                     "'" + hargaBeli + "', " +
                     "'" + varian + "', " +

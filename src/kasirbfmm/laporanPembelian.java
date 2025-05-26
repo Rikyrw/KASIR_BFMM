@@ -4,19 +4,271 @@
  */
 package kasirbfmm;
 
-/**
- *
- * @author Dhimas Ananta
- */
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 public class laporanPembelian extends javax.swing.JFrame {
 
+    
+        DefaultTableModel model = new DefaultTableModel();
+    databasee db = new databasee();
     /**
      * Creates new form laporanPembelian
      */
     public laporanPembelian() {
+        db.koneksiDB();
+        
         initComponents();
+        
+                                // Setup tabel
+        aturTabel();
+        // Load data default (hari ini)
+        tampilkanData();
+        
+        model.addTableModelListener(e -> {
+        hitungTotalBarang();
+        });
+        model.addTableModelListener(e -> {
+        hitungTotalHarga();
+        });
+        
+         // Event listener untuk dari_tanggal
+    dari_tanggal.addPropertyChangeListener("date", new java.beans.PropertyChangeListener() {
+        @Override
+        public void propertyChange(java.beans.PropertyChangeEvent evt) {
+            if (dari_tanggal.getDate() != null && sampai_tanggal.getDate() != null) {
+                tampilkanDataByTanggal();
+            }
+        }
+    });
+    
+    // Event listener untuk sampai_tanggal
+    sampai_tanggal.addPropertyChangeListener("date", new java.beans.PropertyChangeListener() {
+        @Override
+        public void propertyChange(java.beans.PropertyChangeEvent evt) {
+            if (dari_tanggal.getDate() != null && sampai_tanggal.getDate() != null) {
+                tampilkanDataByTanggal();
+            }
+        }
+    });
+    
+    
+
+    }
+    
+    
+    
+     private void aturTabel() {
+        model.addColumn("Kode barang");
+        model.addColumn("Nama barang");
+        model.addColumn("Jumlah barang");
+        model.addColumn("Harga beli");
+        model.addColumn("Harga jual");
+        model.addColumn("Pemasok");
+        model.addColumn("Tanggal");
+    }
+     
+        public void tampilkanData() {
+try {
+        model.setRowCount(0); // Bersihkan tabel sebelum menambahkan data baru
+        
+        ResultSet rs = db.ambildata("SELECT kode_barang, nama_barang, stok, harga_beli, harga_jual, nama_pemasok, Tanggal FROM tb_barang");
+        while (rs.next()) {
+            model.addRow(new Object[]{ 
+                rs.getString("kode_barang"),    
+                rs.getString("nama_barang"),
+                rs.getString("stok"),
+                rs.getString("harga_beli"),
+                rs.getString("harga_jual"),
+                rs.getString("nama_pemasok"),
+                rs.getString("Tanggal")
+            });
+        }
+        jTable1.setModel(model);
+        hitungTotalBarang();
+        hitungTotalHarga();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menampilkan data: " + e.getMessage());
+    }
     }
 
+        
+           private void hitungTotalBarang() {
+    int totalBarang = 0;
+    
+    // Loop melalui semua baris di tabel
+    for (int i = 0; i < model.getRowCount(); i++) {
+        // Ambil nilai dari kolom "JUMLAH TERJUAL" (kolom ke-4 dalam model tabel)
+        totalBarang += Integer.parseInt(model.getValueAt(i, 2).toString());
+    }
+    
+        // Tampilkan hasil total ke jtotal_1
+        totalBarang1.setText(String.valueOf(totalBarang));
+    }
+
+    private void hitungTotalHarga() {
+        int totalHarga = 0;
+
+        // Loop melalui semua baris di tabel
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Ambil nilai dari kolom "TOTAL HARGA" (kolom ke-5 dalam model tabel)
+            totalHarga += Integer.parseInt(model.getValueAt(i, 4).toString());
+        }
+
+        // Tampilkan hasil total ke jtotal_1
+        totalPemasukan.setText(String.valueOf(totalHarga));
+    }
+    
+    
+    public void tampilkanDataByTanggal() {
+    try {
+        // Validasi apakah kedua tanggal sudah dipilih
+        if (dari_tanggal.getDate() == null || sampai_tanggal.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Pilih kedua tanggal terlebih dahulu!");
+            return;
+        }
+        
+        // Validasi rentang tanggal
+        if (dari_tanggal.getDate().after(sampai_tanggal.getDate())) {
+            JOptionPane.showMessageDialog(this, "Tanggal awal tidak boleh lebih besar dari tanggal akhir!");
+            return;
+        }
+        
+        // Bersihkan tabel terlebih dahulu
+        model.setRowCount(0);
+        
+        // Format tanggal untuk query SQL
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        String tanggalAwal = sdf.format(dari_tanggal.getDate());
+        String tanggalAkhir = sdf.format(sampai_tanggal.getDate());
+        
+        // Query dengan filter tanggal
+        String query = "SELECT kode_barang, nama_barang, stok, harga_beli, harga_jual, nama_pemasok, Tanggal " +
+                      "FROM tb_barang " +
+                      "WHERE Tanggal BETWEEN '" + tanggalAwal + "' AND '" + tanggalAkhir + "' " +
+                      "ORDER BY Tanggal DESC";
+        
+        ResultSet rs = db.ambildata(query);
+        int totalRows = 0;
+        
+        while (rs.next()) {
+            model.addRow(new Object[]{ 
+                rs.getString("kode_barang"),
+                rs.getString("nama_barang"),
+                rs.getString("stok"),
+                rs.getString("harga_beli"),
+                rs.getString("harga_jual"),
+                rs.getString("nama_pemasok"),
+                rs.getString("Tanggal")
+            });
+            totalRows++;
+        }
+        
+        jTable1.setModel(model);
+        hitungTotalBarang();
+        hitungTotalHarga();
+        
+        // Tampilkan info hasil pencarian
+        if (totalRows == 0) {
+            JOptionPane.showMessageDialog(this, "Tidak ada data pembelian pada rentang tanggal tersebut.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ditemukan " + totalRows + " data pembelian\n" +
+                                        "Periode: " + tanggalAwal + " s/d " + tanggalAkhir);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat mencari data: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+    
+    // Method untuk reset dan tampilkan semua data kembali
+public void resetFilter() {
+    // Bersihkan model tabel terlebih dahulu
+    model.setRowCount(0);
+    
+    // Reset tanggal
+    dari_tanggal.setDate(null);
+    sampai_tanggal.setDate(null);
+    
+    // Tampilkan data dengan model yang sudah dibersihkan
+    tampilkanData();
+}
+
+
+
+    private void exportToExcel() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Simpan sebagai Excel");
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
+    fileChooser.setSelectedFile(new File("Laporan_Penjualan.xlsx"));
+    
+    int userSelection = fileChooser.showSaveDialog(this);
+    
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        String filePath = fileToSave.getAbsolutePath();
+        
+        if (!filePath.endsWith(".xlsx")) {
+            filePath += ".xlsx";
+        }
+        
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Laporan Pembelian");
+            
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            for (int i = 0; i < jTable1.getColumnCount(); i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(jTable1.getColumnName(i));
+            }
+            
+            // Create data rows
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                Row row = sheet.createRow(i + 1);
+                for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                    Cell cell = row.createCell(j);
+                    Object value = jTable1.getValueAt(i, j);
+                    if (value != null) {
+                        cell.setCellValue(value.toString());
+                    }
+                }
+            }
+            
+            // Auto size columns
+            for (int i = 0; i < jTable1.getColumnCount(); i++) {
+                sheet.autoSizeColumn(i);
+            }
+            
+            // Write to file
+            try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+                workbook.write(outputStream);
+                JOptionPane.showMessageDialog(this, "Data berhasil diexport ke Excel!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal export ke Excel: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,15 +287,15 @@ public class laporanPembelian extends javax.swing.JFrame {
         logout1 = new javax.swing.JButton();
         ekspor1 = new javax.swing.JButton();
         penjualan1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         retur2 = new javax.swing.JButton();
         totalPemasukan = new javax.swing.JTextField();
         dari_tanggal = new com.toedter.calendar.JDateChooser();
         sampai_tanggal = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
         totalBarang1 = new javax.swing.JTextField();
+        jreset = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -147,18 +399,15 @@ public class laporanPembelian extends javax.swing.JFrame {
         });
         getContentPane().add(penjualan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 110, 120, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, 120, 40));
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No transaksi", "Pemasok", "Kode barang", "Nama barang", "Kode barang", "Harga beli", "Tanggal"
+                "No transaksi", "Pemasok", "Kode barang", "Nama barang", "jumlah barang", "Tanggal ", "Harga beli", "Total harga"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -179,18 +428,26 @@ public class laporanPembelian extends javax.swing.JFrame {
         totalPemasukan.setEditable(false);
         totalPemasukan.setBorder(null);
         totalPemasukan.setRequestFocusEnabled(false);
-        getContentPane().add(totalPemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 680, 130, 40));
-        getContentPane().add(dari_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
-        getContentPane().add(sampai_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 100, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliann dan penjualan.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(totalPemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 690, 110, 20));
+        getContentPane().add(dari_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 130, -1));
+        getContentPane().add(sampai_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 130, -1));
 
         totalBarang1.setEditable(false);
         totalBarang1.setBorder(null);
         totalBarang1.setRequestFocusEnabled(false);
-        getContentPane().add(totalBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 675, 130, 40));
+        getContentPane().add(totalBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 690, 110, 20));
+
+        jreset.setText("RESET");
+        jreset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jresetActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 130, 40));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliann dan penjualan.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -239,7 +496,25 @@ public class laporanPembelian extends javax.swing.JFrame {
     }//GEN-LAST:event_logout1ActionPerformed
 
     private void ekspor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ekspor1ActionPerformed
-        // TODO add your handling code here:
+         // Buat dialog pilihan export
+    Object[] options = {"Export ke Excel",  "Batal"};
+    int choice = JOptionPane.showOptionDialog(
+        this,
+        "Pilih format export:",
+        "Export Data",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        options,
+        options[0]
+    );
+    
+    if (choice == 0) {
+        exportToExcel();
+//    } else if (choice == 1) {
+//        exportToPDF();
+//    }
+    }
     }//GEN-LAST:event_ekspor1ActionPerformed
 
     private void penjualan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penjualan1ActionPerformed
@@ -253,6 +528,10 @@ public class laporanPembelian extends javax.swing.JFrame {
         retur.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_retur2ActionPerformed
+
+    private void jresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jresetActionPerformed
+        resetFilter();
+    }//GEN-LAST:event_jresetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,10 +573,10 @@ public class laporanPembelian extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dari_tanggal;
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton ekspor1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton jreset;
     private javax.swing.JButton jual1;
     private javax.swing.JButton laba;
     private javax.swing.JButton logout1;
