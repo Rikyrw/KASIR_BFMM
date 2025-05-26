@@ -37,8 +37,8 @@ public class laporanLaba extends javax.swing.JFrame {
         pembelian = new javax.swing.JButton();
         sampaitanggal = new javax.swing.JTextField();
         daritanggal = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         retur2 = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -151,9 +151,6 @@ public class laporanLaba extends javax.swing.JFrame {
         daritanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(daritanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 109, 100, 20));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 120, 40));
-
         retur2.setBorderPainted(false);
         retur2.setContentAreaFilled(false);
         retur2.setFocusPainted(false);
@@ -165,7 +162,19 @@ public class laporanLaba extends javax.swing.JFrame {
         });
         getContentPane().add(retur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 100, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/Laba.png"))); // NOI18N
+        reset.setBorder(null);
+        reset.setBorderPainted(false);
+        reset.setFocusPainted(false);
+        reset.setOpaque(false);
+        reset.setRequestFocusEnabled(false);
+        reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetActionPerformed(evt);
+            }
+        });
+        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(664, 100, 120, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/Labaa (1).png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -231,6 +240,10 @@ public class laporanLaba extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_retur2ActionPerformed
 
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resetActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -274,12 +287,12 @@ public class laporanLaba extends javax.swing.JFrame {
     private javax.swing.JTextField daritanggal;
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton ekspor1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jual1;
     private javax.swing.JButton logout1;
     private javax.swing.JButton pembelian;
     private javax.swing.JButton penjualan;
+    private javax.swing.JButton reset;
     private javax.swing.JButton retur2;
     private javax.swing.JTextField sampaitanggal;
     private javax.swing.JButton stokOpname;

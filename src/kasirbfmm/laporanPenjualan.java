@@ -501,15 +501,19 @@ private void exportToExcel() {
         getContentPane().add(daritanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(266, 110, 140, -1));
         getContentPane().add(sampai_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 130, -1));
 
-        jreset.setText("RESET");
+        jreset.setBorder(null);
+        jreset.setBorderPainted(false);
+        jreset.setContentAreaFilled(false);
+        jreset.setFocusPainted(false);
+        jreset.setRequestFocusEnabled(false);
         jreset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jresetActionPerformed(evt);
             }
         });
-        getContentPane().add(jreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, 140, 40));
+        getContentPane().add(jreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 120, 40));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliann dan penjualan.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/penjualannn (1).png"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

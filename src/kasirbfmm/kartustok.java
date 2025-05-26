@@ -26,98 +26,63 @@ public class kartustok extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        namaBarang = new javax.swing.JTextField();
+        stokAkhir = new javax.swing.JTextField();
         kodeBarang1 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        ekspor = new javax.swing.JButton();
-        cari1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        namaBarang1 = new javax.swing.JTextField();
+        stokKeluar1 = new javax.swing.JTextField();
+        stokMasuk1 = new javax.swing.JTextField();
+        silang = new javax.swing.JButton();
+        simpan1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Id kartu", "Tanggal", "Kode barang", "Jenis transaksi", "Barang masuk", "Barang keluar", "Stok akhir", "Keterangan"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
+        stokAkhir.setBorder(null);
+        stokAkhir.setOpaque(false);
+        stokAkhir.setRequestFocusEnabled(false);
+        getContentPane().add(stokAkhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 130, 30));
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-        }
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 142, 1240, 570));
-
-        namaBarang.setActionCommand("<Not Set>");
-        namaBarang.setBorder(null);
-        namaBarang.setOpaque(false);
-        namaBarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                namaBarangActionPerformed(evt);
-            }
-        });
-        getContentPane().add(namaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 180, 30));
-
-        kodeBarang1.setActionCommand("<Not Set>");
         kodeBarang1.setBorder(null);
         kodeBarang1.setOpaque(false);
-        kodeBarang1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kodeBarang1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 79, 180, 30));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 130, 40));
+        kodeBarang1.setRequestFocusEnabled(false);
+        getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 210, 30));
 
-        ekspor.setBorder(null);
-        ekspor.setContentAreaFilled(false);
-        ekspor.setFocusPainted(false);
-        ekspor.setRequestFocusEnabled(false);
-        getContentPane().add(ekspor, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 80, 100, 30));
+        namaBarang1.setBorder(null);
+        namaBarang1.setOpaque(false);
+        namaBarang1.setRequestFocusEnabled(false);
+        getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 210, 30));
 
-        cari1.setBorder(null);
-        cari1.setContentAreaFilled(false);
-        cari1.setFocusPainted(false);
-        cari1.setRequestFocusEnabled(false);
-        getContentPane().add(cari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 80, 80, 30));
+        stokKeluar1.setBorder(null);
+        stokKeluar1.setOpaque(false);
+        stokKeluar1.setRequestFocusEnabled(false);
+        getContentPane().add(stokKeluar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 130, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/barangg (2).jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
+        stokMasuk1.setBorder(null);
+        stokMasuk1.setOpaque(false);
+        stokMasuk1.setRequestFocusEnabled(false);
+        getContentPane().add(stokMasuk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 130, 30));
+
+        silang.setBorder(null);
+        silang.setBorderPainted(false);
+        silang.setContentAreaFilled(false);
+        silang.setFocusPainted(false);
+        silang.setRequestFocusEnabled(false);
+        getContentPane().add(silang, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 30, 30));
+
+        simpan1.setBorder(null);
+        simpan1.setBorderPainted(false);
+        simpan1.setContentAreaFilled(false);
+        simpan1.setFocusPainted(false);
+        simpan1.setRequestFocusEnabled(false);
+        getContentPane().add(simpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 230, 470, 40));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/kartus stok.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-19, -20, 640, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void namaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaBarangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_namaBarangActionPerformed
-
-    private void kodeBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarang1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kodeBarang1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,13 +120,13 @@ public class kartustok extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cari1;
-    private javax.swing.JButton ekspor;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField kodeBarang1;
-    private javax.swing.JTextField namaBarang;
+    private javax.swing.JTextField namaBarang1;
+    private javax.swing.JButton silang;
+    private javax.swing.JButton simpan1;
+    private javax.swing.JTextField stokAkhir;
+    private javax.swing.JTextField stokKeluar1;
+    private javax.swing.JTextField stokMasuk1;
     // End of variables declaration//GEN-END:variables
 }

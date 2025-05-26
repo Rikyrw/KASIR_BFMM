@@ -437,15 +437,19 @@ public void resetFilter() {
         totalBarang1.setRequestFocusEnabled(false);
         getContentPane().add(totalBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 690, 110, 20));
 
-        jreset.setText("RESET");
+        jreset.setBorder(null);
+        jreset.setBorderPainted(false);
+        jreset.setContentAreaFilled(false);
+        jreset.setFocusPainted(false);
+        jreset.setRequestFocusEnabled(false);
         jreset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jresetActionPerformed(evt);
             }
         });
-        getContentPane().add(jreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 130, 40));
+        getContentPane().add(jreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 110, 40));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliann dan penjualan.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/pembeliannnn (1).png"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
