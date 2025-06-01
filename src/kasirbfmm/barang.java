@@ -408,6 +408,15 @@ private void searchByName() {
         jexp1 = new com.toedter.calendar.JDateChooser();
         b1 = new javax.swing.JTextField();
         a1 = new javax.swing.JLabel();
+        jDialog3 = new javax.swing.JDialog();
+        kodeBarang1 = new javax.swing.JTextField();
+        namaBarang1 = new javax.swing.JTextField();
+        stokKeluar1 = new javax.swing.JTextField();
+        stokMasuk1 = new javax.swing.JTextField();
+        stokAkhir = new javax.swing.JTextField();
+        simpan2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         tombolstokop = new javax.swing.JButton();
         tombollUser = new javax.swing.JButton();
         tombolLaporan = new javax.swing.JButton();
@@ -671,6 +680,43 @@ private void searchByName() {
         a1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/popup edit dan tambah(1).png"))); // NOI18N
         a1.setText("jLabel2");
         jbarang2.getContentPane().add(a1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, -1));
+
+        jDialog3.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        kodeBarang1.setBorder(null);
+        kodeBarang1.setRequestFocusEnabled(false);
+        jDialog3.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, 20));
+
+        namaBarang1.setBorder(null);
+        namaBarang1.setRequestFocusEnabled(false);
+        jDialog3.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 190, 20));
+
+        stokKeluar1.setBorder(null);
+        stokKeluar1.setRequestFocusEnabled(false);
+        jDialog3.getContentPane().add(stokKeluar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 130, 20));
+
+        stokMasuk1.setBorder(null);
+        stokMasuk1.setRequestFocusEnabled(false);
+        jDialog3.getContentPane().add(stokMasuk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 120, 20));
+
+        stokAkhir.setBorder(null);
+        stokAkhir.setRequestFocusEnabled(false);
+        jDialog3.getContentPane().add(stokAkhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 130, 20));
+
+        simpan2.setBorder(null);
+        simpan2.setBorderPainted(false);
+        simpan2.setContentAreaFilled(false);
+        simpan2.setFocusPainted(false);
+        simpan2.setRequestFocusEnabled(false);
+        jDialog3.getContentPane().add(simpan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 450, 30));
+
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jDialog3.getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 40, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/kartus stok.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jDialog3.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 620, 300));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1209,6 +1255,10 @@ private void searchByName() {
 
     private void tombolKartustokkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolKartustokkActionPerformed
         // TODO add your handling code here:
+    jDialog3.setSize(580, 345); // Sesuaikan dengan ukuran yang diinginkan
+    jDialog3.setLocationRelativeTo(this); // Supaya muncul di tengah
+    jDialog3.setModal(true); // Membuat dialog bersifat modal (opsional)
+    jDialog3.setVisible(true); // Menampilkan dialog
     }//GEN-LAST:event_tombolKartustokkActionPerformed
 
     private void tombolCari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolCari1ActionPerformed
@@ -1257,6 +1307,9 @@ private void searchByName() {
     private javax.swing.JTextField b1;
     private javax.swing.JTextField c;
     private javax.swing.JTextField c1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JDialog jDialog3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
@@ -1288,10 +1341,16 @@ private void searchByName() {
     private javax.swing.JTextField jvarian;
     private javax.swing.JTextField jvarian1;
     private javax.swing.JComboBox<String> kategori;
+    private javax.swing.JTextField kodeBarang1;
+    private javax.swing.JTextField namaBarang1;
     private javax.swing.JTextField noTrans;
     private javax.swing.JTextField noTrans1;
     private javax.swing.JButton simpan;
     private javax.swing.JButton simpan1;
+    private javax.swing.JButton simpan2;
+    private javax.swing.JTextField stokAkhir;
+    private javax.swing.JTextField stokKeluar1;
+    private javax.swing.JTextField stokMasuk1;
     private javax.swing.JTextField tanggal;
     private javax.swing.JTextField tanggal1;
     private javax.swing.JButton tombolCari1;

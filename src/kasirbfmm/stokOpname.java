@@ -3,19 +3,98 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package kasirbfmm;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 /**
  *
  * @author Dhimas Ananta
  */
 public class stokOpname extends javax.swing.JFrame {
+    databasee db = new databasee();
 
     /**
      * Creates new form stokOpname
      */
     public stokOpname() {
         initComponents();
+        
+        jtgl.setEditable(false);
+        
+                        //tampilkan tanggal transaksi
+        tglskrg();
+        
+        kodeBarang1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+        });
+        
     }
+    
+    
+   private void cariBarang() { 
+    String kode = kodeBarang1.getText(); 
+    if (kode.length() >= 2) { // Mulai cari setelah 2 karakter diinput 
+        try { 
+            ResultSet rs = db.ambildata( 
+                    "SELECT nama_barang, stok FROM tb_barang WHERE kode_barang LIKE '" + kode + "%' LIMIT 1"); 
+            if (rs.next()) { 
+                namaBarang1.setText(rs.getString("nama_barang")); 
+                stokSistem1.setText(rs.getString("stok")); // Tambahan untuk mengisi stok
+                 
+            } else { 
+                namaBarang1.setText(""); 
+                stokSistem1.setText(""); // Kosongkan stok jika tidak ditemukan
+                 
+            } 
+            rs.close(); 
+        } catch (Exception e) { 
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage()); 
+        } 
+    } else {
+        // Kosongkan field jika input kurang dari 2 karakter
+        namaBarang1.setText("");
+        stokSistem1.setText("");
+    }
+}
+    
+    
+    
+    public void tglskrg(){
+    Date skrg = new Date();
+    // Format untuk tampilan di form (readable)
+    SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
+    // Format untuk database (SQL)
+    SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+    // Simpan format SQL dalam variable yang bisa diakses class
+    String tanggalSQL = sqlFormat.format(skrg);
+    // Tampilkan format readable di form
+    jtgl.setText(displayFormat.format(skrg));
+}
+    
+        // Tambahkan method baru untuk mendapatkan tanggal SQL
+    public String getTanggalSQL() {
+        Date skrg = new Date();
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return sqlFormat.format(skrg);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,15 +106,15 @@ public class stokOpname extends javax.swing.JFrame {
     private void initComponents() {
 
         jDialog1 = new javax.swing.JDialog();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        selisih = new javax.swing.JTextField();
+        simpan = new javax.swing.JButton();
+        cari2 = new javax.swing.JButton();
+        jtgl = new javax.swing.JTextField();
         kodeBarang1 = new javax.swing.JTextField();
         namaBarang1 = new javax.swing.JTextField();
         kartuStok1 = new javax.swing.JTextField();
         stokSistem1 = new javax.swing.JTextField();
         keterangan1 = new javax.swing.JTextField();
-        simpan = new javax.swing.JButton();
-        cari2 = new javax.swing.JButton();
+        selisih = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         hapus = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
@@ -55,36 +134,16 @@ public class stokOpname extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jDialog1.getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 100, 30));
-
-        selisih.setBorder(null);
-        selisih.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(selisih, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, 100, 30));
-
-        kodeBarang1.setBorder(null);
-        kodeBarang1.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 190, 30));
-
-        namaBarang1.setBorder(null);
-        namaBarang1.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 190, 30));
-
-        kartuStok1.setBorder(null);
-        kartuStok1.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(kartuStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 190, 30));
-
-        stokSistem1.setBorder(null);
-        stokSistem1.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(stokSistem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 190, 30));
-
-        keterangan1.setBorder(null);
-        keterangan1.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(keterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 190, 30));
 
         simpan.setBorder(null);
         simpan.setBorderPainted(false);
         simpan.setContentAreaFilled(false);
         simpan.setFocusPainted(false);
+        simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanActionPerformed(evt);
+            }
+        });
         jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 110, 30));
 
         cari2.setBorder(null);
@@ -93,9 +152,52 @@ public class stokOpname extends javax.swing.JFrame {
         cari2.setFocusPainted(false);
         jDialog1.getContentPane().add(cari2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 70, 40));
 
+        jtgl.setBorder(null);
+        jtgl.setFocusable(false);
+        jtgl.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(jtgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 120, 30));
+
+        kodeBarang1.setBorder(null);
+        kodeBarang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeBarang1ActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 170, 20));
+
+        namaBarang1.setBorder(null);
+        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 154, 190, 20));
+
+        kartuStok1.setBorder(null);
+        kartuStok1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kartuStok1ActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(kartuStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 170, 30));
+
+        stokSistem1.setBorder(null);
+        jDialog1.getContentPane().add(stokSistem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 190, 30));
+
+        keterangan1.setBorder(null);
+        keterangan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                keterangan1ActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(keterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 170, 30));
+
+        selisih.setBorder(null);
+        selisih.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selisihActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(selisih, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, 90, 20));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/stokkop (1).png"))); // NOI18N
         jLabel3.setText("jLabel3");
-        jDialog1.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, -1, -1));
+        jDialog1.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 720, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -197,6 +299,11 @@ public class stokOpname extends javax.swing.JFrame {
         tambah2.setBorderPainted(false);
         tambah2.setContentAreaFilled(false);
         tambah2.setFocusPainted(false);
+        tambah2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambah2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -280,6 +387,47 @@ public class stokOpname extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_logout1ActionPerformed
 
+    private void tambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambah2ActionPerformed
+        // TODO add your handling code here:
+    jDialog1.setSize(727, 463); // Sesuaikan dengan ukuran yang diinginkan
+    jDialog1.setLocationRelativeTo(this); // Supaya muncul di tengah
+    jDialog1.setModal(true); // Membuat dialog bersifat modal (opsional)
+    jDialog1.setVisible(true); // Menampilkan dialog
+    }//GEN-LAST:event_tambah2ActionPerformed
+
+    private void kodeBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarang1ActionPerformed
+        // TODO add your handling code here:
+    try {
+            ResultSet rs = db.ambildata("select * from tb_barang where kode_barang='" + kodeBarang1.getText() + "'");
+            if (rs.next()) {
+                namaBarang1.setText(rs.getString("nama_barang"));
+//                 harga1.setText(rs.getString("harga_jual"));
+                stokSistem1.setText(rs.getString("stok"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Kode Belum terdaftar");
+                kodeBarang1.selectAll();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_kodeBarang1ActionPerformed
+
+    private void kartuStok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kartuStok1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kartuStok1ActionPerformed
+
+    private void selisihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selisihActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selisihActionPerformed
+
+    private void keterangan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keterangan1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_keterangan1ActionPerformed
+
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_simpanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -323,13 +471,13 @@ public class stokOpname extends javax.swing.JFrame {
     private javax.swing.JButton edit1;
     private javax.swing.JButton ekspor;
     private javax.swing.JButton hapus;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jtgl;
     private javax.swing.JButton jual1;
     private javax.swing.JTextField kartuStok1;
     private javax.swing.JTextField keterangan1;

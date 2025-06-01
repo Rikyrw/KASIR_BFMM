@@ -111,22 +111,22 @@ ya2.addActionListener(new java.awt.event.ActionListener() {
         
                  buatNomor();
                  
-                 kodeBarang1.getDocument().addDocumentListener(new DocumentListener() {
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        cariBarang();
-    }
+        kodeBarang1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                cariBarang();
+            }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        cariBarang();
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                cariBarang();
+            }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        cariBarang();
-    }
-});
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+        });
 //                     model = new DefaultTableModel();
 //    model.addColumn("Kode");
 //    model.addColumn("Nama");
@@ -245,22 +245,22 @@ ya2.addActionListener(new java.awt.event.ActionListener() {
 }
     
     private void cariBarang() {
-    String kode = kodeBarang1.getText();
-    if (kode.length() >= 2) { // Mulai cari setelah 2 karakter diinput
-        try {
-            ResultSet rs = db.ambildata(
-                "SELECT nama_barang FROM tb_barang WHERE kode_barang LIKE '" + kode + "%' LIMIT 1");
-            if (rs.next()) {
-                namaBarang1.setText(rs.getString("nama_barang"));
-            } else {
-                namaBarang1.setText("");
+        String kode = kodeBarang1.getText();
+        if (kode.length() >= 2) { // Mulai cari setelah 2 karakter diinput
+            try {
+                ResultSet rs = db.ambildata(
+                        "SELECT nama_barang FROM tb_barang WHERE kode_barang LIKE '" + kode + "%' LIMIT 1");
+                if (rs.next()) {
+                    namaBarang1.setText(rs.getString("nama_barang"));
+                } else {
+                    namaBarang1.setText("");
+                }
+                rs.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
-}
 
         public void setTanggalOtomatis() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format tanggal
@@ -547,6 +547,11 @@ private javax.swing.JButton btnSimpanEdit;
         kodeBarang1.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang1.setBorder(null);
         kodeBarang1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        kodeBarang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeBarang1ActionPerformed(evt);
+            }
+        });
         jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 200, 20));
 
         jtanggal.setBackground(new java.awt.Color(153, 153, 153));
@@ -946,6 +951,10 @@ private javax.swing.JButton btnSimpanEdit;
     private void jtanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtanggalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtanggalActionPerformed
+
+    private void kodeBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarang1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kodeBarang1ActionPerformed
 
     
  
