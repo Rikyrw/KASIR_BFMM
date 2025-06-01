@@ -4,6 +4,10 @@
  */
 package kasirbfmm;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.SwingUtilities;
 
 /**
@@ -12,7 +16,7 @@ import javax.swing.SwingUtilities;
  */
 public class dashboard extends javax.swing.JFrame {
     private String userName;
-   
+   private Connection conn;
     /**
      * Creates new form dashboard
      */
@@ -51,7 +55,148 @@ public class dashboard extends javax.swing.JFrame {
         jlogout.setContentAreaFilled(false);
         jlogout.setBorderPainted(false);
 
+        updateDashboardData();
+    }
+    
+   private void initializeDatabaseConnection() {
+        try {
+            String url = "jdbc:mysql://localhost:3306/ddos"; // Updated database name
+            String username = "root"; // Change as needed
+            String password = ""; // Change as needed
+            
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Failed to connect to database: " + e.getMessage(),
+                "Database Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void updateDashboardData() {
+        // Calculate today's loss
+        double totalRugi = calculateTotalRugi();
+        rugihariini1.setText("Rp " + String.format("%,.2f", totalRugi));
         
+        // Calculate today's profit
+        double totalUntung = calculateTotalUntung();
+        untunghariini1.setText("Rp " + String.format("%,.2f", totalUntung));
+        
+        // Count near-expired items
+        int jumlahHampirExpired = countHampirKadaluwarsa();
+        hampirkadaluwarsa.setText(String.valueOf(jumlahHampirExpired));
+    }
+
+    private double calculateTotalRugi() {
+    double totalRugi = 0;
+    try {
+        if (conn == null || conn.isClosed()) {
+            initializeDatabaseConnection();
+        }
+        
+        // 1. Calculate from supplier returns
+        String queryRetur = "SELECT SUM(b.harga_beli * rs.qty) as total_rugi " +
+                           "FROM tb_retur_supplier rs " +
+                           "JOIN tb_barang b ON rs.kode_barang = b.kode_barang " +
+                           "WHERE DATE(rs.tanggal) = CURDATE()";
+        
+        // 2. Calculate from negative price items in log
+        String queryLog = "SELECT SUM(harga_jual) as total_rugi_log " +
+                         "FROM log_barang " +
+                         "WHERE harga_jual < 0 AND DATE(deleted_at) = CURDATE()";
+        
+        // 3. Calculate from stock opname losses (where physical stock < system stock)
+        String queryOpname = "SELECT SUM(b.harga_beli * ABS(so.selisih)) as total_rugi_opname " +
+                           "FROM tb_stok_opname so " +
+                           "JOIN tb_barang b ON so.kode_barang = b.kode_barang " +
+                           "WHERE so.selisih < 0 AND DATE(so.tanggal) = CURDATE()";
+        
+        Statement stmt = conn.createStatement();
+        
+        // Execute first query (retur supplier)
+        ResultSet rs = stmt.executeQuery(queryRetur);
+        if (rs.next()) {
+            totalRugi += rs.getDouble("total_rugi");
+        }
+        
+        // Execute second query (negative price items)
+        rs = stmt.executeQuery(queryLog);
+        if (rs.next()) {
+            totalRugi += Math.abs(rs.getDouble("total_rugi_log"));
+        }
+        
+        // Execute third query (stock opname losses)
+        rs = stmt.executeQuery(queryOpname);
+        if (rs.next()) {
+            totalRugi += rs.getDouble("total_rugi_opname");
+        }
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Error calculating loss: " + e.getMessage(),
+            "Calculation Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    return totalRugi;
+}
+
+    private double calculateTotalUntung() {
+        double totalUntung = 0;
+        try {
+            if (conn == null || conn.isClosed()) {
+                initializeDatabaseConnection();
+            }
+            
+            // Calculate from today's sales
+            String query = "SELECT SUM((dj.harga_barang - dj.harga_beli) * dj.jumlah_barang) as total_untung " +
+                          "FROM detail_transaksijual dj " +
+                          "JOIN tb_jual tj ON dj.no_transaksi = tj.no_transaksi " +
+                          "WHERE DATE(tj.tanggal) = CURDATE()";
+            
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                totalUntung = rs.getDouble("total_untung");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error calculating profit: " + e.getMessage(),
+                "Calculation Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        return totalUntung;
+    }
+
+    private int countHampirKadaluwarsa() {
+        int count = 0;
+        try {
+            if (conn == null || conn.isClosed()) {
+                initializeDatabaseConnection();
+            }
+            
+            // Count items expiring within 7 days
+            String query = "SELECT COUNT(*) as jumlah " +
+                          "FROM tb_barang " +
+                          "WHERE exp BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+            
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                count = rs.getInt("jumlah");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error counting near-expired items: " + e.getMessage(),
+                "Calculation Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        return count;
     }
     
     /**
@@ -71,6 +216,9 @@ public class dashboard extends javax.swing.JFrame {
         tombolLaporan = new javax.swing.JButton();
         tombolRetur1 = new javax.swing.JButton();
         tombolJual1 = new javax.swing.JButton();
+        hampirkadaluwarsa = new javax.swing.JTextField();
+        rugihariini1 = new javax.swing.JTextField();
+        untunghariini1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -159,6 +307,9 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
         getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 100, 20));
+        getContentPane().add(hampirkadaluwarsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 340, 250, 80));
+        getContentPane().add(rugihariini1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 250, 80));
+        getContentPane().add(untunghariini1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 250, 80));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/desktop.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -167,6 +318,10 @@ public class dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    // Tambahkan method ini di dalam class dashboard (sebelum initComponents())
+ 
+    
     private void jlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlogoutActionPerformed
         login dashboard = new login();
         dashboard.setVisible(true);
@@ -251,14 +406,17 @@ public class dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField hampirkadaluwarsa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jlogout;
     private javax.swing.JTextField nama;
+    private javax.swing.JTextField rugihariini1;
     private javax.swing.JButton tombolBarang1;
     private javax.swing.JButton tombolJual1;
     private javax.swing.JButton tombolLaporan;
     private javax.swing.JButton tombolRetur1;
     private javax.swing.JButton tombolStokop;
     private javax.swing.JButton tombolUser;
+    private javax.swing.JTextField untunghariini1;
     // End of variables declaration//GEN-END:variables
 }
