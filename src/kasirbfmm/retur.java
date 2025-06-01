@@ -466,7 +466,6 @@ private javax.swing.JButton btnSimpanEdit;
     private void initComponents() {
 
         jDialog1 = new javax.swing.JDialog();
-        jComboBox2 = new javax.swing.JComboBox<>();
         simpan = new javax.swing.JButton();
         alasan = new javax.swing.JTextField();
         namaBarang1 = new javax.swing.JTextField();
@@ -476,7 +475,6 @@ private javax.swing.JButton btnSimpanEdit;
         noTrans1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jDialog2 = new javax.swing.JDialog();
-        jComboBox3 = new javax.swing.JComboBox<>();
         simpan1 = new javax.swing.JButton();
         alasan1 = new javax.swing.JTextField();
         namaBarang2 = new javax.swing.JTextField();
@@ -509,9 +507,6 @@ private javax.swing.JButton btnSimpanEdit;
 
         jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jDialog1.getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 220, 30));
-
         simpan.setBorder(null);
         simpan.setBorderPainted(false);
         simpan.setContentAreaFilled(false);
@@ -522,12 +517,12 @@ private javax.swing.JButton btnSimpanEdit;
                 simpanActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, 120, 40));
+        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 460, 30));
 
         alasan.setBackground(new java.awt.Color(255, 255, 255));
         alasan.setBorder(null);
         alasan.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog1.getContentPane().add(alasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 200, 80));
+        jDialog1.getContentPane().add(alasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 200, 20));
 
         namaBarang1.setBackground(new java.awt.Color(255, 255, 255));
         namaBarang1.setBorder(null);
@@ -537,12 +532,12 @@ private javax.swing.JButton btnSimpanEdit;
                 namaBarang1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 20));
+        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 200, 20));
 
         qty1.setBackground(new java.awt.Color(255, 255, 255));
         qty1.setBorder(null);
         qty1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog1.getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 200, 20));
+        jDialog1.getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 200, 20));
 
         kodeBarang1.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang1.setBorder(null);
@@ -552,7 +547,7 @@ private javax.swing.JButton btnSimpanEdit;
                 kodeBarang1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 200, 20));
+        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 190, 30));
 
         jtanggal.setBackground(new java.awt.Color(153, 153, 153));
         jtanggal.setBorder(null);
@@ -561,20 +556,22 @@ private javax.swing.JButton btnSimpanEdit;
                 jtanggalActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(jtanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 100, 20));
+        jDialog1.getContentPane().add(jtanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 100, 20));
 
         noTrans1.setBackground(new java.awt.Color(153, 153, 153));
         noTrans1.setBorder(null);
-        jDialog1.getContentPane().add(noTrans1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 100, 20));
+        noTrans1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noTrans1ActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(noTrans1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 100, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return_1.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-        jDialog1.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 580, 490));
+        jDialog1.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -60, 580, 490));
 
         jDialog2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jDialog2.getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 220, 30));
 
         simpan1.setBorder(null);
         simpan1.setBorderPainted(false);
@@ -586,12 +583,12 @@ private javax.swing.JButton btnSimpanEdit;
                 simpan1ActionPerformed(evt);
             }
         });
-        jDialog2.getContentPane().add(simpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, 120, 40));
+        jDialog2.getContentPane().add(simpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 470, 40));
 
         alasan1.setBackground(new java.awt.Color(255, 255, 255));
         alasan1.setBorder(null);
         alasan1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog2.getContentPane().add(alasan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 200, 80));
+        jDialog2.getContentPane().add(alasan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 190, 30));
 
         namaBarang2.setBackground(new java.awt.Color(255, 255, 255));
         namaBarang2.setBorder(null);
@@ -601,41 +598,51 @@ private javax.swing.JButton btnSimpanEdit;
                 namaBarang2ActionPerformed(evt);
             }
         });
-        jDialog2.getContentPane().add(namaBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 20));
+        jDialog2.getContentPane().add(namaBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 190, 30));
 
         qty2.setBackground(new java.awt.Color(255, 255, 255));
         qty2.setBorder(null);
         qty2.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog2.getContentPane().add(qty2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 200, 20));
+        jDialog2.getContentPane().add(qty2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 190, 30));
 
         kodeBarang2.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang2.setBorder(null);
         kodeBarang2.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog2.getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 200, 20));
+        jDialog2.getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 200, 20));
 
         jtanggal1.setBackground(new java.awt.Color(153, 153, 153));
         jtanggal1.setBorder(null);
-        jDialog2.getContentPane().add(jtanggal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 100, 20));
+        jtanggal1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtanggal1ActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(jtanggal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 100, 20));
 
         noTrans2.setBackground(new java.awt.Color(153, 153, 153));
         noTrans2.setBorder(null);
-        jDialog2.getContentPane().add(noTrans2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 100, 20));
+        noTrans2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noTrans2ActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(noTrans2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 100, 20));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return_1.png"))); // NOI18N
         jLabel3.setText("jLabel1");
-        jDialog2.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 580, 490));
+        jDialog2.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 580, 420));
 
         jDialog3.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tidak.setBorder(null);
         tidak.setContentAreaFilled(false);
         tidak.setFocusPainted(false);
-        jDialog3.getContentPane().add(tidak, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 30, 10));
+        jDialog3.getContentPane().add(tidak, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 30, 10));
 
         silang.setBorder(null);
         silang.setContentAreaFilled(false);
         silang.setFocusPainted(false);
-        jDialog3.getContentPane().add(silang, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 10, 20));
+        jDialog3.getContentPane().add(silang, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 10, 10));
 
         ya2.setBorder(null);
         ya2.setContentAreaFilled(false);
@@ -645,9 +652,9 @@ private javax.swing.JButton btnSimpanEdit;
                 ya2ActionPerformed(evt);
             }
         });
-        jDialog3.getContentPane().add(ya2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 50, 20));
+        jDialog3.getContentPane().add(ya2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 50, 20));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/popup hapus.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/popup hapus_1.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         jDialog3.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
 
@@ -956,6 +963,18 @@ private javax.swing.JButton btnSimpanEdit;
         // TODO add your handling code here:
     }//GEN-LAST:event_kodeBarang1ActionPerformed
 
+    private void noTrans1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noTrans1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noTrans1ActionPerformed
+
+    private void noTrans2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noTrans2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noTrans2ActionPerformed
+
+    private void jtanggal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtanggal1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtanggal1ActionPerformed
+
     
  
     /**
@@ -1058,8 +1077,6 @@ private void tabelReturMouseClicked(java.awt.event.MouseEvent evt) {
     private javax.swing.JTextField alasan1;
     private javax.swing.JTextField cri;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;

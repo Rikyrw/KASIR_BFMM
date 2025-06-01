@@ -114,6 +114,7 @@ public class stokOpname extends javax.swing.JFrame {
         kartuStok1 = new javax.swing.JTextField();
         stokSistem1 = new javax.swing.JTextField();
         keterangan1 = new javax.swing.JTextField();
+        silang = new javax.swing.JButton();
         selisih = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         hapus = new javax.swing.JButton();
@@ -144,18 +145,18 @@ public class stokOpname extends javax.swing.JFrame {
                 simpanActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 110, 30));
+        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 470, 30));
 
         cari2.setBorder(null);
         cari2.setBorderPainted(false);
         cari2.setContentAreaFilled(false);
         cari2.setFocusPainted(false);
-        jDialog1.getContentPane().add(cari2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 70, 40));
+        jDialog1.getContentPane().add(cari2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 90, 40));
 
         jtgl.setBorder(null);
         jtgl.setFocusable(false);
         jtgl.setRequestFocusEnabled(false);
-        jDialog1.getContentPane().add(jtgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 120, 30));
+        jDialog1.getContentPane().add(jtgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 120, 30));
 
         kodeBarang1.setBorder(null);
         kodeBarang1.addActionListener(new java.awt.event.ActionListener() {
@@ -163,10 +164,10 @@ public class stokOpname extends javax.swing.JFrame {
                 kodeBarang1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 170, 20));
+        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 190, 30));
 
         namaBarang1.setBorder(null);
-        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 154, 190, 20));
+        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 200, 30));
 
         kartuStok1.setBorder(null);
         kartuStok1.addActionListener(new java.awt.event.ActionListener() {
@@ -174,10 +175,10 @@ public class stokOpname extends javax.swing.JFrame {
                 kartuStok1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(kartuStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 170, 30));
+        jDialog1.getContentPane().add(kartuStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 120, 20));
 
         stokSistem1.setBorder(null);
-        jDialog1.getContentPane().add(stokSistem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 190, 30));
+        jDialog1.getContentPane().add(stokSistem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 130, 20));
 
         keterangan1.setBorder(null);
         keterangan1.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +186,14 @@ public class stokOpname extends javax.swing.JFrame {
                 keterangan1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(keterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 170, 30));
+        jDialog1.getContentPane().add(keterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 450, 30));
+
+        silang.setBorder(null);
+        silang.setBorderPainted(false);
+        silang.setContentAreaFilled(false);
+        silang.setFocusPainted(false);
+        silang.setRequestFocusEnabled(false);
+        jDialog1.getContentPane().add(silang, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, 30, 30));
 
         selisih.setBorder(null);
         selisih.addActionListener(new java.awt.event.ActionListener() {
@@ -193,11 +201,11 @@ public class stokOpname extends javax.swing.JFrame {
                 selisihActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(selisih, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, 90, 20));
+        jDialog1.getContentPane().add(selisih, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 90, 20));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/stokkop (1).png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/stokkop_1.png"))); // NOI18N
         jLabel3.setText("jLabel3");
-        jDialog1.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 720, -1));
+        jDialog1.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -487,6 +495,7 @@ public class stokOpname extends javax.swing.JFrame {
     private javax.swing.JTextField namaBarang1;
     private javax.swing.JButton retur1;
     private javax.swing.JTextField selisih;
+    private javax.swing.JButton silang;
     private javax.swing.JButton simpan;
     private javax.swing.JTextField stokSistem1;
     private javax.swing.JButton tambah2;

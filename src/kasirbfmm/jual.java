@@ -122,7 +122,6 @@ public void tglskrg(){
         hapus1 = new javax.swing.JButton();
         tambah2 = new javax.swing.JButton();
         cetak1 = new javax.swing.JButton();
-        ekspor1 = new javax.swing.JButton();
         tanggal = new javax.swing.JTextField();
         noTransaksi1 = new javax.swing.JTextField();
         namaBarang = new javax.swing.JTextField();
@@ -133,6 +132,7 @@ public void tglskrg(){
         qty1 = new javax.swing.JTextField();
         jumlahHarga1 = new javax.swing.JTextField();
         total1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         bayar1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -215,7 +215,7 @@ public void tglskrg(){
                 simpanActionPerformed(evt);
             }
         });
-        getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 680, 130, 40));
+        getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 680, 110, 40));
 
         hapus1.setBorderPainted(false);
         hapus1.setContentAreaFilled(false);
@@ -247,11 +247,6 @@ public void tglskrg(){
         });
         getContentPane().add(cetak1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 680, 130, 40));
 
-        ekspor1.setBorderPainted(false);
-        ekspor1.setContentAreaFilled(false);
-        ekspor1.setFocusPainted(false);
-        getContentPane().add(ekspor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 680, 130, 40));
-
         tanggal.setBackground(new java.awt.Color(153, 153, 153));
         tanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 110, 20));
@@ -266,7 +261,7 @@ public void tglskrg(){
 
         kembalian1.setBackground(new java.awt.Color(255, 255, 255));
         kembalian1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(kembalian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 690, 100, 30));
+        getContentPane().add(kembalian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 690, 100, 30));
 
         kodeBarang2.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -275,7 +270,7 @@ public void tglskrg(){
                 kodeBarang2ActionPerformed(evt);
             }
         });
-        getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 209, 450, 30));
+        getContentPane().add(kodeBarang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 209, 340, 30));
 
         harga1.setBackground(new java.awt.Color(255, 255, 255));
         harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -300,7 +295,15 @@ public void tglskrg(){
 
         total1.setBackground(new java.awt.Color(255, 255, 255));
         total1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 690, 100, 30));
+        getContentPane().add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 690, 100, 30));
+
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setFocusPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setRequestFocusEnabled(false);
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, 90, 40));
 
         bayar1.setBackground(new java.awt.Color(255, 255, 255));
         bayar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -309,7 +312,7 @@ public void tglskrg(){
                 bayar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 690, 100, 30));
+        getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 690, 100, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -351,7 +354,7 @@ public void tglskrg(){
         });
         getContentPane().add(retur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/jual.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/jual_1.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -895,9 +898,9 @@ try {
     private javax.swing.JTextField bayar1;
     private javax.swing.JButton cetak1;
     private javax.swing.JButton dasbor1;
-    private javax.swing.JButton ekspor1;
     private javax.swing.JButton hapus1;
     private javax.swing.JTextField harga1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
