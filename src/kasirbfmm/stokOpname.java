@@ -10,18 +10,24 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Dhimas Ananta
  */
 public class stokOpname extends javax.swing.JFrame {
     databasee db = new databasee();
-
+    private String selectedKodeBarang;
+    private String selectedTanggal;
     /**
      * Creates new form stokOpname
      */
     public stokOpname() {
         initComponents();
+                    setTanggalOtomatis();
+                    //         Load data ke tabel saat form dibuka
+        loadDataToTable();
         
         jtgl.setEditable(false);
         
@@ -45,7 +51,124 @@ public class stokOpname extends javax.swing.JFrame {
             }
         });
         
+                // Tambahkan listener untuk stok fisik (kartuStok1)
+        kartuStok1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hitungSelisih();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                hitungSelisih();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                hitungSelisih();
+            }
+        });
+        
+         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        tableClicked(evt);
     }
+});
+
+    }
+    
+    
+     private void tableClicked(java.awt.event.MouseEvent evt) {
+        
+    int row = jTable1.getSelectedRow();
+    if (row >= 0) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        selectedKodeBarang = model.getValueAt(row, 0).toString();
+        selectedTanggal = model.getValueAt(row, 5).toString();
+    }
+}
+     
+     
+         public void setTanggalOtomatis() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format tanggal
+    String tanggalSekarang = sdf.format(new Date()); // Ambil tanggal sekarang
+    jtgl.setText(tanggalSekarang); // Set ke JTextField (ganti dengan nama variabel JTextField tanggal kamu)
+}
+         
+         
+         
+         private void loadDataToTable() {
+    try {
+        // Query untuk mengambil data stok opname
+        String sql = "SELECT so.kode_barang, so.stok_sistem, so.stok_fisik, so.selisih, so.keterangan, so.tanggal " +
+                     "FROM tb_stok_opname so " +
+                     "JOIN tb_barang b ON so.kode_barang = b.kode_barang " +
+                     "ORDER BY so.tanggal DESC";
+        
+        ResultSet rs = db.ambildata(sql);
+        
+        // Model tabel default
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Kosongkan tabel sebelum mengisi data baru
+        
+        // Isi tabel dengan data dari ResultSet
+        while (rs.next()) {
+            Object[] row = {
+                rs.getString("kode_barang"),
+                rs.getInt("stok_sistem"),
+                rs.getInt("stok_fisik"),
+                rs.getInt("selisih"),
+                rs.getString("keterangan"),
+                rs.getString("tanggal")
+            };
+            model.addRow(row);
+        }
+        
+        rs.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error saat memuat data: " + e.getMessage());
+    }
+}
+         
+         
+         
+           private void hitungSelisih() {
+        try {
+            // Ambil nilai stok sistem dan stok fisik
+            int stokSistem = stokSistem1.getText().isEmpty() ? 0 : Integer.parseInt(stokSistem1.getText());
+            int stokFisik = kartuStok1.getText().isEmpty() ? 0 : Integer.parseInt(kartuStok1.getText());
+
+            // Hitung selisih untuk tampilan UI saja
+            int selisihValue = stokFisik - stokSistem;
+
+            // Tampilkan selisih (hanya untuk preview, tidak disimpan ke database)
+            selisih.setText(String.valueOf(selisihValue));
+
+            // Beri warna berdasarkan positif/negatif
+            if (selisihValue > 0) {
+                selisih.setForeground(Color.GREEN);
+            } else if (selisihValue < 0) {
+                selisih.setForeground(Color.RED);
+            } else {
+                selisih.setForeground(Color.BLACK);
+            }
+        } catch (NumberFormatException e) {
+            // Handle jika input bukan angka
+            selisih.setText("");
+        }
+    }
+           
+           private void resetForm() {
+    kodeBarang1.setText("");
+    namaBarang1.setText("");
+    stokSistem1.setText("");
+    kartuStok1.setText("");
+    selisih.setText("");
+    keterangan1.setText("");
+    selectedKodeBarang = null;
+    selectedTanggal = null;
+}
     
     
    private void cariBarang() { 
@@ -213,6 +336,11 @@ public class stokOpname extends javax.swing.JFrame {
         hapus.setBorderPainted(false);
         hapus.setContentAreaFilled(false);
         hapus.setFocusPainted(false);
+        hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusActionPerformed(evt);
+            }
+        });
         getContentPane().add(hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, 120, 40));
 
         dasbor1.setBorderPainted(false);
@@ -302,6 +430,11 @@ public class stokOpname extends javax.swing.JFrame {
         edit1.setBorderPainted(false);
         edit1.setContentAreaFilled(false);
         edit1.setFocusPainted(false);
+        edit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
 
         tambah2.setBorderPainted(false);
@@ -434,7 +567,126 @@ public class stokOpname extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
+        try {
+        // Validasi input
+        if (kodeBarang1.getText().isEmpty() || stokSistem1.getText().isEmpty()
+                || kartuStok1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Harap lengkapi semua field!");
+            return;
+        }
+
+        // Ambil data dari form
+        String kodeBarang = kodeBarang1.getText();
+        int stokSistem = Integer.parseInt(stokSistem1.getText());
+        int stokFisik = Integer.parseInt(kartuStok1.getText());
+        String keterangan = keterangan1.getText();
+        String tanggal = jtgl.getText();
+
+        String sql;
+        if (selectedKodeBarang != null && selectedTanggal != null) {
+            // Mode edit - update data yang ada
+            sql = "UPDATE tb_stok_opname SET "
+                + "stok_sistem = " + stokSistem + ", "
+                + "stok_fisik = " + stokFisik + ", "
+                + "keterangan = '" + keterangan + "', "
+                + "tanggal = '" + tanggal + "' "
+                + "WHERE kode_barang = '" + selectedKodeBarang + "' "
+                + "AND tanggal = '" + selectedTanggal + "'";
+        } else {
+            // Mode tambah - insert data baru
+            sql = "INSERT INTO tb_stok_opname (kode_barang, stok_sistem, stok_fisik, tanggal, keterangan) "
+                + "VALUES ('" + kodeBarang + "', " + stokSistem + ", " + stokFisik
+                + ", '" + tanggal + "', '" + keterangan + "')";
+        }
+
+        if (db.aksi(sql)) {
+            JOptionPane.showMessageDialog(this, "Data stok opname berhasil disimpan!");
+            resetForm();
+            jDialog1.setVisible(false);
+            loadDataToTable();
+            
+            // Reset selected data setelah simpan
+            selectedKodeBarang = null;
+            selectedTanggal = null;
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan data stok opname!");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Input stok harus berupa angka!");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+    
     }//GEN-LAST:event_simpanActionPerformed
+
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+
+ if (selectedKodeBarang == null || selectedTanggal == null) {
+        JOptionPane.showMessageDialog(this, "Pilih data yang akan dihapus terlebih dahulu!");
+        return;
+    }
+    
+    int confirm = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin menghapus data stok opname untuk barang " + selectedKodeBarang + "?", 
+        "Konfirmasi Hapus", 
+        JOptionPane.YES_NO_OPTION
+    );
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        String sql = "DELETE FROM tb_stok_opname WHERE kode_barang = '" + selectedKodeBarang 
+                    + "' AND tanggal = '" + selectedTanggal + "'";
+        
+        if (db.aksi(sql)) {
+            JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+            loadDataToTable();
+            selectedKodeBarang = null;
+            selectedTanggal = null;
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal menghapus data!");
+        }
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_hapusActionPerformed
+
+    private void edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit1ActionPerformed
+        // TODO add your handling code here:
+        if (selectedKodeBarang == null || selectedTanggal == null) {
+        JOptionPane.showMessageDialog(this, "Pilih data yang akan diedit terlebih dahulu!");
+        return;
+    }
+    
+    try {
+        // Ambil data dari database
+        String sql = "SELECT * FROM tb_stok_opname WHERE kode_barang = '" + selectedKodeBarang 
+                   + "' AND tanggal = '" + selectedTanggal + "'";
+        ResultSet rs = db.ambildata(sql);
+        
+        if (rs.next()) {
+            // Isi form dialog dengan data yang dipilih
+            kodeBarang1.setText(rs.getString("kode_barang"));
+            stokSistem1.setText(rs.getString("stok_sistem"));
+            kartuStok1.setText(rs.getString("stok_fisik"));
+            selisih.setText(rs.getString("selisih"));
+            keterangan1.setText(rs.getString("keterangan"));
+            jtgl.setText(rs.getString("tanggal"));
+            
+            // Ambil nama barang dari tabel barang
+            ResultSet rsBarang = db.ambildata("SELECT nama_barang FROM tb_barang WHERE kode_barang = '" 
+                                            + selectedKodeBarang + "'");
+            if (rsBarang.next()) {
+                namaBarang1.setText(rsBarang.getString("nama_barang"));
+            }
+            
+            // Tampilkan dialog edit
+            jDialog1.setSize(727, 463);
+            jDialog1.setLocationRelativeTo(this);
+            jDialog1.setModal(true);
+            jDialog1.setVisible(true);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+    }//GEN-LAST:event_edit1ActionPerformed
 
     /**
      * @param args the command line arguments
