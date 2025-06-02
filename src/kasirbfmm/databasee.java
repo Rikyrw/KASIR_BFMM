@@ -22,7 +22,7 @@ public class databasee {
     ResultSet rs;
     
     private final String driver = "com.mysql.cj.jdbc.Driver";
-    private final String url = "jdbc:mysql://localhost/ddos"; // nama database kamu
+    private final String url = "jdbc:mysql://localhost/bfm_kasir1111"; // nama database kamu
     private final String user = "root";
     private final String password = "";
 
@@ -86,6 +86,8 @@ public ResultSet cariBarangByBarcode(int barcode) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
+
+
 
 //    public Connection koneksiDB() {
 //    try {

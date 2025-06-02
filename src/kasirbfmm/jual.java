@@ -24,6 +24,8 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 /**
  *
  * @author Dhimas Ananta
@@ -44,7 +46,136 @@ public class jual extends javax.swing.JFrame {
         buatnomor();
                 //tampilkan tabel
         aturTabel();
+         // Set focus ke kodeBarang2 saat form dibuka
+    kodeBarang2.requestFocusInWindow();
+    
+    
+    qty1.getDocument().addDocumentListener(new DocumentListener() {
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        hitungJumlahHarga();
     }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        hitungJumlahHarga();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        hitungJumlahHarga();
+    }
+});
+    
+    
+    bayar1.getDocument().addDocumentListener(new DocumentListener() {
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        hitungKembalian();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        hitungKembalian();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        hitungKembalian();
+    }
+});
+    
+            kodeBarang2.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                cariBarang();
+            }
+        });
+    
+    }
+    
+    
+       private void cariBarang() { 
+    String kode = kodeBarang2.getText(); 
+    if (kode.length() >= 2) { // Mulai cari setelah 2 karakter diinput 
+        try { 
+            ResultSet rs = db.ambildata( 
+                    "SELECT nama_barang, stok FROM tb_barang WHERE kode_barang LIKE '" + kode + "%' LIMIT 1"); 
+            if (rs.next()) { 
+                namaBarang.setText(rs.getString("nama_barang")); 
+                stok1.setText(rs.getString("stok")); // Tambahan untuk mengisi stok
+                 
+            } else { 
+                namaBarang.setText(""); 
+                stok1.setText(""); // Kosongkan stok jika tidak ditemukan
+                 
+            } 
+            rs.close(); 
+        } catch (Exception e) { 
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage()); 
+        } 
+    } else {
+        // Kosongkan field jika input kurang dari 2 karakter
+        namaBarang.setText("");
+        stok1.setText("");
+    }
+}
+    
+    
+    // Method untuk menghitung kembalian
+    private void hitungKembalian() {
+        try {
+            if (!bayar1.getText().isEmpty() && !total1.getText().isEmpty()) {
+                int bayar = Integer.parseInt(bayar1.getText());
+                int total = Integer.parseInt(total1.getText());
+
+                if (bayar < total) {
+                    kembalian1.setText("Uang kurang!");
+                } else {
+                    int kembalian = bayar - total;
+                    kembalian1.setText(String.valueOf(kembalian));
+                }
+            }
+        } catch (NumberFormatException ex) {
+            kembalian1.setText("Input tidak valid");
+        }
+    }
+    
+    
+    
+    // Method untuk menghitung jumlah harga
+private void hitungJumlahHarga() {
+    try {
+        if (!qty1.getText().isEmpty() && !harga1.getText().isEmpty()) {
+            int qty = Integer.parseInt(qty1.getText());
+            int harga = Integer.parseInt(harga1.getText());
+            int stok = Integer.parseInt(stok1.getText());
+            
+            if (qty > stok) {
+                JOptionPane.showMessageDialog(null, "Stok tidak mencukupi! Stok tersedia: " + stok);
+                qty1.setText("");
+                return;
+            }
+            
+            int total = qty * harga;
+            jumlahHarga1.setText(String.valueOf(total));
+        }
+    } catch (NumberFormatException ex) {
+        // Biarkan kosong jika input tidak valid
+    }
+}
+    
+    
 public void tglskrg(){
     Date skrg = new Date();
     // Format untuk tampilan di form (readable)
@@ -82,12 +213,15 @@ public void tglskrg(){
 }
     
     //perintah membuat judul tabel pada form transaksi jual
-        public void aturTabel(){
-        model.addColumn("KODE BARANG");
-        model.addColumn("NAMA BARANG");
-        model.addColumn("HARGA BARANG");
-        model.addColumn("JUMLAH BARANG");
-        jTable1.setModel(model);
+        
+       public void aturTabel(){
+    model.addColumn("KODE BARANG");
+    model.addColumn("NAMA BARANG");
+    model.addColumn("HARGA BARANG");
+    model.addColumn("JUMLAH BARANG");
+    model.addColumn("BARCODE"); // Kolom tambahan untuk barcode
+    jTable1.setModel(model);
+
     }
         
         private void isianBersih(){
@@ -316,17 +450,18 @@ public void tglskrg(){
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Kode Barang", "Nama Barang", "Jumlah Barang", "Harga Barang"
+                "Kode Barang", "Nama Barang", "Jumlah Barang", "Harga Barang", "Barcode"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -340,6 +475,7 @@ public void tglskrg(){
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 422, 1020, 230));
@@ -438,7 +574,7 @@ public void tglskrg(){
             JOptionPane.showMessageDialog(null, "Diskon 50% diterapkan! Total setelah diskon: " + totalHarga);
         }
 
-        // Dapatkan id_user dari session (contoh menggunakan id_user = 1)
+        // Dapatkan id_user dari session
         int id_user = 1; // Ganti dengan cara mendapatkan id_user yang login
 
         // Simpan data transaksi ke tb_jual
@@ -457,6 +593,7 @@ public void tglskrg(){
             String namaBarang = jTable1.getValueAt(i, 1).toString();
             String hargaBarang = jTable1.getValueAt(i, 2).toString(); 
             String jumlahBarang = jTable1.getValueAt(i, 3).toString(); 
+            String barcode = jTable1.getValueAt(i, 4) != null ? jTable1.getValueAt(i, 4).toString() : null;
 
             // Ambil data tambahan dari tb_barang
             ResultSet rsBarang = db.ambildata("SELECT harga_beli, varian FROM tb_barang WHERE kode_barang = '" + kodeBarang + "'");
@@ -471,9 +608,9 @@ public void tglskrg(){
             // Hitung total harga per item
             double totalHargaItem = Double.parseDouble(jumlahBarang) * Double.parseDouble(hargaBarang);
 
-            // Query insert detail transaksi (sesuai struktur baru tanpa no_detail)
+            // Query insert detail transaksi dengan barcode
             String sqlDetail = "INSERT INTO detail_transaksijual " +
-                    "(no_transaksi, kode_barang, nama_barang, jumlah_barang, harga_barang, harga_beli, varian, total) VALUES (" + 
+                    "(no_transaksi, kode_barang, nama_barang, jumlah_barang, harga_barang, harga_beli, varian, total, barcode) VALUES (" + 
                     "'" + noTransaksi1.getText() + "', " + 
                     "'" + kodeBarang + "', " + 
                     "'" + namaBarang + "', " + 
@@ -481,7 +618,8 @@ public void tglskrg(){
                     "'" + hargaBarang + "', " +
                     "'" + hargaBeli + "', " +
                     "'" + varian + "', " +
-                    "'" + totalHargaItem + "')";
+                    "'" + totalHargaItem + "', " +
+                    (barcode != null ? "'" + barcode + "'" : "NULL") + ")";
             db.aksi(sqlDetail); 
 
             // Update stok barang 
@@ -500,17 +638,7 @@ public void tglskrg(){
         // Reset form dan tabel
         model.setRowCount(0);
         buatnomor();
-        
-        // Clear semua fields
-        total1.setText("");
-        bayar1.setText("");
-        kembalian1.setText("");
-        kodeBarang2.setText("");
-        namaBarang.setText("");
-        harga1.setText("");
-        stok1.setText("");
-        jumlahHarga1.setText("");
-        
+        isianBersih();
         sumTotal = 0;
 
     } catch (SQLException ex) {
@@ -532,79 +660,121 @@ public void tglskrg(){
     }//GEN-LAST:event_bayar1ActionPerformed
 
     private void kodeBarang2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarang2ActionPerformed
-try {
-            ResultSet rs = db.ambildata("select * from tb_barang where kode_barang='" +kodeBarang2.getText()+"'");
-             if (rs.next()) {
-                 namaBarang.setText(rs.getString("nama_barang"));
-                 harga1.setText(rs.getString("harga_jual"));
-                 stok1.setText(rs.getString("stok"));
-                 qty1.requestFocus();
-             }else{
-                 JOptionPane.showMessageDialog(null, "Kode Belum terdaftar");
-                 kodeBarang2.selectAll();
-             }       
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        try {
+        String input = kodeBarang2.getText().trim();
+        ResultSet rs;
+        
+        // Cari barang berdasarkan kode atau barcode
+        if (input.matches("\\d+")) { // Jika input adalah angka (barcode)
+            rs = db.ambildata("SELECT * FROM tb_barang WHERE barcode = '" + input + "'");
+        } else { // Jika input adalah kode barang
+            rs = db.ambildata("SELECT * FROM tb_barang WHERE kode_barang = '" + input + "'");
         }
+        
+        if (rs.next()) {
+            // Simpan kode_barang yang sebenarnya, bukan barcode
+            kodeBarang2.setText(rs.getString("kode_barang"));
+            namaBarang.setText(rs.getString("nama_barang"));
+            harga1.setText(rs.getString("harga_jual"));
+            stok1.setText(rs.getString("stok"));
+            qty1.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(null, "Kode/Barcode belum terdaftar");
+            kodeBarang2.selectAll();
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+            // Pindah focus ke tombol tambah setelah enter di qty
+    tambah2.requestFocus();
     }//GEN-LAST:event_kodeBarang2ActionPerformed
 
     private void qty1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qty1ActionPerformed
         // TODO add your handling code here:
-        int a1, a2, total, stok_barang = Integer.parseInt(stok1.getText());
-        if (stok_barang > 1) {
-            a1 = Integer.parseInt(harga1.getText());
-            a2 = Integer.parseInt(qty1.getText());
-            total = a1 * a2;
-            jumlahHarga1.setText(String.valueOf(total));
-            tambah2.requestFocus();
-    }else{
-            JOptionPane.showMessageDialog(null, "Maaf, \nstok sudah mencapai stok minimum!");   
+    try {
+        int stok_barang = Integer.parseInt(stok1.getText());
+        int qty = Integer.parseInt(qty1.getText());
+        
+        // Validasi stok
+        if (qty <= 0) {
+            JOptionPane.showMessageDialog(null, "Jumlah tidak boleh nol atau negatif!");
+            qty1.setText("");
+            qty1.requestFocus();
+            return;
         }
+        
+        if (qty > stok_barang) {
+            JOptionPane.showMessageDialog(null, "Maaf, stok tidak mencukupi!\nStok tersedia: " + stok_barang);
+            qty1.setText("");
+            qty1.requestFocus();
+            return;
+        }
+        
+        // Hitung total harga jika validasi berhasil
+        int harga = Integer.parseInt(harga1.getText());
+        int total = harga * qty;
+        jumlahHarga1.setText(String.valueOf(total));
+        tambah2.requestFocus();
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Input harus berupa angka!");
+        qty1.setText("");
+        qty1.requestFocus();
+    }
     }//GEN-LAST:event_qty1ActionPerformed
 
     private void tambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambah2ActionPerformed
      // TODO add your handling code here:
         try {
-            //konfirmasi tambah
-         int n = JOptionPane.showConfirmDialog(this, "Tambah lagi?", "riky",
-                 JOptionPane.YES_NO_OPTION,
-                 JOptionPane.QUESTION_MESSAGE, null);
-         if (n == JOptionPane.YES_OPTION){
-             long qyt, hrg;
-             
-             model.addRow(new Object[]{kodeBarang2.getText(), namaBarang.getText(), harga1.getText(), qty1.getText()});
-             jTable1.setModel(model);
-             qyt = Long.parseLong(qty1.getText());
-             hrg = Long.parseLong(harga1.getText());
-             sumTotal += (hrg * qyt);
-             total1.setText(String.valueOf(sumTotal));
-             kodeBarang2.requestFocus();
-             kodeBarang2.setText("");
-             namaBarang.setText("");
-             harga1.setText("");
-             qty1.setText("");
-             jumlahHarga1.setText("");
-         }else if (n == JOptionPane.NO_OPTION){
-             long qyt, hrg;
-             model.addRow(new Object[]{kodeBarang2.getText(), namaBarang.getText(), harga1.getText(), qty1.getText()});
-             jTable1.setModel(model);
-             qyt = Long.parseLong(qty1.getText());
-             hrg = Long.parseLong(harga1.getText());
-             sumTotal += (hrg * qyt);
-             total1.setText(String.valueOf(sumTotal));
-             kodeBarang2.requestFocus();
-             kodeBarang2.setText("");
-             namaBarang.setText("");
-             harga1.setText("");
-             qty1.setText("");
-             stok1.setText("");
-             jumlahHarga1.setText("");
-             bayar1.requestFocus();
-             
-         }else{
-             bayar1.requestFocus();
-         }
-        } catch (Exception e) {
+        // Validasi stok
+        int stok_barang = Integer.parseInt(stok1.getText());
+        if (stok_barang < 1) {
+            JOptionPane.showMessageDialog(null, "Maaf, stok sudah mencapai stok minimum!");
+            return;
+        }
+        
+        //konfirmasi tambah
+        int n = JOptionPane.showConfirmDialog(this, "Tambah lagi?", "Konfirmasi", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        long qyt = Long.parseLong(qty1.getText());
+        long hrg = Long.parseLong(harga1.getText());
+        long totalItem = hrg * qyt;
+        
+        // Ambil barcode untuk ditampilkan di tabel
+        ResultSet rs = db.ambildata("SELECT barcode FROM tb_barang WHERE kode_barang = '" + kodeBarang2.getText() + "'");
+        String barcode = "";
+        if (rs.next()) {
+            barcode = rs.getString("barcode");
+        }
+        
+        if (n == JOptionPane.YES_OPTION) {
+            model.addRow(new Object[]{
+                kodeBarang2.getText(), 
+                namaBarang.getText(), 
+                harga1.getText(), 
+                qty1.getText(),
+                barcode // Kolom ke-5 untuk barcode
+            });
+            sumTotal += totalItem;
+            total1.setText(String.valueOf(sumTotal));
+            isianBersih();
+            kodeBarang2.requestFocus();
+        } else if (n == JOptionPane.NO_OPTION) {
+            model.addRow(new Object[]{
+                kodeBarang2.getText(), 
+                namaBarang.getText(), 
+                harga1.getText(), 
+                qty1.getText(),
+                barcode // Kolom ke-5 untuk barcode
+            });
+            sumTotal += totalItem;
+            total1.setText(String.valueOf(sumTotal));
+            isianBersih();
+            bayar1.requestFocus();
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_tambah2ActionPerformed
 
@@ -743,118 +913,49 @@ try {
 
     private void hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapus1ActionPerformed
        // TODO add your handling code here:
-// TODO add your handling code here:
-try {
-    // Periksa apakah ada transaksi
-    if (noTransaksi1.getText().isEmpty() || jTable1.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(null, "Tidak ada transaksi untuk dicetak.");
-        return;
-    }
+    // Mendapatkan baris yang dipilih di tabel
+        int selectedRow = jTable1.getSelectedRow();
 
-    // Hitung total harga setelah diskon
-    int totalHarga = Integer.parseInt(total1.getText());
-    int diskon = 0;
-    boolean isDiskon = false;
-
-    // Format waktu
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    String waktu = timeFormat.format(new Date());
-
-    // Membuat header nota dengan format thermal printer
-    StringBuilder nota = new StringBuilder();
-    nota.append("     BUNDA FIENS MART     \n");
-    nota.append("============================\n");
-    nota.append("Jl. Jombang no 29\n");
-    nota.append("Ajung Jember Utara\n");
-    nota.append("Telp: 081234567890\n");
-    nota.append("Kasir: Aditya F.A.\n");
-    nota.append("============================\n");
-    
-    // Informasi transaksi
-    nota.append("No.Trx : ").append(noTransaksi1.getText()).append("\n");
-    nota.append("Waktu  : ").append(tanggal.getText()).append(" ").append(waktu).append("\n");
-    nota.append("----------------------------\n");
-    
-    // Header kolom
-    nota.append(String.format("%-20s %3s %7s\n", "NAMA BARANG", "QTY", "TOTAL"));
-
-    // Iterasi data tabel untuk isi nota
-    for (int i = 0; i < jTable1.getRowCount(); i++) {
-        String barang = jTable1.getValueAt(i, 1).toString();
-        int jumlah = Integer.parseInt(jTable1.getValueAt(i, 3).toString());
-        int harga = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
-        int total = jumlah * harga;
-
-        // Format nama barang (maksimal 20 karakter)
-        String formattedBarang = barang.length() > 20 ? barang.substring(0, 17) + "..." : barang;
-        
-        // Format baris item
-        nota.append(String.format("%-20s\n", formattedBarang));
-        nota.append(String.format("%20sx%2s %,9d\n", "", jumlah, total));
-    }
-
-    // Footer nota
-    nota.append("----------------------------\n");
-    
-    // Hitung diskon jika ada
-    int hargaJual = Integer.parseInt(total1.getText());
-    if (diskon > 0) {
-        nota.append(String.format("%-15s %,12d\n", "DISKON :", -diskon));
-    }
-    
-    nota.append(String.format("%-15s %,12d\n", "HARGA JUAL :", hargaJual));
-    nota.append("----------------------------\n");
-    nota.append(String.format("%-15s %,12d\n", "TOTAL :", totalHarga));
-    nota.append(String.format("%-15s %,12d\n", "TUNAI :", Integer.parseInt(bayar1.getText())));
-    
-    // Hitung kembalian
-    int kembalian = Integer.parseInt(bayar1.getText()) - totalHarga;
-    nota.append(String.format("%-15s %,12d\n", "KEMBALI :", kembalian));
-    
-    if (diskon > 0) {
-        nota.append(String.format("%-15s %,12d\n", "ANDA HEMAT :", diskon));
-    }
-    
-    nota.append("============================\n");
-    nota.append("TERIMA KASIH TELAH BERBELANJA\n");
-    nota.append("DI TOKO KAMI\n");
-    nota.append("============================\n");
-    nota.append("LAYANAN KONSUMEN\n");
-    nota.append("SMS/WA: 081234567890\n");
-    nota.append("Email: adityfn@gmail.com\n");
-    nota.append("============================\n");
-
-    // Menampilkan preview struk
-    JTextArea textArea = new JTextArea(nota.toString());
-    textArea.setEditable(false);
-    textArea.setFont(new Font("Monospaced", Font.PLAIN, 2));
-    
-    // Konfigurasi halaman untuk cetak
-    MessageFormat header = new MessageFormat("Bunda Fiens Mart - Nota Penjualan");
-    MessageFormat footer = new MessageFormat("Halaman {0}");
-    
-    // Konfirmasi cetak
-    int printConfirm = JOptionPane.showConfirmDialog(null, new JScrollPane(textArea), "Preview Struk", JOptionPane.YES_NO_OPTION);
-    if (printConfirm == JOptionPane.YES_OPTION) {
-        try {
-            // Set font khusus untuk printer thermal
-            textArea.setFont(new Font("Monospaced", Font.PLAIN, 2));
-            
-            // Cetak dengan dialog printer
-            boolean complete = textArea.print(header, footer);
-            if (complete) {
-                JOptionPane.showMessageDialog(null, "Struk berhasil dicetak.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Pencetakan dibatalkan.");
-            }
-        } catch (java.awt.print.PrinterException e) {
-            JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
+        // Validasi apakah ada baris yang dipilih
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Pilih baris yang akan dihapus terlebih dahulu!");
+            return;
         }
-    }
-} catch (Exception e) {
-    JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-    e.printStackTrace();
-}
+
+        // Konfirmasi penghapusan
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Apakah Anda yakin ingin menghapus baris ini?",
+                "Konfirmasi Hapus",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // Mendapatkan nilai total dari baris yang akan dihapus
+                int harga = Integer.parseInt(jTable1.getValueAt(selectedRow, 2).toString());
+                int qty = Integer.parseInt(jTable1.getValueAt(selectedRow, 3).toString());
+                int totalRow = harga * qty;
+
+                // Mengurangi totalRow dari sumTotal
+                sumTotal -= totalRow;
+                total1.setText(String.valueOf(sumTotal));
+
+                // Menghapus baris dari model tabel
+                model.removeRow(selectedRow);
+
+                // Reset kembalian jika ada
+                if (!bayar1.getText().isEmpty() && !total1.getText().isEmpty()) {
+                    int bayar = Integer.parseInt(bayar1.getText());
+                    int total = Integer.parseInt(total1.getText());
+                    kembalian1.setText(String.valueOf(bayar - total));
+                }
+
+                JOptionPane.showMessageDialog(null, "Baris berhasil dihapus");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal menghapus baris: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_hapus1ActionPerformed
 
     /**

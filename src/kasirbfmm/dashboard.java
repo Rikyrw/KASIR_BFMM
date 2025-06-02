@@ -60,7 +60,7 @@ public class dashboard extends javax.swing.JFrame {
     
    private void initializeDatabaseConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/ddos"; // Updated database name
+            String url = "jdbc:mysql://localhost:3306/bfm_kasir1111"; // Updated database name
             String username = "root"; // Change as needed
             String password = ""; // Change as needed
             

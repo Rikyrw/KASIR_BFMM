@@ -27,6 +27,8 @@ public class barang extends javax.swing.JFrame {
     
   DefaultTableModel model = new DefaultTableModel();
   
+  
+  
   databasee db = new databasee ();
     public barang() {
     this.setUndecorated(true);
@@ -409,13 +411,13 @@ private void searchByName() {
         b1 = new javax.swing.JTextField();
         a1 = new javax.swing.JLabel();
         jDialog3 = new javax.swing.JDialog();
-        kodeBarang1 = new javax.swing.JTextField();
-        namaBarang1 = new javax.swing.JTextField();
-        stokKeluar1 = new javax.swing.JTextField();
-        stokMasuk1 = new javax.swing.JTextField();
-        stokAkhir = new javax.swing.JTextField();
         simpan2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        kodeBarang1 = new javax.swing.JTextField();
+        stokKeluar1 = new javax.swing.JTextField();
+        stokakhir = new javax.swing.JTextField();
+        stokMasuk1 = new javax.swing.JTextField();
+        namaBarang1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         tombolstokop = new javax.swing.JButton();
         tombollUser = new javax.swing.JButton();
@@ -683,36 +685,61 @@ private void searchByName() {
 
         jDialog3.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        kodeBarang1.setBorder(null);
-        kodeBarang1.setRequestFocusEnabled(false);
-        jDialog3.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, 20));
-
-        namaBarang1.setBorder(null);
-        namaBarang1.setRequestFocusEnabled(false);
-        jDialog3.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 190, 20));
-
-        stokKeluar1.setBorder(null);
-        stokKeluar1.setRequestFocusEnabled(false);
-        jDialog3.getContentPane().add(stokKeluar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 130, 20));
-
-        stokMasuk1.setBorder(null);
-        stokMasuk1.setRequestFocusEnabled(false);
-        jDialog3.getContentPane().add(stokMasuk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 120, 20));
-
-        stokAkhir.setBorder(null);
-        stokAkhir.setRequestFocusEnabled(false);
-        jDialog3.getContentPane().add(stokAkhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 130, 20));
-
         simpan2.setBorder(null);
         simpan2.setBorderPainted(false);
         simpan2.setContentAreaFilled(false);
         simpan2.setFocusPainted(false);
         simpan2.setRequestFocusEnabled(false);
+        simpan2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpan2ActionPerformed(evt);
+            }
+        });
         jDialog3.getContentPane().add(simpan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 450, 30));
 
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jDialog3.getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 40, 40));
+
+        kodeBarang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeBarang1ActionPerformed(evt);
+            }
+        });
+        jDialog3.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, -1));
+
+        stokKeluar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stokKeluar1ActionPerformed(evt);
+            }
+        });
+        jDialog3.getContentPane().add(stokKeluar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 110, 20));
+
+        stokakhir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stokakhirActionPerformed(evt);
+            }
+        });
+        jDialog3.getContentPane().add(stokakhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 100, 20));
+
+        stokMasuk1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stokMasuk1ActionPerformed(evt);
+            }
+        });
+        jDialog3.getContentPane().add(stokMasuk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 100, 20));
+
+        namaBarang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namaBarang1ActionPerformed(evt);
+            }
+        });
+        jDialog3.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 180, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/kartus stok.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -1266,6 +1293,48 @@ private void searchByName() {
 
     }//GEN-LAST:event_tombolCari1ActionPerformed
 
+    private void kodeBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarang1ActionPerformed
+        // TODO add your handling code here:
+//        try {
+//            ResultSet rs = db.ambildata("select * from tb_barang where kode_barang='" + kodeBarang1.getText() + "'");
+//            if (rs.next()) {
+//                namaBarang.setText(rs.getString("nama_barang"));
+//                harga1.setText(rs.getString("harga_jual"));
+//                stok1.setText(rs.getString("stok"));
+//                qty1.requestFocus();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Kode Belum terdaftar");
+//                kodeBarang2.selectAll();
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e);
+//        }
+    }//GEN-LAST:event_kodeBarang1ActionPerformed
+
+    private void namaBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaBarang1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_namaBarang1ActionPerformed
+
+    private void stokKeluar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokKeluar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stokKeluar1ActionPerformed
+
+    private void stokMasuk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokMasuk1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stokMasuk1ActionPerformed
+
+    private void stokakhirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokakhirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stokakhirActionPerformed
+
+    private void simpan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_simpan2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1349,9 +1418,9 @@ private void searchByName() {
     private javax.swing.JButton simpan;
     private javax.swing.JButton simpan1;
     private javax.swing.JButton simpan2;
-    private javax.swing.JTextField stokAkhir;
     private javax.swing.JTextField stokKeluar1;
     private javax.swing.JTextField stokMasuk1;
+    private javax.swing.JTextField stokakhir;
     private javax.swing.JTextField tanggal;
     private javax.swing.JTextField tanggal1;
     private javax.swing.JButton tombolCari1;
