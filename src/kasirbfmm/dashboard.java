@@ -9,6 +9,31 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.SwingUtilities;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.util.Calendar;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.geom.Ellipse2D;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+import org.jfree.chart.axis.NumberAxis;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet; // Untuk ResultSet
+import java.text.SimpleDateFormat; // Untuk format tanggal
+import java.util.Date; // Untuk Date
+import javax.swing.JOptionPane; // Untuk menampilkan error
+import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -56,11 +81,152 @@ public class dashboard extends javax.swing.JFrame {
         jlogout.setBorderPainted(false);
 
         updateDashboardData();
+        createWeeklyProfitChart();
     }
     
+    private void createWeeklyProfitChart() {
+    try {
+        if (conn == null || conn.isClosed()) {
+            initializeDatabaseConnection();
+        }
+
+        // Dataset untuk chart
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Array nama hari (Senin-Sabtu)
+        String[] days = {"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
+
+        // Dapatkan tanggal Senin hingga Sabtu minggu ini
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Hitung laba/rugi untuk setiap hari
+        for (int i = 0; i < 6; i++) {
+            String currentDate = sdf.format(cal.getTime());
+            double profit = calculateDailyProfit(currentDate);
+            double loss = calculateDailyLoss(currentDate);
+            double netProfit = profit - loss;
+
+            dataset.addValue(netProfit, "Laba/Rugi", days[i]);
+            
+            // Pindah ke hari berikutnya
+            cal.add(Calendar.DATE, 1);
+        }
+
+        // Buat chart
+        JFreeChart chart = ChartFactory.createLineChart(
+            "",                     // Judul chart
+            "Hari",                 // Label sumbu X
+            "Nominal (Rp)",         // Label sumbu Y
+            dataset,               // Data
+            PlotOrientation.VERTICAL,
+            false,                  // Tampilkan legend
+            true,                   // Tooltips
+            false                   // URLs
+        );
+
+        // Styling chart
+        chart.setBackgroundPaint(Color.WHITE);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setRangeGridlinePaint(new Color(230, 230, 230)); // Warna grid lebih soft
+
+        // Warna ungu sesuai desain - RGB: 128, 0, 128
+        Color purpleColor = new Color(128, 0, 128);
+
+        // Styling garis dengan warna ungu
+        LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
+        renderer.setSeriesStroke(0, new BasicStroke(3.0f));
+        renderer.setSeriesPaint(0, purpleColor); // Menggunakan warna ungu
+        renderer.setSeriesShapesVisible(0, true);
+        renderer.setSeriesShape(0, new Ellipse2D.Double(-3, -3, 6, 6));
+        
+        // Warna titik (shape) juga diubah ke ungu
+        renderer.setSeriesFillPaint(0, purpleColor);
+        renderer.setSeriesOutlinePaint(0, purpleColor);
+
+        // Format sumbu Y (currency)
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setNumberFormatOverride(new DecimalFormat("Rp #,##0"));
+
+        // Buat panel chart dan tambahkan ke jPanel1
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(jPanel1.getWidth(), jPanel1.getHeight()));
+        jPanel1.removeAll();
+        jPanel1.add(chartPanel);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, 
+            "Error creating chart: " + e.getMessage(),
+            "Chart Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private double calculateDailyProfit(String date) {
+    double profit = 0;
+    try {
+        String query = "SELECT SUM((dj.harga_barang - dj.harga_beli) * dj.jumlah_barang) as profit " +
+                      "FROM detail_transaksijual dj " +
+                      "JOIN tb_jual tj ON dj.no_transaksi = tj.no_transaksi " +
+                      "WHERE DATE(tj.tanggal) = ?";
+        
+        java.sql.PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, date);
+        ResultSet rs = stmt.executeQuery();
+        
+        if (rs.next()) {
+            profit = rs.getDouble("profit");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return profit;
+}
+
+private double calculateDailyLoss(String date) {
+    double loss = 0;
+    try {
+        // 1. Hitung dari retur supplier
+        String queryRetur = "SELECT SUM(b.harga_beli * rs.qty) as loss " +
+                          "FROM tb_retur_supplier rs " +
+                          "JOIN tb_barang b ON rs.kode_barang = b.kode_barang " +
+                          "WHERE DATE(rs.tanggal) = ?";
+        
+        // 2. Hitung dari stock opname (selisih negatif)
+        String queryOpname = "SELECT SUM(b.harga_beli * ABS(so.selisih)) as loss " +
+                           "FROM tb_stok_opname so " +
+                           "JOIN tb_barang b ON so.kode_barang = b.kode_barang " +
+                           "WHERE so.selisih < 0 AND DATE(so.tanggal) = ?";
+        
+        java.sql.PreparedStatement stmt = conn.prepareStatement(queryRetur);
+        stmt.setString(1, date);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            loss += rs.getDouble("loss");
+        }
+        
+        stmt = conn.prepareStatement(queryOpname);
+        stmt.setString(1, date);
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            loss += rs.getDouble("loss");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return loss;
+}
+
+
+   
    private void initializeDatabaseConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/bfm_kasir1111"; // Updated database name
+            String url = "jdbc:mysql://localhost:3306/ddos"; // Updated database name
             String username = "root"; // Change as needed
             String password = ""; // Change as needed
             
@@ -219,6 +385,7 @@ public class dashboard extends javax.swing.JFrame {
         hampirkadaluwarsa = new javax.swing.JTextField();
         rugihariini1 = new javax.swing.JTextField();
         untunghariini1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -310,6 +477,7 @@ public class dashboard extends javax.swing.JFrame {
         getContentPane().add(hampirkadaluwarsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 340, 250, 80));
         getContentPane().add(rugihariini1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 250, 80));
         getContentPane().add(untunghariini1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 250, 80));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, 1070, 240));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/desktop.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -408,6 +576,7 @@ public class dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField hampirkadaluwarsa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jlogout;
     private javax.swing.JTextField nama;
     private javax.swing.JTextField rugihariini1;
@@ -420,3 +589,4 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField untunghariini1;
     // End of variables declaration//GEN-END:variables
 }
+    
