@@ -5,6 +5,7 @@
 package kasirbfmm;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +25,7 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 /**
@@ -37,9 +39,13 @@ public class jual extends javax.swing.JFrame {
     /**
      * Creates new form jual
      */
-    public jual() {
+    public jual() { 
         this.setUndecorated(true);
         initComponents();
+        
+            tanggal.setEditable(false);
+            noTransaksi1.setEditable(false);
+        
                 //tampilkan tanggal transaksi
         tglskrg();
                 //tampilkan nomor transaksi
@@ -101,7 +107,125 @@ public class jual extends javax.swing.JFrame {
                 cariBarang();
             }
         });
+        // Inisialisasi tabel daftar barang
+        initTabelDaftarBarang();
+
+        // Event listener untuk pencarian
+        cari1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchBarang();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchBarang();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchBarang();
+            }
+        });
+
+        // Event listener untuk klik tabel
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    selectBarangFromTable();
+                }
+            }
+        });
+
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    selectBarangFromTable();
+                }
+            }
+        });
+
+        jTable2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable2.setRowSelectionAllowed(true);
     
+    }
+    
+    
+    // Tambahkan di class jual
+    private void loadDataBarang(String keyword) {
+        try {
+            DefaultTableModel modelBarang = (DefaultTableModel) jTable2.getModel();
+            modelBarang.setRowCount(0); // Kosongkan tabel
+
+            String sql = "SELECT kode_barang, nama_barang, harga_jual, stok FROM tb_barang";
+            if (keyword != null && !keyword.isEmpty()) {
+                sql += " WHERE nama_barang LIKE '%" + keyword + "%' OR kode_barang LIKE '%" + keyword + "%'";
+            }
+
+            ResultSet rs = db.ambildata(sql);
+            while (rs.next()) {
+                modelBarang.addRow(new Object[]{
+                    rs.getString("kode_barang"),
+                    rs.getString("nama_barang"),
+                    rs.getInt("harga_jual"),
+                    rs.getInt("stok")
+                });
+            }
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error memuat data barang: " + e.getMessage());
+        }
+    }
+
+    private void initTabelDaftarBarang() {
+        DefaultTableModel modelBarang = new DefaultTableModel();
+        modelBarang.addColumn("Kode Barang");
+        modelBarang.addColumn("Nama Barang");
+        modelBarang.addColumn("Harga Jual");
+        modelBarang.addColumn("Stok");
+        jTable2.setModel(modelBarang);
+
+        // Atur lebar kolom
+        jTable2.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable2.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTable2.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable2.getColumnModel().getColumn(3).setPreferredWidth(50);
+
+        // Load data awal
+        loadDataBarang(null);
+    }
+
+    private void searchBarang() {
+        String keyword = cari1.getText().trim();
+        loadDataBarang(keyword);
+    }
+
+    private void selectBarangFromTable() {
+        int selectedRow = jTable2.getSelectedRow();
+        if (selectedRow >= 0) {
+            // Ambil data dari baris yang dipilih
+            String kode = jTable2.getValueAt(selectedRow, 0).toString();
+            String nama = jTable2.getValueAt(selectedRow, 1).toString();
+            String harga = jTable2.getValueAt(selectedRow, 2).toString();
+            String stok = jTable2.getValueAt(selectedRow, 3).toString();
+
+            // Isi ke form jual
+            kodeBarang2.setText(kode);
+            namaBarang.setText(nama);
+            harga1.setText(harga);
+            stok1.setText(stok);
+
+            // Fokus ke qty
+            qty1.requestFocus();
+
+            // Tutup dialog daftar barang
+            daftar_barang.dispose();
+
+            // Otomatis hitung jika qty sudah diisi
+            if (!qty1.getText().isEmpty()) {
+                hitungJumlahHarga();
+            }
+        }
     }
     
     
@@ -245,6 +369,11 @@ public void tglskrg(){
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        daftar_barang = new javax.swing.JDialog();
+        cari1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         barang = new javax.swing.JButton();
         dasbor1 = new javax.swing.JButton();
         barang1 = new javax.swing.JButton();
@@ -266,12 +395,54 @@ public void tglskrg(){
         qty1 = new javax.swing.JTextField();
         jumlahHarga1 = new javax.swing.JTextField();
         total1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Jcari2 = new javax.swing.JButton();
         bayar1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         retur1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        daftar_barang.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cari1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cari1ActionPerformed(evt);
+            }
+        });
+        daftar_barang.getContentPane().add(cari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 1150, -1));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Kode barang", "Nama barang", "Harga jual", "Stok"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setColumnSelectionAllowed(true);
+        jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        daftar_barang.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 1160, 520));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/cari_data.jpg"))); // NOI18N
+        daftar_barang.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 760));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -381,11 +552,9 @@ public void tglskrg(){
         });
         getContentPane().add(cetak1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 680, 130, 40));
 
-        tanggal.setBackground(new java.awt.Color(153, 153, 153));
         tanggal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 110, 20));
 
-        noTransaksi1.setBackground(new java.awt.Color(153, 153, 153));
         noTransaksi1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(noTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 110, 20));
 
@@ -431,13 +600,18 @@ public void tglskrg(){
         total1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 690, 100, 30));
 
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setFocusPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setRequestFocusEnabled(false);
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, 90, 40));
+        Jcari2.setBorder(null);
+        Jcari2.setBorderPainted(false);
+        Jcari2.setContentAreaFilled(false);
+        Jcari2.setFocusPainted(false);
+        Jcari2.setFocusable(false);
+        Jcari2.setRequestFocusEnabled(false);
+        Jcari2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcari2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Jcari2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, 90, 30));
 
         bayar1.setBackground(new java.awt.Color(255, 255, 255));
         bayar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -725,7 +899,7 @@ public void tglskrg(){
 
     private void tambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambah2ActionPerformed
      // TODO add your handling code here:
-        try {
+    try {
         // Validasi stok
         int stok_barang = Integer.parseInt(stok1.getText());
         if (stok_barang < 1) {
@@ -733,49 +907,67 @@ public void tglskrg(){
             return;
         }
         
-        //konfirmasi tambah
-        int n = JOptionPane.showConfirmDialog(this, "Tambah lagi?", "Konfirmasi", 
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        
         long qyt = Long.parseLong(qty1.getText());
         long hrg = Long.parseLong(harga1.getText());
         long totalItem = hrg * qyt;
+        String kodeBarang = kodeBarang2.getText();
         
-        // Ambil barcode untuk ditampilkan di tabel
-        ResultSet rs = db.ambildata("SELECT barcode FROM tb_barang WHERE kode_barang = '" + kodeBarang2.getText() + "'");
-        String barcode = "";
-        if (rs.next()) {
-            barcode = rs.getString("barcode");
+        // Cek apakah barang sudah ada di tabel
+        boolean barangSudahAda = false;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model.getValueAt(i, 0).equals(kodeBarang)) {
+                // Jika barang sudah ada, update jumlahnya
+                long jumlahLama = Long.parseLong(model.getValueAt(i, 3).toString());
+                long jumlahBaru = jumlahLama + qyt;
+                
+                // Validasi stok untuk jumlah baru
+                if (jumlahBaru > stok_barang) {
+                    JOptionPane.showMessageDialog(null, "Maaf, stok tidak mencukupi!\nStok tersedia: " + stok_barang);
+                    return;
+                }
+                
+                model.setValueAt(String.valueOf(jumlahBaru), i, 3);
+                barangSudahAda = true;
+                break;
+            }
         }
         
-        if (n == JOptionPane.YES_OPTION) {
+        // Jika barang belum ada di tabel, tambahkan baris baru
+        if (!barangSudahAda) {
+            // Ambil barcode untuk ditampilkan di tabel
+            ResultSet rs = db.ambildata("SELECT barcode FROM tb_barang WHERE kode_barang = '" + kodeBarang + "'");
+            String barcode = "";
+            if (rs.next()) {
+                barcode = rs.getString("barcode");
+            }
+            
             model.addRow(new Object[]{
-                kodeBarang2.getText(), 
+                kodeBarang, 
                 namaBarang.getText(), 
                 harga1.getText(), 
                 qty1.getText(),
-                barcode // Kolom ke-5 untuk barcode
+                barcode
             });
-            sumTotal += totalItem;
-            total1.setText(String.valueOf(sumTotal));
+        }
+        
+        // Update total
+        sumTotal += totalItem;
+        total1.setText(String.valueOf(sumTotal));
+        
+        // Konfirmasi tambah
+        int n = JOptionPane.showConfirmDialog(this, "Tambah lagi?", "Konfirmasi", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (n == JOptionPane.YES_OPTION) {
             isianBersih();
             kodeBarang2.requestFocus();
-        } else if (n == JOptionPane.NO_OPTION) {
-            model.addRow(new Object[]{
-                kodeBarang2.getText(), 
-                namaBarang.getText(), 
-                harga1.getText(), 
-                qty1.getText(),
-                barcode // Kolom ke-5 untuk barcode
-            });
-            sumTotal += totalItem;
-            total1.setText(String.valueOf(sumTotal));
+        } else {
             isianBersih();
             bayar1.requestFocus();
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
+    }
     }//GEN-LAST:event_tambah2ActionPerformed
 
     private void cetak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetak1ActionPerformed
@@ -958,6 +1150,30 @@ try {
         }
     }//GEN-LAST:event_hapus1ActionPerformed
 
+    private void Jcari2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcari2ActionPerformed
+    // Muat ulang data barang
+    loadDataBarang(null);
+    
+    // Kosongkan field pencarian
+    cari1.setText("");
+    
+    // Tampilkan dialog
+    daftar_barang.setSize(1370, 768);
+    daftar_barang.setLocationRelativeTo(this);
+    daftar_barang.setModal(true);
+    daftar_barang.setVisible(true);
+    // TODO add your handling code here:
+                // TODO add your handling code here:
+//    daftar_barang.setSize(1370, 768); // Sesuaikan dengan ukuran yang diinginkan
+//    daftar_barang.setLocationRelativeTo(this); // Supaya muncul di tengah
+//    daftar_barang.setModal(true); // Membuat dialog bersifat modal (opsional)
+//    daftar_barang.setVisible(true); // Menampilkan dialog
+    }//GEN-LAST:event_Jcari2ActionPerformed
+
+    private void cari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cari1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cari1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -994,17 +1210,22 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Jcari2;
     private javax.swing.JButton barang;
     private javax.swing.JButton barang1;
     private javax.swing.JTextField bayar1;
+    private javax.swing.JTextField cari1;
     private javax.swing.JButton cetak1;
+    private javax.swing.JDialog daftar_barang;
     private javax.swing.JButton dasbor1;
     private javax.swing.JButton hapus1;
     private javax.swing.JTextField harga1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jumlahHarga1;
     private javax.swing.JTextField kembalian1;
     private javax.swing.JTextField kodeBarang2;

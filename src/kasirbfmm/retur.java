@@ -5,6 +5,7 @@
 package kasirbfmm;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,6 +19,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import javax.swing.JDialog;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -37,9 +40,16 @@ public class retur extends javax.swing.JFrame {
      */
     
     public retur() {
-        
+            this.setUndecorated(true);//untuk(x)from
         
         initComponents();
+            jtanggal.setEditable(false);
+            noTrans1.setEditable(false);
+        
+            // Untuk jbarang1
+        jDialog1.setUndecorated(true); // Ini akan menghilangkan semua dekorasi termasuk tombol close
+        jDialog1.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Nonaktifkan tombol close
+        
         kodeBarang1.setBackground(Color.WHITE);
         kodeBarang1.setOpaque(true);
         
@@ -134,7 +144,124 @@ ya2.addActionListener(new java.awt.event.ActionListener() {
 //    model.addColumn("Alasan");
 //    model.addColumn("Kategori");
 //    jTable1.setModel(model);
+
+// Inisialisasi tabel daftar barang
+        initTabelDaftarBarang();
+
+        // Event listener untuk pencarian
+        // Event listener untuk pencarian
+        cari3.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchBarang();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchBarang();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchBarang();
+            }
+        });
+
+        // Event listener untuk klik tabel
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    selectBarangFromTable();
+                }
+            }
+        });
+
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    selectBarangFromTable();
+                }
+            }
+        });
+
+        jTable2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable2.setRowSelectionAllowed(true);
     }
+    
+    
+        // Tambahkan di class jual
+    private void loadDataBarang(String keyword) {
+        try {
+            DefaultTableModel modelBarang = (DefaultTableModel) jTable2.getModel();
+            modelBarang.setRowCount(0); // Kosongkan tabel
+
+            String sql = "SELECT kode_barang, nama_barang, stok FROM tb_barang";
+            if (keyword != null && !keyword.isEmpty()) {
+                sql += " WHERE nama_barang LIKE '%" + keyword + "%' OR kode_barang LIKE '%" + keyword + "%'";
+            }
+
+            ResultSet rs = db.ambildata(sql);
+            while (rs.next()) {
+                modelBarang.addRow(new Object[]{
+                    rs.getString("kode_barang"),
+                    rs.getString("nama_barang"),
+                    //                rs.getInt("harga_jual"),
+                    rs.getInt("stok")
+                });
+            }
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error memuat data barang: " + e.getMessage());
+        }
+    }
+
+    private void initTabelDaftarBarang() {
+        DefaultTableModel modelBarang = new DefaultTableModel();
+        modelBarang.addColumn("Kode Barang");
+        modelBarang.addColumn("Nama Barang");
+//    modelBarang.addColumn("Harga Jual");
+        modelBarang.addColumn("Stok");
+        jTable2.setModel(modelBarang);
+
+        // Atur lebar kolom
+        jTable2.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable2.getColumnModel().getColumn(1).setPreferredWidth(300);
+//    jTable2.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable2.getColumnModel().getColumn(2).setPreferredWidth(50);
+
+        // Load data awal
+        loadDataBarang(null);
+    }
+
+    private void searchBarang() {
+        String keyword = cari3.getText().trim();
+        loadDataBarang(keyword);
+    }
+
+    private void selectBarangFromTable() {
+        int selectedRow = jTable2.getSelectedRow();
+        if (selectedRow >= 0) {
+            // Ambil data dari baris yang dipilih
+            String kode = jTable2.getValueAt(selectedRow, 0).toString();
+            String nama = jTable2.getValueAt(selectedRow, 1).toString();
+            String stok = jTable2.getValueAt(selectedRow, 2).toString();
+
+            // Isi ke form jual
+            kodeBarang1.setText(kode);
+            namaBarang1.setText(nama);
+            qty1.setText(stok);
+
+            // Fokus ke qty
+            qty1.requestFocus();
+
+            // Tutup dialog daftar barang
+            daftar_barang.dispose();
+
+        }
+    }
+    
+    
+    
     
     private void cariDataRetur() {
     String keyword = cri.getText().trim();
@@ -143,7 +270,12 @@ ya2.addActionListener(new java.awt.event.ActionListener() {
     if (keyword.isEmpty()) {
         tampilDataRetur(); // Kembalikan ke tampilan semua data
         return;
+        
     }
+    
+    
+    
+    
 
     DefaultTableModel model = new DefaultTableModel();
     model.addColumn("ID");
@@ -441,16 +573,22 @@ ya2.addActionListener(new java.awt.event.ActionListener() {
 }
 
     private void resetForm() {
-        kodeBarang1.setText("");
-        namaBarang1.setText("");
-        qty1.setText("");
-        alasan.setText("");
-         selectedReturId = -1; // <-- TAMBAHKAN INI
+    kodeBarang1.setText("");
+    namaBarang1.setText("");
+    qty1.setText("");
+    alasan.setText("");
+    selectedReturId = -1; // Reset ID retur yang dipilih
     
-    // AKTIFKAN KEMBALI FIELD
+    // Aktifkan kembali semua field
     kodeBarang1.setEnabled(true);
     namaBarang1.setEnabled(true);
     alasan.setEnabled(true);
+    qty1.setEnabled(true);
+    
+    // Generate nomor transaksi baru jika dalam mode tambah
+    if (selectedReturId == -1) {
+        buatNomor();
+    }
     }
    
     private javax.swing.JDialog jBarang2;
@@ -473,6 +611,8 @@ private javax.swing.JButton btnSimpanEdit;
         kodeBarang1 = new javax.swing.JTextField();
         jtanggal = new javax.swing.JTextField();
         noTrans1 = new javax.swing.JTextField();
+        Jcari2 = new javax.swing.JButton();
+        jcancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jDialog2 = new javax.swing.JDialog();
         simpan1 = new javax.swing.JButton();
@@ -488,6 +628,11 @@ private javax.swing.JButton btnSimpanEdit;
         silang = new javax.swing.JButton();
         ya2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        daftar_barang = new javax.swing.JDialog();
+        cari3 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
         tombolhapus = new javax.swing.JButton();
         tombollogout = new javax.swing.JButton();
         tombolstokOpname = new javax.swing.JButton();
@@ -498,7 +643,6 @@ private javax.swing.JButton btnSimpanEdit;
         tombolcari1 = new javax.swing.JButton();
         tomboltambah1 = new javax.swing.JButton();
         tomboledit1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         cri = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -517,12 +661,12 @@ private javax.swing.JButton btnSimpanEdit;
                 simpanActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 460, 30));
+        jDialog1.getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 460, 30));
 
         alasan.setBackground(new java.awt.Color(255, 255, 255));
         alasan.setBorder(null);
         alasan.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog1.getContentPane().add(alasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 200, 20));
+        jDialog1.getContentPane().add(alasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 200, 20));
 
         namaBarang1.setBackground(new java.awt.Color(255, 255, 255));
         namaBarang1.setBorder(null);
@@ -532,12 +676,12 @@ private javax.swing.JButton btnSimpanEdit;
                 namaBarang1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 200, 20));
+        jDialog1.getContentPane().add(namaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 200, 20));
 
         qty1.setBackground(new java.awt.Color(255, 255, 255));
         qty1.setBorder(null);
         qty1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jDialog1.getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 200, 20));
+        jDialog1.getContentPane().add(qty1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 200, 20));
 
         kodeBarang1.setBackground(new java.awt.Color(255, 255, 255));
         kodeBarang1.setBorder(null);
@@ -547,29 +691,50 @@ private javax.swing.JButton btnSimpanEdit;
                 kodeBarang1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 190, 30));
+        jDialog1.getContentPane().add(kodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 190, 30));
 
-        jtanggal.setBackground(new java.awt.Color(153, 153, 153));
         jtanggal.setBorder(null);
         jtanggal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtanggalActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(jtanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 100, 20));
+        jDialog1.getContentPane().add(jtanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 100, 20));
 
-        noTrans1.setBackground(new java.awt.Color(153, 153, 153));
         noTrans1.setBorder(null);
         noTrans1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noTrans1ActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(noTrans1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 100, 20));
+        jDialog1.getContentPane().add(noTrans1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 100, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return_1.png"))); // NOI18N
+        Jcari2.setBorder(null);
+        Jcari2.setBorderPainted(false);
+        Jcari2.setContentAreaFilled(false);
+        Jcari2.setFocusPainted(false);
+        Jcari2.setFocusable(false);
+        Jcari2.setRequestFocusEnabled(false);
+        Jcari2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcari2ActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(Jcari2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 90, 30));
+
+        jcancel.setBackground(new java.awt.Color(255, 255, 255));
+        jcancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/Cancel.png"))); // NOI18N
+        jcancel.setBorder(null);
+        jcancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcancelActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(jcancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 50, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/return_2.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-        jDialog1.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -60, 580, 490));
+        jDialog1.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, -60, 710, 490));
 
         jDialog2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -657,6 +822,42 @@ private javax.swing.JButton btnSimpanEdit;
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/popup hapus_1.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         jDialog3.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
+
+        daftar_barang.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cari3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cari3ActionPerformed(evt);
+            }
+        });
+        daftar_barang.getContentPane().add(cari3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 1150, -1));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Kode barang", "Nama barang", "Stok"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setColumnSelectionAllowed(true);
+        jScrollPane2.setViewportView(jTable2);
+
+        daftar_barang.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 1160, 520));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/cari_data.jpg"))); // NOI18N
+        daftar_barang.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 760));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -771,17 +972,8 @@ private javax.swing.JButton btnSimpanEdit;
         });
         getContentPane().add(tomboledit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 100, 130, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, 130, 40));
-
         cri.setBorder(null);
-        cri.setRequestFocusEnabled(false);
-        cri.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                criActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cri, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 99, 410, 40));
+        getContentPane().add(cri, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 400, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -851,8 +1043,9 @@ private javax.swing.JButton btnSimpanEdit;
     }//GEN-LAST:event_tombolcari1ActionPerformed
 
     private void tomboltambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboltambah1ActionPerformed
-        // TODO add your handling code here:
-        jDialog1.setSize(565, 458); // Sesuaikan dengan ukuran yang diinginkan
+    resetForm(); // Reset form sebelum menampilkan dialog tambah
+    buatNomor(); // Generate nomor transaksi baru
+    jDialog1.setSize(637, 410); // Sesuaikan dengan ukuran yang diinginkan
     jDialog1.setLocationRelativeTo(this); // Supaya muncul di tengah
     jDialog1.setModal(true); // Membuat dialog bersifat modal (opsional)
     jDialog1.setVisible(true); // Menampilkan dialog
@@ -887,7 +1080,7 @@ private javax.swing.JButton btnSimpanEdit;
     alasan.setEnabled(false);
 
     // Show the edit dialog
-    jDialog1.setSize(565, 458);
+    jDialog1.setSize(637, 410);
     jDialog1.setLocationRelativeTo(this);
     jDialog1.setModal(true);
     jDialog1.setVisible(true);
@@ -951,10 +1144,6 @@ private javax.swing.JButton btnSimpanEdit;
         // TODO add your handling code here:
     }//GEN-LAST:event_ya2ActionPerformed
 
-    private void criActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_criActionPerformed
-
     private void jtanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtanggalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtanggalActionPerformed
@@ -974,6 +1163,31 @@ private javax.swing.JButton btnSimpanEdit;
     private void jtanggal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtanggal1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtanggal1ActionPerformed
+
+    private void Jcari2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcari2ActionPerformed
+        // TODO add your handling code here:
+            // Muat ulang data barang
+    loadDataBarang(null);
+    
+    // Kosongkan field pencarian
+    cari3.setText("");
+    
+    // Tampilkan dialog
+    daftar_barang.setSize(1370, 768);
+    daftar_barang.setLocationRelativeTo(this);
+    daftar_barang.setModal(true);
+    daftar_barang.setVisible(true);
+    }//GEN-LAST:event_Jcari2ActionPerformed
+
+    private void cari3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cari3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cari3ActionPerformed
+
+    private void jcancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancelActionPerformed
+    resetForm(); // Panggil method resetForm
+    jDialog1.dispose();  // Tutup JDialog
+    this.setVisible(true); // Pastikan JFrame tetap terlihat
+    }//GEN-LAST:event_jcancelActionPerformed
 
     
  
@@ -1012,7 +1226,13 @@ private javax.swing.JButton btnSimpanEdit;
         });
     }
 public void tampilDataRetur() {
-    DefaultTableModel model = new DefaultTableModel();
+    DefaultTableModel model = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Seluruh cell tidak bisa di-edit
+            return false;
+        }
+    };
     // Add columns including the ID column
     model.addColumn("ID"); // Hidden column
     model.addColumn("Kode Barang");
@@ -1073,10 +1293,12 @@ private void tabelReturMouseClicked(java.awt.event.MouseEvent evt) {
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Jcari2;
     private javax.swing.JTextField alasan;
     private javax.swing.JTextField alasan1;
+    private javax.swing.JTextField cari3;
     private javax.swing.JTextField cri;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog daftar_barang;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -1084,8 +1306,12 @@ private void tabelReturMouseClicked(java.awt.event.MouseEvent evt) {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JButton jcancel;
     private javax.swing.JTextField jtanggal;
     private javax.swing.JTextField jtanggal1;
     private javax.swing.JTextField kodeBarang1;

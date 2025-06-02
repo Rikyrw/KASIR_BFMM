@@ -34,9 +34,17 @@ public class laporanPembelian extends javax.swing.JFrame {
      * Creates new form laporanPembelian
      */
     public laporanPembelian() {
+            this.setUndecorated(true);
         db.koneksiDB();
         
         initComponents();
+            // Setup tabel dengan model non-editable
+    model = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Semua cell tidak bisa di-edit
+        }
+    };
         
                                 // Setup tabel
         aturTabel();

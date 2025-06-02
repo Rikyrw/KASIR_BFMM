@@ -25,6 +25,8 @@ public class barang extends javax.swing.JFrame {
     private ResultSet RSsupplier;
     private String sql = "";
     
+
+    
   DefaultTableModel model = new DefaultTableModel();
   
   
@@ -33,10 +35,23 @@ public class barang extends javax.swing.JFrame {
     public barang() {
     this.setUndecorated(true);
     initComponents();
+    // Untuk jbarang1
+    jbarang1.setUndecorated(true); // Ini akan menghilangkan semua dekorasi termasuk tombol close
+    jbarang1.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Nonaktifkan tombol close
+    
+    // Untuk jbarang2
+    jbarang2.setUndecorated(true);
+    jbarang2.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
     db.koneksiDB(); // <-- koneksi database harus dipanggil dulu sebelum viewdata()!
 
-    model = new DefaultTableModel();
+    model = new DefaultTableModel() {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        // Seluruh cell tidak bisa di-edit
+        return false;
+    }
+};
     model.addColumn("Kode");
     model.addColumn("Nama");
     model.addColumn("Varian");
@@ -149,6 +164,65 @@ jcari.getDocument().addDocumentListener(new DocumentListener() {
         
       
     }
+    
+    
+    
+    private int getStokKeluarHariIni(String kodeBarang) {
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(new Date());
+        
+        String sql = "SELECT SUM(d.jumlah_barang) as total_keluar " +
+                     "FROM detail_transaksijual d " +
+                     "JOIN tb_jual j ON d.no_transaksi = j.no_transaksi " +
+                     "WHERE d.kode_barang = '" + kodeBarang + "' " +
+                     "AND j.tanggal = '" + today + "'";
+        
+        ResultSet rs = db.ambildata(sql);
+        if (rs.next()) {
+            return rs.getInt("total_keluar");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
+    
+    
+    
+    private void updateStokBarang(String kodeBarang, int stokMasuk, int stokKeluar) {
+    try {
+        // Hitung stok akhir
+        int stokAkhir = Integer.parseInt(stokakhir.getText());
+        
+        // Update stok di tabel barang
+        String sql = "UPDATE tb_barang SET stok = " + stokAkhir + 
+                     " WHERE kode_barang = '" + kodeBarang + "'";
+        db.aksi(sql);
+        
+        // Insert ke kartu stok
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(new Date());
+        
+        String jenisTransaksi = stokMasuk > 0 ? "beli" : "jual";
+        
+        sql = "INSERT INTO kartu_stok (tanggal, kode_barang, jenis_transaksi, " +
+              "qty_masuk, qty_keluar, stok_akhir, keterangan) VALUES (" +
+              "'" + today + "', '" + kodeBarang + "', '" + jenisTransaksi + "', " +
+              stokMasuk + ", " + stokKeluar + ", " + stokAkhir + ", " +
+              "'Penyesuaian stok')";
+        db.aksi(sql);
+        
+        JOptionPane.showMessageDialog(null, "Stok berhasil diperbarui!");
+        jDialog3.dispose();
+        viewdata(); // Refresh tabel barang
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Gagal memperbarui stok: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+    
+    
     
     private void tampilData(){
     
@@ -426,7 +500,6 @@ private void searchByName() {
         tombolCari1 = new javax.swing.JButton();
         tombolTambah1 = new javax.swing.JButton();
         tombolhapussss = new javax.swing.JButton();
-        kategori = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         tombolDasbor2 = new javax.swing.JButton();
@@ -441,7 +514,7 @@ private void searchByName() {
 
         jcancel.setBackground(new java.awt.Color(255, 255, 255));
         jcancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/Cancel.png"))); // NOI18N
-        jcancel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jcancel.setBorder(null);
         jcancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcancelActionPerformed(evt);
@@ -564,7 +637,7 @@ private void searchByName() {
 
         jcancel1.setBackground(new java.awt.Color(255, 255, 255));
         jcancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/Cancel.png"))); // NOI18N
-        jcancel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jcancel1.setBorder(null);
         jcancel1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcancel1ActionPerformed(evt);
@@ -824,14 +897,6 @@ private void searchByName() {
         });
         getContentPane().add(tombolhapussss, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 120, 40));
 
-        kategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Minuman", "Sembako" }));
-        kategori.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kategoriActionPerformed(evt);
-            }
-        });
-        getContentPane().add(kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 110, 40));
-
         jTable1.setBackground(new java.awt.Color(102, 102, 102));
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -942,23 +1007,6 @@ private void searchByName() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kategoriActionPerformed
-//            String selectedCategory = kategori.getSelectedItem().toString();
-//    String searchText = jcari.getText().trim();
-//    
-//    if (searchText.isEmpty()) {
-//        // If search field is empty, filter by category only
-//        if (selectedCategory.equals("Makanan") || selectedCategory.equals("Minuman") || selectedCategory.equals("Sembako")) {
-//            filterByCategory(selectedCategory);
-//        } else {
-//            viewdata(); // Show all data if no specific category selected
-//        }
-//    } else {
-//        // If search field has text, search with both category and keyword
-//        searchWithCategory(selectedCategory, searchText);
-//    }
-    }//GEN-LAST:event_kategoriActionPerformed
-
     private void tombolstokopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolstokopActionPerformed
         stokOpname stokOpname = new stokOpname();
         stokOpname.setVisible(true);
@@ -986,6 +1034,7 @@ private void searchByName() {
     jbarang1.setLocationRelativeTo(this); // Supaya muncul di tengah
     jbarang1.setModal(true); // Membuat dialog bersifat modal (opsional)
     jbarang1.setVisible(true); // Menampilkan dialog
+
     
     }//GEN-LAST:event_tombolTambah1ActionPerformed
 
@@ -1074,11 +1123,6 @@ private void searchByName() {
                               
 
     }//GEN-LAST:event_tombolhapussssActionPerformed
-
-    private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
-        jbarang2.dispose();  // Tutup JDialog
-        this.setVisible(true); // Pastikan JFrame tetap terlihat
-    }//GEN-LAST:event_jcancel1ActionPerformed
 
     private void tanggal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanggal1ActionPerformed
         // TODO add your handling code here:
@@ -1282,7 +1326,15 @@ private void searchByName() {
     }//GEN-LAST:event_tombolLaporanActionPerformed
 
     private void tombolKartustokkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolKartustokkActionPerformed
+
         // TODO add your handling code here:
+    // Kosongkan form terlebih dahulu
+    kodeBarang1.setText("");
+    namaBarang1.setText("");
+    stokMasuk1.setText("");
+    stokKeluar1.setText("");
+    stokakhir.setText("");
+        
     jDialog3.setSize(580, 345); // Sesuaikan dengan ukuran yang diinginkan
     jDialog3.setLocationRelativeTo(this); // Supaya muncul di tengah
     jDialog3.setModal(true); // Membuat dialog bersifat modal (opsional)
@@ -1309,6 +1361,32 @@ private void searchByName() {
 //        } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e);
 //        }
+
+try {
+        String kode = kodeBarang1.getText();
+        ResultSet rs = db.ambildata("SELECT * FROM tb_barang WHERE kode_barang='" + kode + "'");
+        
+        if (rs.next()) {
+            // Set nama barang
+            namaBarang1.setText(rs.getString("nama_barang"));
+            
+            // Set stok keluar (penjualan hari ini)
+            int stokKeluar = getStokKeluarHariIni(kode);
+            stokKeluar1.setText(String.valueOf(stokKeluar));
+            
+            // Set stok awal
+            int stokAwal = rs.getInt("stok");
+            stokakhir.setText(String.valueOf(stokAwal));
+        } else {
+            JOptionPane.showMessageDialog(null, "Kode barang tidak ditemukan");
+            kodeBarang1.setText("");
+            kodeBarang1.requestFocus();
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+
     }//GEN-LAST:event_kodeBarang1ActionPerformed
 
     private void namaBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaBarang1ActionPerformed
@@ -1321,6 +1399,19 @@ private void searchByName() {
 
     private void stokMasuk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokMasuk1ActionPerformed
         // TODO add your handling code here:
+            try {
+        if (!kodeBarang1.getText().isEmpty() && !stokMasuk1.getText().isEmpty()) {
+            int stokMasuk = Integer.parseInt(stokMasuk1.getText());
+            int stokKeluar = Integer.parseInt(stokKeluar1.getText());
+            int stokAwal = Integer.parseInt(stokakhir.getText());
+            
+            // Hitung stok akhir
+            int stokAkhir = stokAwal + stokMasuk - stokKeluar;
+            stokakhir.setText(String.valueOf(stokAkhir));
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Masukkan angka yang valid");
+    }
     }//GEN-LAST:event_stokMasuk1ActionPerformed
 
     private void stokakhirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stokakhirActionPerformed
@@ -1328,12 +1419,31 @@ private void searchByName() {
     }//GEN-LAST:event_stokakhirActionPerformed
 
     private void simpan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan2ActionPerformed
-        // TODO add your handling code here:
+
+ if (kodeBarang1.getText().isEmpty() || namaBarang1.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Kode barang harus diisi terlebih dahulu");
+        return;
+    }
+    
+    try {
+        int stokMasuk = stokMasuk1.getText().isEmpty() ? 0 : Integer.parseInt(stokMasuk1.getText());
+        int stokKeluar = stokKeluar1.getText().isEmpty() ? 0 : Integer.parseInt(stokKeluar1.getText());
+        int stokAkhir = Integer.parseInt(stokakhir.getText());
+        
+        updateStokBarang(kodeBarang1.getText(), stokMasuk, stokKeluar);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Masukkan angka yang valid");
+    }        // TODO add your handling code here:
     }//GEN-LAST:event_simpan2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jcancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancel1ActionPerformed
+        jbarang2.dispose();  // Tutup JDialog
+        this.setVisible(true); // Pastikan JFrame tetap terlihat
+    }//GEN-LAST:event_jcancel1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1410,7 +1520,6 @@ private void searchByName() {
     private com.toedter.calendar.JDateChooser jtgl_exp;
     private javax.swing.JTextField jvarian;
     private javax.swing.JTextField jvarian1;
-    private javax.swing.JComboBox<String> kategori;
     private javax.swing.JTextField kodeBarang1;
     private javax.swing.JTextField namaBarang1;
     private javax.swing.JTextField noTrans;
