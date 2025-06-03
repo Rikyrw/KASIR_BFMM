@@ -136,7 +136,68 @@ public class stokOpname extends javax.swing.JFrame {
         c.setOpaque(false); 
         c.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         c.setFocusable(false); // Biar nggak bisa di-klik
+        
+            // Tambahkan listener untuk pencarian di jTextField1
+    jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            searchData();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            searchData();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            searchData();
+        }
+    });
+        
     }
+    
+    
+    
+    
+    
+    
+    private void searchData() {
+     String keyword = jTextField1.getText().trim();
+     
+    try {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Kosongkan tabel
+        
+
+        String sql = "SELECT so.kode_barang, b.nama_barang, so.stok_sistem, so.stok_fisik, so.selisih, so.keterangan, so.tanggal "
+                + "FROM tb_stok_opname so "
+                + "JOIN tb_barang b ON so.kode_barang = b.kode_barang "
+                + "WHERE so.kode_barang LIKE '%" + keyword + "%' OR b.nama_barang LIKE '%" + keyword + "%' "
+                + "ORDER BY so.tanggal DESC";
+
+        // Gunakan method ambildata() dari class databasee
+        ResultSet rs = db.ambildata(sql);
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getString("kode_barang"),
+                rs.getString("nama_barang"),
+                rs.getInt("stok_sistem"),
+                rs.getInt("stok_fisik"),
+                rs.getInt("selisih"),
+                rs.getString("keterangan"),
+                rs.getString("tanggal")
+            };
+            model.addRow(row);
+        }
+
+        rs.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error saat mencari data: " + e.getMessage());
+    }
+    }
+    
     
     
     
@@ -220,12 +281,15 @@ public class stokOpname extends javax.swing.JFrame {
     
      private void tableClicked(java.awt.event.MouseEvent evt) {
         
-    int row = jTable1.getSelectedRow();
-    if (row >= 0) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        selectedKodeBarang = model.getValueAt(row, 0).toString();
-        selectedTanggal = model.getValueAt(row, 5).toString();
-    }
+         int row = jTable1.getSelectedRow();
+         if (row >= 0) {
+             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+             selectedKodeBarang = model.getValueAt(row, 0).toString();
+             selectedTanggal = model.getValueAt(row, 6).toString(); // Index 6 untuk tanggal
+
+             // Isi jTextField1 dengan nama barang yang dipilih
+             jTextField1.setText(model.getValueAt(row, 1).toString());
+         }
 }
      
      
@@ -238,36 +302,40 @@ public class stokOpname extends javax.swing.JFrame {
          
          
          private void loadDataToTable() {
-    try {
-        // Query untuk mengambil data stok opname
-        String sql = "SELECT so.kode_barang, so.stok_sistem, so.stok_fisik, so.selisih, so.keterangan, so.tanggal " +
-                     "FROM tb_stok_opname so " +
-                     "JOIN tb_barang b ON so.kode_barang = b.kode_barang " +
-                     "ORDER BY so.tanggal DESC";
-        
-        ResultSet rs = db.ambildata(sql);
-        
-        // Model tabel default
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Kosongkan tabel sebelum mengisi data baru
-        
-        // Isi tabel dengan data dari ResultSet
-        while (rs.next()) {
-            Object[] row = {
-                rs.getString("kode_barang"),
-                rs.getInt("stok_sistem"),
-                rs.getInt("stok_fisik"),
-                rs.getInt("selisih"),
-                rs.getString("keterangan"),
-                rs.getString("tanggal")
-            };
-            model.addRow(row);
-        }
-        
-        rs.close();
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error saat memuat data: " + e.getMessage());
-    }
+             try {
+                 // Query untuk mengambil data stok opname dengan nama barang
+                 String sql = "SELECT so.kode_barang, b.nama_barang, so.stok_sistem, so.stok_fisik, so.selisih, so.keterangan, so.tanggal "
+                         + "FROM tb_stok_opname so "
+                         + "JOIN tb_barang b ON so.kode_barang = b.kode_barang "
+                         + "ORDER BY so.tanggal DESC";
+
+                 ResultSet rs = db.ambildata(sql);
+
+                 // Model tabel default
+                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                 model.setRowCount(0); // Kosongkan tabel sebelum mengisi data baru
+
+                 // Ganti kolom tabel dengan yang baru
+                 model.setColumnIdentifiers(new Object[]{"Kode Barang", "Nama Barang", "Stok Sistem", "Stok Fisik", "Selisih", "Keterangan", "Tanggal"});
+
+                 // Isi tabel dengan data dari ResultSet
+                 while (rs.next()) {
+                     Object[] row = {
+                         rs.getString("kode_barang"),
+                         rs.getString("nama_barang"),
+                         rs.getInt("stok_sistem"),
+                         rs.getInt("stok_fisik"),
+                         rs.getInt("selisih"),
+                         rs.getString("keterangan"),
+                         rs.getString("tanggal")
+                     };
+                     model.addRow(row);
+                 }
+
+                 rs.close();
+             } catch (SQLException e) {
+                 JOptionPane.showMessageDialog(this, "Error saat memuat data: " + e.getMessage());
+             }
 }
          
          
@@ -399,6 +467,7 @@ public class stokOpname extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         edit1 = new javax.swing.JButton();
         tambah2 = new javax.swing.JButton();
+        c1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -493,12 +562,13 @@ public class stokOpname extends javax.swing.JFrame {
 
         daftar_barang.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cari3.setBorder(null);
         cari3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cari3ActionPerformed(evt);
             }
         });
-        daftar_barang.getContentPane().add(cari3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 1150, -1));
+        daftar_barang.getContentPane().add(cari3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 1150, 20));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -613,6 +683,11 @@ public class stokOpname extends javax.swing.JFrame {
         cari1.setBorderPainted(false);
         cari1.setContentAreaFilled(false);
         cari1.setFocusPainted(false);
+        cari1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cari1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(cari1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 30, 40));
 
         ekspor.setBorderPainted(false);
@@ -644,6 +719,17 @@ public class stokOpname extends javax.swing.JFrame {
         });
         getContentPane().add(tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 40));
 
+        c1.setBackground(new java.awt.Color(255, 255, 255));
+        c1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        c1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                c1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(c1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 140, 50));
+
+        jTable1.setBackground(new java.awt.Color(102, 102, 102));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -719,10 +805,21 @@ public class stokOpname extends javax.swing.JFrame {
     }//GEN-LAST:event_laporan1ActionPerformed
 
     private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_logout1ActionPerformed
 
     private void tambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambah2ActionPerformed
@@ -764,7 +861,7 @@ public class stokOpname extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
-        try {
+     try {
         // Validasi input
         if (kodeBarang1.getText().isEmpty() || stokSistem1.getText().isEmpty()
                 || kartuStok1.getText().isEmpty()) {
@@ -774,6 +871,7 @@ public class stokOpname extends javax.swing.JFrame {
 
         // Ambil data dari form
         String kodeBarang = kodeBarang1.getText();
+        String namaBarang = namaBarang1.getText(); // Tambahkan ini
         int stokSistem = Integer.parseInt(stokSistem1.getText());
         int stokFisik = Integer.parseInt(kartuStok1.getText());
         String keterangan = keterangan1.getText();
@@ -783,6 +881,7 @@ public class stokOpname extends javax.swing.JFrame {
         if (selectedKodeBarang != null && selectedTanggal != null) {
             // Mode edit - update data yang ada
             sql = "UPDATE tb_stok_opname SET "
+                + "nama_barang = '" + namaBarang + "', " // Tambahkan ini
                 + "stok_sistem = " + stokSistem + ", "
                 + "stok_fisik = " + stokFisik + ", "
                 + "keterangan = '" + keterangan + "', "
@@ -791,8 +890,8 @@ public class stokOpname extends javax.swing.JFrame {
                 + "AND tanggal = '" + selectedTanggal + "'";
         } else {
             // Mode tambah - insert data baru
-            sql = "INSERT INTO tb_stok_opname (kode_barang, stok_sistem, stok_fisik, tanggal, keterangan) "
-                + "VALUES ('" + kodeBarang + "', " + stokSistem + ", " + stokFisik
+            sql = "INSERT INTO tb_stok_opname (kode_barang, nama_barang, stok_sistem, stok_fisik, tanggal, keterangan) "
+                + "VALUES ('" + kodeBarang + "', '" + namaBarang + "', " + stokSistem + ", " + stokFisik
                 + ", '" + tanggal + "', '" + keterangan + "')";
         }
 
@@ -846,8 +945,7 @@ public class stokOpname extends javax.swing.JFrame {
     }//GEN-LAST:event_hapusActionPerformed
 
     private void edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit1ActionPerformed
-        // TODO add your handling code here:
-        if (selectedKodeBarang == null || selectedTanggal == null) {
+    if (selectedKodeBarang == null || selectedTanggal == null) {
         JOptionPane.showMessageDialog(this, "Pilih data yang akan diedit terlebih dahulu!");
         return;
     }
@@ -861,18 +959,12 @@ public class stokOpname extends javax.swing.JFrame {
         if (rs.next()) {
             // Isi form dialog dengan data yang dipilih
             kodeBarang1.setText(rs.getString("kode_barang"));
+            namaBarang1.setText(rs.getString("nama_barang")); // Pastikan ini ada
             stokSistem1.setText(rs.getString("stok_sistem"));
             kartuStok1.setText(rs.getString("stok_fisik"));
             selisih.setText(rs.getString("selisih"));
             keterangan1.setText(rs.getString("keterangan"));
             jtgl.setText(rs.getString("tanggal"));
-            
-            // Ambil nama barang dari tabel barang
-            ResultSet rsBarang = db.ambildata("SELECT nama_barang FROM tb_barang WHERE kode_barang = '" 
-                                            + selectedKodeBarang + "'");
-            if (rsBarang.next()) {
-                namaBarang1.setText(rsBarang.getString("nama_barang"));
-            }
             
             // Tampilkan dialog edit
             jDialog1.setSize(727, 463);
@@ -909,6 +1001,15 @@ public class stokOpname extends javax.swing.JFrame {
                 jDialog1.dispose();  // Tutup JDialog
         this.setVisible(true); // Pastikan JFrame tetap terlihat
     }//GEN-LAST:event_jcancelActionPerformed
+
+    private void cari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cari1ActionPerformed
+        // TODO add your handling code here:
+            searchData();
+    }//GEN-LAST:event_cari1ActionPerformed
+
+    private void c1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_c1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -948,6 +1049,7 @@ public class stokOpname extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton barang1;
     private javax.swing.JTextField c;
+    private javax.swing.JTextField c1;
     private javax.swing.JButton cari1;
     private javax.swing.JButton cari2;
     private javax.swing.JTextField cari3;

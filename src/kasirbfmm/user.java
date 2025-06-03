@@ -356,6 +356,8 @@ private void updateUser() {
         });
         getContentPane().add(kataSandi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 200, 200, 30));
 
+        jTable1.setBackground(new java.awt.Color(102, 102, 102));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -440,10 +442,21 @@ private void updateUser() {
     }//GEN-LAST:event_laporanActionPerformed
 
     private void logout2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout2ActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_logout2ActionPerformed
 
     private void kataSandi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kataSandi1ActionPerformed

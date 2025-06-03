@@ -615,6 +615,11 @@ private void searchByName() {
 
         c.setBackground(new java.awt.Color(255, 255, 255));
         c.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        c.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cActionPerformed(evt);
+            }
+        });
         jbarang1.getContentPane().add(c, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, -20, 160, 90));
 
         b.setBackground(new java.awt.Color(255, 255, 255));
@@ -1112,10 +1117,21 @@ private void searchByName() {
     }//GEN-LAST:event_jberatActionPerformed
 
     private void tombolLogout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolLogout1ActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_tombolLogout1ActionPerformed
 
     private void tombolhapussssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolhapussssActionPerformed
@@ -1444,6 +1460,10 @@ try {
         jbarang2.dispose();  // Tutup JDialog
         this.setVisible(true); // Pastikan JFrame tetap terlihat
     }//GEN-LAST:event_jcancel1ActionPerformed
+
+    private void cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cActionPerformed
 
     /**
      * @param args the command line arguments

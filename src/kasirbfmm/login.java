@@ -147,10 +147,16 @@ public class login extends javax.swing.JFrame {
             pst.setString(2, jpassword.getText());
             rs = pst.executeQuery();
 
-            if (rs.next()) {
-                dispose();
-                String userName = rs.getString("nama"); // Ambil nama user
-                 new dashboard(userName).setVisible(true); // Kirim ke dashboard
+         if (rs.next()) {
+            // Your code integration here
+            jual.loggedInUserId = rs.getInt("id_user");
+            jual.loggedInUsername = rs.getString("nama");
+            
+            dispose();
+            new dashboard(jual.loggedInUsername).setVisible(true); // Or new jual() if you prefer
+            // Alternatively, you could use:
+            // new jual().setVisible(true);
+            // this.dispose();
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau Password salah");

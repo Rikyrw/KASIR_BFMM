@@ -84,24 +84,24 @@ cri.getDocument().addDocumentListener(new DocumentListener() {
     }
 });
         
-        tidak.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jDialog3.setVisible(false);
-    }
-});
+//        tidak.addActionListener(new java.awt.event.ActionListener() {
+//    public void actionPerformed(java.awt.event.ActionEvent evt) {
+//        jDialog3.setVisible(false);
+//    }
+//});
 
-silang.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jDialog3.setVisible(false);
-    }
-});
-
-ya2.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        hapusDataRetur();
-        jDialog3.setVisible(false);
-    }
-});
+//silang.addActionListener(new java.awt.event.ActionListener() {
+//    public void actionPerformed(java.awt.event.ActionEvent evt) {
+//        jDialog3.setVisible(false);
+//    }
+//});
+//
+//ya2.addActionListener(new java.awt.event.ActionListener() {
+//    public void actionPerformed(java.awt.event.ActionEvent evt) {
+//        hapusDataRetur();
+//        jDialog3.setVisible(false);
+//    }
+//});
         // Tambahkan mouse listener untuk tabel
     jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
         
@@ -186,6 +186,14 @@ ya2.addActionListener(new java.awt.event.ActionListener() {
 
         jTable2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTable2.setRowSelectionAllowed(true);
+        
+            jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            tabelReturMouseClicked(evt);
+        }
+    });
+        
     }
     
     
@@ -623,11 +631,6 @@ private javax.swing.JButton btnSimpanEdit;
         jtanggal1 = new javax.swing.JTextField();
         noTrans2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jDialog3 = new javax.swing.JDialog();
-        tidak = new javax.swing.JButton();
-        silang = new javax.swing.JButton();
-        ya2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         daftar_barang = new javax.swing.JDialog();
         cari3 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -797,40 +800,15 @@ private javax.swing.JButton btnSimpanEdit;
         jLabel3.setText("jLabel1");
         jDialog2.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -20, 580, 420));
 
-        jDialog3.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tidak.setBorder(null);
-        tidak.setContentAreaFilled(false);
-        tidak.setFocusPainted(false);
-        jDialog3.getContentPane().add(tidak, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 30, 10));
-
-        silang.setBorder(null);
-        silang.setContentAreaFilled(false);
-        silang.setFocusPainted(false);
-        jDialog3.getContentPane().add(silang, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 10, 10));
-
-        ya2.setBorder(null);
-        ya2.setContentAreaFilled(false);
-        ya2.setFocusPainted(false);
-        ya2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ya2ActionPerformed(evt);
-            }
-        });
-        jDialog3.getContentPane().add(ya2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 50, 20));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/popup hapus_1.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jDialog3.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
-
         daftar_barang.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cari3.setBorder(null);
         cari3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cari3ActionPerformed(evt);
             }
         });
-        daftar_barang.getContentPane().add(cari3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 1150, -1));
+        daftar_barang.getContentPane().add(cari3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 1150, 20));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -975,6 +953,8 @@ private javax.swing.JButton btnSimpanEdit;
         cri.setBorder(null);
         getContentPane().add(cri, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 400, 30));
 
+        jTable1.setBackground(new java.awt.Color(102, 102, 102));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -1026,10 +1006,60 @@ private javax.swing.JButton btnSimpanEdit;
 
     private void tombolhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolhapusActionPerformed
         // TODO add your handling code here:
-        jDialog3.setSize(319, 330); // Sesuaikan dengan ukuran yang diinginkan
-    jDialog3.setLocationRelativeTo(this); // Supaya muncul di tengah
-    jDialog3.setModal(true); // Membuat dialog bersifat modal (opsional)
-    jDialog3.setVisible(true); // Menampilkan dialog
+//    jDialog3.setSize(319, 330); // Sesuaikan dengan ukuran yang diinginkan
+//    jDialog3.setLocationRelativeTo(this); // Supaya muncul di tengah
+//    jDialog3.setModal(true); // Membuat dialog bersifat modal (opsional)
+//    jDialog3.setVisible(true); // Menampilkan dialog
+
+
+    if (selectedReturId == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih data yang akan dihapus terlebih dahulu!");
+        return;
+    }
+
+    // Tampilkan dialog konfirmasi
+    int confirm = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin menghapus data retur ini?", 
+        "Konfirmasi Hapus", 
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // 1. Ambil data retur yang akan dihapus
+            ResultSet rs = db.ambildata(
+                "SELECT kode_barang, qty FROM tb_retur_supplier WHERE id_retur = " + selectedReturId);
+            
+            if (rs.next()) {
+                String kodeBarang = rs.getString("kode_barang");
+                int qty = rs.getInt("qty");
+                
+                // 2. Kembalikan stok barang
+                db.aksi("UPDATE tb_barang SET stok = stok + " + qty + 
+                       " WHERE kode_barang = '" + kodeBarang + "'");
+                
+                // 3. Catat di kartu stok
+                String tanggal = jtanggal.getText();
+                db.aksi("INSERT INTO kartu_stok (tanggal, kode_barang, jenis_transaksi, " +
+                       "qty_masuk, stok_akhir, keterangan) " +
+                       "SELECT '" + tanggal + "', '" + kodeBarang + "', 'penyesuaian', " + 
+                       qty + ", stok, 'Pembatalan retur' " +
+                       "FROM tb_barang WHERE kode_barang = '" + kodeBarang + "'");
+                
+                // 4. Hapus data retur
+                db.aksi("DELETE FROM tb_retur_supplier WHERE id_retur = " + selectedReturId);
+                
+                JOptionPane.showMessageDialog(this, "Data retur berhasil dihapus!");
+                tampilDataRetur(); // Refresh tabel
+                selectedReturId = -1; // Reset selected ID
+            }
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Gagal menghapus data: " + e.getMessage());
+        }
+    }
+
     }//GEN-LAST:event_tombolhapusActionPerformed
 
     private void tomboldasbor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboldasbor1ActionPerformed
@@ -1118,10 +1148,21 @@ private javax.swing.JButton btnSimpanEdit;
     }//GEN-LAST:event_tombollaporan1ActionPerformed
 
     private void tombollogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombollogoutActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_tombollogoutActionPerformed
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
@@ -1139,10 +1180,6 @@ private javax.swing.JButton btnSimpanEdit;
     private void namaBarang2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaBarang2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_namaBarang2ActionPerformed
-
-    private void ya2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ya2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ya2ActionPerformed
 
     private void jtanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtanggalActionPerformed
         // TODO add your handling code here:
@@ -1301,11 +1338,9 @@ private void tabelReturMouseClicked(java.awt.event.MouseEvent evt) {
     private javax.swing.JDialog daftar_barang;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JDialog jDialog3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1322,10 +1357,8 @@ private void tabelReturMouseClicked(java.awt.event.MouseEvent evt) {
     private javax.swing.JTextField noTrans2;
     private javax.swing.JTextField qty1;
     private javax.swing.JTextField qty2;
-    private javax.swing.JButton silang;
     private javax.swing.JButton simpan;
     private javax.swing.JButton simpan1;
-    private javax.swing.JButton tidak;
     private javax.swing.JButton tombolbarang2;
     private javax.swing.JButton tombolcari1;
     private javax.swing.JButton tomboldasbor1;
@@ -1337,6 +1370,5 @@ private void tabelReturMouseClicked(java.awt.event.MouseEvent evt) {
     private javax.swing.JButton tombolstokOpname;
     private javax.swing.JButton tomboltambah1;
     private javax.swing.JButton tomboluser1;
-    private javax.swing.JButton ya2;
     // End of variables declaration//GEN-END:variables
 }

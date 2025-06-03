@@ -36,10 +36,16 @@ public class jual extends javax.swing.JFrame {
     databasee db = new databasee();
     DefaultTableModel model = new DefaultTableModel();
         long sumTotal = 0;
+        public static int loggedInUserId = 0; // Default 0, akan diisi saat login
+        public static String loggedInUsername = "";
+
     /**
      * Creates new form jual
      */
     public jual() { 
+        
+        
+        
         this.setUndecorated(true);
         initComponents();
         
@@ -404,6 +410,7 @@ public void tglskrg(){
 
         daftar_barang.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cari1.setBorder(null);
         cari1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cari1ActionPerformed(evt);
@@ -622,6 +629,8 @@ public void tglskrg(){
         });
         getContentPane().add(bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 690, 100, 30));
 
+        jTable1.setBackground(new java.awt.Color(102, 102, 102));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -708,17 +717,30 @@ public void tglskrg(){
     }//GEN-LAST:event_userActionPerformed
 
     private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_logout1ActionPerformed
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
-       sumTotal = 0;
+    sumTotal = 0;
     int row = jTable1.getRowCount();
-    boolean isDiskon = false;
+    boolean isDiskonPrettyDate = false;
+    boolean isDiskonOver100k = false;
     boolean isEsKrimGratis = false;
+    int diskon = 0;
 
     try {
         // Validasi input
@@ -734,27 +756,41 @@ public void tglskrg(){
 
         // Periksa diskon dan promo
         LocalDate today = LocalDate.now();
+        
+        // Diskon 50% jika tanggal = bulan (misal 3 Maret)
         if (today.getDayOfMonth() == today.getMonthValue()) {
-            isDiskon = true;
+            isDiskonPrettyDate = true;
         }
+        
+        // Diskon 2% jika total > 100.000
+        int totalHarga = Integer.parseInt(total1.getText());
+        if (totalHarga > 100000) {
+            isDiskonOver100k = true;
+            diskon = (int) (totalHarga * 0.02); // 2% diskon
+            totalHarga -= diskon;
+        }
+        
+        // Diskon 50% jika ada (prioritas lebih tinggi)
+        if (isDiskonPrettyDate) {
+            diskon = totalHarga / 2; // 50% discount
+            totalHarga -= diskon;
+        }
+        
+        // Promo es krim hari Jumat
         if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
             isEsKrimGratis = true;
         }
 
-        // Hitung total harga
-        int totalHarga = Integer.parseInt(total1.getText());
-        if (isDiskon) {
-            totalHarga /= 2;
-            JOptionPane.showMessageDialog(null, "Diskon 50% diterapkan! Total setelah diskon: " + totalHarga);
+        // Validasi user yang login
+        if (loggedInUserId == 0) {
+            JOptionPane.showMessageDialog(null, "User tidak valid! Silahkan login ulang.");
+            return;
         }
-
-        // Dapatkan id_user dari session
-        int id_user = 1; // Ganti dengan cara mendapatkan id_user yang login
 
         // Simpan data transaksi ke tb_jual
         String sqlTransaksi = "INSERT INTO tb_jual (no_transaksi, id_user, tanggal, qty, total, bayar) VALUES (" + 
                 "'" + noTransaksi1.getText() + "', " + 
-                "'" + id_user + "', " + 
+                "'" + loggedInUserId + "', " + 
                 "'" + getTanggalSQL() + "', " + 
                 "'" + row + "', " + 
                 "'" + totalHarga + "', " + 
@@ -802,12 +838,20 @@ public void tglskrg(){
             db.aksi(sqlUpdate); 
         }
 
-        // Promo es krim
-        if (isEsKrimGratis) {
-            JOptionPane.showMessageDialog(null, "Selamat! Anda mendapatkan es krim gratis karena hari ini Jumat!");
+        // Tampilkan informasi diskon dan promo
+        StringBuilder message = new StringBuilder("Transaksi berhasil disimpan!\n");
+        
+        if (isDiskonPrettyDate) {
+            message.append("Anda mendapatkan diskon 50% (Tanggal Cantik)\n");
+        } else if (isDiskonOver100k) {
+            message.append("Anda mendapatkan diskon 2% (Pembelian > 100.000)\n");
         }
-
-        JOptionPane.showMessageDialog(null, "Data telah berhasil disimpan!");
+        
+        if (isEsKrimGratis) {
+            message.append("Selamat! Anda mendapatkan es krim gratis karena hari ini Jumat!\n");
+        }
+        
+        JOptionPane.showMessageDialog(null, message.toString());
 
         // Reset form dan tabel
         model.setRowCount(0);
@@ -971,7 +1015,7 @@ public void tglskrg(){
     }//GEN-LAST:event_tambah2ActionPerformed
 
     private void cetak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetak1ActionPerformed
-try {
+    try {
         // Check if there's a transaction to print
         if (noTransaksi1.getText().isEmpty() || jTable1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Tidak ada transaksi untuk dicetak.");
@@ -981,14 +1025,21 @@ try {
         // Calculate total price after discounts
         int totalHarga = Integer.parseInt(total1.getText());
         int diskon = 0;
-        boolean isDiskon = false;
+        boolean isDiskonPrettyDate = false;
+        boolean isDiskonOver100k = false;
         boolean isFreeIceCream = false;
 
         // Check for "pretty date" discount (day = month)
         LocalDate today = LocalDate.now();
         if (today.getDayOfMonth() == today.getMonthValue()) {
-            isDiskon = true;
+            isDiskonPrettyDate = true;
             diskon = totalHarga / 2; // 50% discount
+            totalHarga -= diskon;
+        } 
+        // Check for 2% discount if total > 100.000
+        else if (totalHarga > 100000) {
+            isDiskonOver100k = true;
+            diskon = (int) (totalHarga * 0.02); // 2% discount
             totalHarga -= diskon;
         }
 
@@ -1013,7 +1064,6 @@ try {
         // Store header
         nota.append("BUNDA FIENS MART\n");
         
-        
         // Reset to normal font and left align
         nota.append("--------------------------------\n");
         nota.append((char)27).append((char)33).append((char)0);
@@ -1022,14 +1072,13 @@ try {
         // Store information
         nota.append("Jl. Jombang no 29, Ajung Jember Utara\n");
         nota.append("Telp: 081234567890\n");
-        nota.append("Kasir: Aditya Fadni Athaullah\n");
+        nota.append("Kasir: ").append(loggedInUsername).append("\n");
         
         // Transaction details
         nota.append("--------------------------------\n");
         nota.append(String.format("%-12s: %s\n", "No Transaksi", noTransaksi1.getText()));
-        nota.append(String.format("%-12s: %s-%s\n", "Waktu",tanggalStr, waktuStr));
+        nota.append(String.format("%-12s: %s-%s\n", "Waktu", tanggalStr, waktuStr));
         
-
         // Item list
         nota.append("--------------------------------\n");
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -1046,12 +1095,13 @@ try {
         }
 
         // Payment summary
-//        nota.append("\n");
         nota.append("--------------------------------\n");
         nota.append(String.format("%-12s: %12s\n", "HARGA JUAL", formatCurrency(Integer.parseInt(total1.getText()))));
         
-        if (isDiskon) {
+        if (isDiskonPrettyDate) {
             nota.append(String.format("%-12s: %12s\n", "DISKON 50%", formatCurrency(diskon)));
+        } else if (isDiskonOver100k) {
+            nota.append(String.format("%-12s: %12s\n", "DISKON 2%", formatCurrency(diskon)));
         }
         
         nota.append("--------------------------------\n");
@@ -1063,7 +1113,7 @@ try {
         nota.append("--------------------------------\n\n");
         
         // Promo information
-        if (isDiskon) {
+        if (isDiskonPrettyDate || isDiskonOver100k) {
             nota.append("  ANDA HEMAT: ").append(formatCurrency(diskon)).append("\n\n");
         }
         

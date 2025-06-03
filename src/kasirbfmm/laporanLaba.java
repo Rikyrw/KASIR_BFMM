@@ -47,6 +47,7 @@ public class laporanLaba extends javax.swing.JFrame {
      * Creates new form laporanPembelian
      */
     public laporanLaba() {
+                this.setUndecorated(true);
         initComponents();
     initializeDatabaseConnection();
     
@@ -108,7 +109,7 @@ public class laporanLaba extends javax.swing.JFrame {
 
      private void initializeDatabaseConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/ddos";
+            String url = "jdbc:mysql://localhost:3306/bfm_kasir1111";
             String username = "root";
             String password = "";
             conn = DriverManager.getConnection(url, username, password);
@@ -634,6 +635,9 @@ private double calculateDailyLoss(String date) {
         getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 120, 40));
         getContentPane().add(dariTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 130, -1));
         getContentPane().add(sampaiTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 130, -1));
+
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setForeground(new java.awt.Color(204, 204, 204));
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 1010, 560));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotobaru/Labaa (1).png"))); // NOI18N
@@ -680,10 +684,21 @@ private double calculateDailyLoss(String date) {
     }//GEN-LAST:event_user1ActionPerformed
 
     private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_logout1ActionPerformed
 
     private void ekspor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ekspor1ActionPerformed

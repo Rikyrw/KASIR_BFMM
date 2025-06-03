@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
  * @author Dhimas Ananta
  */
 public class laporanPenjualan extends javax.swing.JFrame {
-            DefaultTableModel model = new DefaultTableModel();
+    DefaultTableModel model = new DefaultTableModel();
     
     databasee db = new databasee();
 
@@ -456,6 +456,8 @@ private void exportToExcel() {
         });
         getContentPane().add(pembelian, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, 120, 30));
 
+        jTable1.setBackground(new java.awt.Color(102, 102, 102));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -567,10 +569,21 @@ private void exportToExcel() {
     }//GEN-LAST:event_user1ActionPerformed
 
     private void logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout1ActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_logout1ActionPerformed
 
     private void ekspor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ekspor1ActionPerformed

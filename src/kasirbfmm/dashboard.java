@@ -53,6 +53,30 @@ public class dashboard extends javax.swing.JFrame {
     public dashboard(String userName) {
         this.setUndecorated(true);
         initComponents();
+        
+        rugihariini1.setEditable(false);
+        untunghariini1.setEditable(false);
+        hampirkadaluwarsa.setEditable(false);
+        
+            // Tambahkan kode berikut untuk membuat text field transparan
+        rugihariini1.setOpaque(false);
+        rugihariini1.setBackground(new Color(0, 0, 0, 0)); // Warna transparan
+        rugihariini1.setBorder(null); // Hapus border
+        rugihariini1.setForeground(Color.WHITE); // Atur warna teks sesuai kebutuhan
+        
+        
+        untunghariini1.setOpaque(false);
+        untunghariini1.setBackground(new Color(0, 0, 0, 0)); // Warna transparan
+        untunghariini1.setBorder(null); // Hapus border
+        untunghariini1.setForeground(Color.WHITE); // Atur warna teks sesuai kebutuhan
+        
+        
+        hampirkadaluwarsa.setOpaque(false);
+        hampirkadaluwarsa.setBackground(new Color(0, 0, 0, 0)); // Warna transparan
+        hampirkadaluwarsa.setBorder(null); // Hapus border
+        hampirkadaluwarsa.setForeground(Color.WHITE); // Atur warna teks sesuai kebutuhan
+        
+        
           this.userName = (userName != null && !userName.isEmpty()) ? userName : "Guest"; 
         nama.setText(this.userName); // Set nama user di JTextField
 
@@ -226,7 +250,7 @@ private double calculateDailyLoss(String date) {
    
    private void initializeDatabaseConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/ddos"; // Updated database name
+            String url = "jdbc:mysql://localhost:3306/bfm_kasir1111"; // Updated database name
             String username = "root"; // Change as needed
             String password = ""; // Change as needed
             
@@ -474,8 +498,15 @@ private double calculateDailyLoss(String date) {
             }
         });
         getContentPane().add(tombolJual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 100, 20));
+
+        hampirkadaluwarsa.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         getContentPane().add(hampirkadaluwarsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 340, 250, 80));
+
+        rugihariini1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        rugihariini1.setBorder(null);
         getContentPane().add(rugihariini1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 250, 80));
+
+        untunghariini1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         getContentPane().add(untunghariini1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 250, 80));
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, 1070, 240));
 
@@ -491,10 +522,21 @@ private double calculateDailyLoss(String date) {
  
     
     private void jlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlogoutActionPerformed
+    // Tampilkan dialog konfirmasi
+    int response = JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin logout?", 
+        "Konfirmasi Logout", 
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // Jika user memilih YES (0), lakukan logout
+    if (response == JOptionPane.YES_OPTION) {
         login dashboard = new login();
         dashboard.setVisible(true);
-        System.out.println("github perubahan");
         this.dispose();
+    }
     }//GEN-LAST:event_jlogoutActionPerformed
 
     private void tombolBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombolBarang1ActionPerformed
